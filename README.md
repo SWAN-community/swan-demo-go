@@ -1,10 +1,10 @@
-# ![Secured Web Addressability Network](https://raw.githubusercontent.com/51Degrees/swan/main/images/swan.128.pxls.100.dpi.png)
+# ![Secured Web Addressability Network](https://raw.githubusercontent.com/SWAN-community/swan/main/images/swan.128.pxls.100.dpi.png)
 
 # Secured Web Addressability Network (SWAN) 
 Demo in go of SWAN, SWIFT and OWID
 
 The SWAN demo implements the concepts explained in 
-[SWAN](https://github.com/51degrees/swan)
+[SWAN](https://github.com/SWAN-community/swan)
 
 The deployment guide later on in this readme shows you how to set up example 
 with multiple SWIFT nodes, publishers and marketers but every SWAN needs at 
@@ -59,7 +59,7 @@ This demo uses submodules, to clone the repository and the submodules at the
 same time, run:
 
 ```
-git clone --recurse-submodules https://github.com/51degrees/swan-demo-go
+git clone --recurse-submodules https://github.com/SWAN-community/swan-demo-go
 ```
 
 ## Local Installation
@@ -268,9 +268,9 @@ vi /etc/hosts
 line.
 
 * Familiar with the concepts associated with 
-[SWAN](https://github.com/51degrees/swan),
-[SWIFT](https://github.com/51degrees/swift), and 
-[OWID](https://github.com/51Degrees/owid).
+[SWAN](https://github.com/SWAN-community/swan),
+[SWIFT](https://github.com/SWAN-community/swift), and 
+[OWID](https://github.com/SWAN-community/owid).
 
 * AWS account with Elastic Beanstalk and DynamoDB administration privileges or
 Azure account with Storage and App Services.

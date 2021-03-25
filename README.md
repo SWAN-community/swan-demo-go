@@ -141,8 +141,9 @@ The following host resolutions are used in the sample configuration:
   # Add more if your wish...
   ```
 
-* Run either the `./build.sh` file if you are on Linux or run the `./build.ps1` 
-file if you are on Windows.
+* To build on:
+  * Linux: Run the `./build.sh` file if you are on Linux/MacOS or on 
+  * Windows: First run `./dep.ps1` and then run the `./build.ps1` files.
 
 * Run the server:
 

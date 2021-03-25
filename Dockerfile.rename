@@ -1,0 +1,20 @@
+# A minimal Docker image based on Alpine Linux with a complete package index and only 5 MB in size!
+FROM alpine
+
+# expose port
+EXPOSE 80
+
+# Add executable into image
+ADD application /
+ADD appsettings.json /
+COPY www/ /www/
+
+ENV PORT=80
+ENV 51D_RESOURCE_KEY=
+ENV AZURE_STORAGE_ACCESS_KEY=
+ENV AZURE_STORAGE_ACCOUNT=
+
+CMD ["/application"]
+
+# execute command when docker launches / run
+#CMD ["./app"]

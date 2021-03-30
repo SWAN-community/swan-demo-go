@@ -9,12 +9,16 @@ ADD application /
 ADD appsettings.json /
 COPY www/ /www/
 
+# Environment Variables
+# Application port number.
 ENV PORT=80
+# Used for bot detection. Visit https://configure.51degrees.com/vXyRZz8B to get a free resource key
 ENV 51D_RESOURCE_KEY=
+# Used to store SWAN data. 
+# See https://docs.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage#view-account-access-keys 
+# on how to obtain keys for your target storage account.
 ENV AZURE_STORAGE_ACCESS_KEY=
 ENV AZURE_STORAGE_ACCOUNT=
 
-CMD ["/application"]
-
 # execute command when docker launches / run
-#CMD ["./app"]
+CMD ["/application"]

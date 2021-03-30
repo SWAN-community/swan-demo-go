@@ -33,3 +33,6 @@ if (Test-Path "application")
     # Create a zip file with the application and the settings file
     Invoke-Expression $command
 }
+
+# Build the docker container image.
+docker build -t swan-community/swan-demo-go .

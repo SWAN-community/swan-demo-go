@@ -231,6 +231,8 @@ executable for web services.
 
 `build.sh` : builds AWS or Azure packages on Linux ready for manual deployment.
 
+`dep.ps1` : gets SWAN demo dependencies on Windows.
+
 `appsettings.json` : application settings for production.
 
 `appsettings.dev.json` : application settings for development.
@@ -405,9 +407,172 @@ request from a web browser will result in the progress circle as SWIFT nodes
 are navigated between before the preference capture page from the SWAN domain
 is displayed.
 
-## Azure App Service
+## Azure App Service - with Docker
 
-TODO - prerequisites and steps to set up the demo in an Azure environment
+Azure App Services do not support the Go runtime natively so for deployment, Docker
+containers are used. 
+
+Azure can be used to host docker containers using Azure Container Registries. These
+can then be referenced by an App Service to pull containers from.
+
+### Pre-requisites
+
+* Local Go version 1.15 or greater installation sufficient to run the Go command
+line.
+
+* Familiar with the concepts associated with 
+[SWAN](https://github.com/SWAN-community/swan),
+[SWIFT](https://github.com/SWAN-community/swift), and 
+[OWID](https://github.com/SWAN-community/owid).
+
+* Docker Engine - https://docs.docker.com/get-docker/
+
+* Azure subscription with the ability to create App Services, Container Registries, DNS Zones and SSL Certificates
+
+#### Azure
+
+* Setup Azure container registry to push the demo Docker container to.
+  * [Creating a container registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal)
+  * [Enable Admin Authentication](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication#admin-account)
+
+* Setup domains to use with the demo in Azure using 
+[App Service Domains](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DomainRegistration%2Fdomains). Domains are needed for the 
+following roles.
+
+    * SWAN access domain. For example ``51da.uk``.
+
+    * Each of the SWIFT nodes that will support SWAN. At least two domains are 
+    needed. For the purposes of the demo they may be sub domains. For example
+    ``51da.uk`` and ``51db.uk``.
+
+    * At least two different domains for publishers. For example 
+    ``new-pork-limes.uk`` and ``current-bun.uk``.
+
+    * At least two different domains for marketers. For example 
+    ``cool-bikes.uk`` and ``cool-creams.uk``.
+
+    * A domain for SSPs, Exchanges, DPSs and CMPs. For the purposes of the demo they can be sub domains. For example ``dsp.swan-demo.uk`` amd ``cmp.swan-demo.uk``
+
+* Setup SSL certificates in Azure using 
+[App Service Certificates](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.CertificateRegistration%2FcertificateOrders) 
+for each of the domains.
+
+* Create a place to store SWAN demo data using a [Storage Account](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create?tabs=azure-portal)
+
+#### Windows
+
+* Set powershell unrestricted execution policy to enable `build.ps1` to execute.
+  Use the following command with administrator privileges.
+
+  `Set-ExecutionPolicy Unrestricted`
+
+### Steps
+
+* Get all the dependencies needed by the Go application.
+
+  `go get -d ./...`
+
+  `dep.ps1` can also be used in Powershell to explicitly get the dependencies 
+  for this Go application.
+
+* Add the demo domain names as folder names to the www folder. For example; the
+domain `domain.com` would appear as `www/domain.com`. Alter the `config.json` 
+content in each folder to indicate the purpose of the domain. This aspect of 
+the demo is changing and domain examples provided with the should be reviewed 
+along with the demo source code and comments to understand how multiple domains
+are supported within a single demo application.
+
+* You may need to support multiple SSL certificates if the demo deployment 
+should respond to five or more domains. 
+See Azure [documentation](https://docs.microsoft.com/en-us/azure/app-service/configure-ssl-certificate#import-an-app-service-certificate).
+
+* Copy or rename ``/Dockerfile.rename`` to ``/Dockerfile`` and modify the `ENV` 
+values for your environment. 
+
+  * See [Manage storage account access keys](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage#view-account-access-keys) on how to view and 
+  retrieve access keys for your target storage account.
+
+* Run the build.ps1 (Windows) or build.sh (Linux) to create the Docker image.
+The image should contain the ``application`` executable compiled for Linux 64 
+bit, the ``appsetings.json`` file and the ``www`` folder with directories for 
+all the domains the demo will respond to. Note the SWIFT domains used for 
+storage do not need to be present in the www folder.
+
+* Before you can push the image to your Azure Container Registry (ACR) you will 
+need to tag the image using the docker tag command. Replace <login-server> with 
+the login server name of your ACR instance.
+
+  ```
+  docker tag swan-community/swan-demo-go <login-server>/swan-demo-go:latest
+  ```
+
+* Push the container to the ACR instance. 
+  ```
+  docker push <login-server>/swan-demo-go:latest
+  ```
+
+* Create a new App Service - see [Deploy and run a containerized web app with Azure App Service](https://docs.microsoft.com/en-us/learn/modules/deploy-run-container-app-service/5-exercise-deploy-web-app?pivots=csharp)
+
+  * Go to the [Azure portal](https://portal.azure.com/) and select Create a resource. 
+
+  * Search for and select Web App.
+
+  * On the Basics tab, configure the values. The following values are for guidance:
+    |Setting|Value|
+    |-|-|
+    |Resource Group|Select the resource group to use or create a new one.|
+    |Name|e.g. swan-demo-go-app|
+    |Publish|Docker Container|
+    |OS|Linux|
+    |Region|Select the same location that is close to you from previous exercise.|
+    |App Service Plan|Use the default.|
+
+  * Select Next: Docker >.
+
+  * On the Docker tab, use the following values as a guide for each setting.
+    |Setting|Value|
+    |-|-|
+    |Options|Single Container|
+    |Image Source|Azure Container Registry|
+    |Registry|Select your registry.|
+    |Image|swan-community/swan-demo-go|
+    |Tag|latest|
+    |Startup Command|Leave this setting empty.|
+
+  * Select Review and create, and then select Create.
+  
+* Map each of the domains to direct traffic to the App Service following the 
+[Azure documentation](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain#map-your-domain).
+
+* The SWAN access domain will be used to sign all the outgoing Open Web IDs and
+also to capture people's preferences. Register this domain with the following
+URL and entering any of the details requested. This will create a record in the 
+``owidcreators`` table for the domain which will contain randomly generated 
+public and private signing keys. Do this for each SWAN access node and SWAN 
+participant.
+
+  ```
+  https://swan-access-domain/owid/register
+  ```
+
+* For each of the storage nodes that will be used for the SWIFT component of the
+demo register these using the following URL. Enter the network as "swan" (no 
+quotes) to match the value provided in the ``appsettings.json`` in the 
+``swanNetwork`` field. Leave the others as default.
+
+  ```
+  https://swift-node-domain/swift/register
+  ```
+
+* At least one SWIFT access node is required. Repeat the previous process but 
+select the "Access Node" option rather than the default "Storage Node". The 
+records from these steps will be visible in the ``swiftnodes`` and 
+``swiftsecrets`` tables.
+
+* Verify the demo is working by navigating to a publisher domain. The first 
+request from a web browser will result in the progress circle as SWIFT nodes
+are navigated between before the preference capture page from the SWAN domain
+is displayed.
 
 ## Google Cloud Platform 
 

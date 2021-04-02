@@ -58,6 +58,9 @@ func handleStaticFolder(
 			f.Name() == filepath.Base(r.URL.Path) {
 			return handlerFile(w, r, filepath.Join(folder, f.Name())), nil
 		}
+		if f.IsDir() == true && "\\"+f.Name() == filepath.Dir(r.URL.Path) {
+			return handleStaticFolder(d, w, r, folder+filepath.Dir(r.URL.Path))
+		}
 	}
 	return false, nil
 }

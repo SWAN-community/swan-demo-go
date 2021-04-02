@@ -7,3 +7,6 @@
 [submodule "src/swift"]
 	path = src/swift
 	url = https://github.com/SWAN-community/swift-go
+[submodule "www/owid-js"]
+	path = www/owid-js
+	url = https://github.com/SWAN-community/owid-js

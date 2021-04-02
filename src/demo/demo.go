@@ -85,6 +85,10 @@ func parseDomains(
 	}
 	for _, f := range files {
 
+		if f.Name() == "owid-js" {
+			continue
+		}
+
 		// Domains are the directories of the folder provided.
 		if f.IsDir() {
 			domain, err := common.NewDomain(c, filepath.Join(path, f.Name()))

@@ -106,11 +106,9 @@ appendAuditMark = function(e, r, t) {
 
 loadOWID = function() {
     return new Promise((resolve, reject) => {
-        if(loaded || typeof owid !== "undefined"){
+        if(loaded || typeof owid !== "undefined") {
             resolve();
         }
-        reject();
-    }).catch(resolve => {
         var script = document.createElement('script');
         script.onload = function () {
             loaded = true;

@@ -253,7 +253,7 @@ func appendHTML(
 	html.WriteString("<tr>\r\n")
 	html.WriteString(fmt.Sprintf(
 		"<td style=\"padding-left:%dem;\" class=\"text-left\">\r\n"+
-			"<script>new owid().appendName(document.currentScript.parentNode,\"%s\")</script></td>\r\n",
+			"<script>appendName(document.currentScript.parentNode,\"%s\")</script></td>\r\n",
 		level,
 		o.GetOWIDAsString()))
 
@@ -264,7 +264,7 @@ func appendHTML(
 
 	html.WriteString(fmt.Sprintf(
 		"<td style=\"text-align:center;\">\r\n"+
-			"<script>new owid().appendAuditMark(document.currentScript.parentNode,\"%s\",\"%s\");</script>\r\n"+
+			"<script>appendAuditMark(document.currentScript.parentNode,\"%s\",\"%s\");</script>\r\n"+
 			"<noscript>JavaScript needed to audit</noscript></td>\r\n",
 		r,
 		o.GetOWIDAsString()))
@@ -287,7 +287,7 @@ func appendHTML(
 	if o != nil && r != "" {
 		html.WriteString(fmt.Sprintf(
 			"<td style=\"text-align:center;\">\r\n"+
-				"<script>new owid().appendComplaintEmail(document.currentScript.parentNode,\"%s\",\"%s\",\"%s\", \"noun_complaint_376466.svg\");</script>\r\n"+
+				"<script>appendComplaintEmail(document.currentScript.parentNode,\"%s\",\"%s\",\"%s\", \"noun_complaint_376466.svg\");</script>\r\n"+
 				"<noscript>JavaScript needed to audit</noscript></td>\r\n",
 			d.CMP,
 			r,

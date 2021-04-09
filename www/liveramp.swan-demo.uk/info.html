@@ -6,7 +6,8 @@
     <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
     <title>Advert Info | SWAN Demo</title>
     <link href="/bootstrap.min.css" rel="stylesheet">
-    <script src="/owid-js/owid.js" type="text/javascript"></script>
+    <script src="/owid-js/v1.js" type="text/javascript"></script>
+    <script src="/owid.js" type="text/javascript"></script>
     <link href="/info.css" rel="stylesheet">
 </head>
 <body class="text-center">
@@ -37,7 +38,7 @@
                 {{ range $key, $value := .OWIDs }}
                 <tr>
                     <td class="text-left">
-                        <script>new owid().appendName(
+                        <script>appendName(
                                 document.currentScript.parentNode,
                                 "{{ $key.AsString }}")
                         </script>
@@ -47,7 +48,7 @@
                         {{ if eq $root.AsString $key.AsString }}
                         {{ $first = ""}}
                         {{ end }}
-                        <script>new owid().appendAuditMark(
+                        <script>appendAuditMark(
                                 document.currentScript.parentNode,
                                 "{{ $first }}",
                                 "{{ $key.AsString }}");
@@ -64,7 +65,7 @@
                         {{ end }}
                     </td>
                     <td class="text-center">
-                        <script>new owid().appendComplaintEmail(
+                        <script>appendComplaintEmail(
                                 document.currentScript.parentNode,
                                 null,
                                 "{{ $root.AsString }}",
@@ -90,7 +91,7 @@
         <script>
             function stopAdvert() {
                 {{ if and .Root .Bid }}
-                new owid().stop("{{ .Root.AsString }}", "{{ .Bid.AdvertiserURL }}", "{{ .ReturnURL }}");
+                stop("{{ .Root.AsString }}", "{{ .Bid.AdvertiserURL }}", "{{ .ReturnURL }}");
                 {{ end }}
             }
         </script>

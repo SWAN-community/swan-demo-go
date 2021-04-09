@@ -1,4 +1,6 @@
 {
    "Category": "Demo",
-   "Name": "Swan Demo"
+   "Name": "SWAN Demo",
+   "SWANAccessNode": "51db.uk",
+   "SWANAccessKey": "CMPKeySWAN"
 }

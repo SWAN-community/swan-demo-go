@@ -267,7 +267,7 @@ func getCMPURL(d *common.Domain, r *http.Request, p []*swan.Pair) string {
 	var u url.URL
 	u.Scheme = d.Config.Scheme
 	u.Host = d.CMP
-	u.Path = "/preferences"
+	u.Path = "/preferences/"
 	q := u.Query()
 	q.Set("returnUrl", common.GetCleanURL(d.Config, r).String())
 	q.Set("accessNode", d.SWANAccessNode)

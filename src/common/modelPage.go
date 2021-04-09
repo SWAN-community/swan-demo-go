@@ -55,7 +55,7 @@ func (m PageModel) PreferencesDialogURL() (string, error) {
 	var u url.URL
 	u.Scheme = m.Domain.Config.Scheme
 	u.Host = m.Domain.CMP
-	u.Path = "/preferences"
+	u.Path = "/preferences/"
 	return u.String(), nil
 }
 

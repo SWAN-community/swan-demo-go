@@ -130,7 +130,7 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 
 	// Verify that this domain can create OWIDs. Failure to register a domain
 	// as an OWID creator is a common setup mistake.
-	_, err := d.GetOWIDCreator()
+	oc, err := d.GetOWIDCreator()
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +143,7 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 	}
 
 	// Create an OWID for this processor.
-	t, err := d.OWID.CreateOWID(nil)
+	t, err := oc.CreateOWID(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +191,7 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = d.OWID.Sign(t, r)
+	err = oc.Sign(t, r)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +201,16 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Send the transaction on to any suppliers.
+	if len(d.Suppliers) > 0 {
+		return SendToSuppliers(d, n)
+	}
+	return n, nil
+}
+
+func SendToSuppliers(d *common.Domain, n *owid.Node) (*owid.Node, error) {
+	var err error
 
 	// Call all the suppliers adding them to this Processor OWID's child
 	// transactions.
@@ -354,15 +364,15 @@ func createFailed(
 	if err != nil {
 		return nil, err
 	}
-	_, err = d.GetOWIDCreator()
+	oc, err := d.GetOWIDCreator()
 	if err != nil {
 		return nil, err
 	}
-	t, err := d.OWID.CreateOWID(b)
+	t, err := oc.CreateOWID(b)
 	if err != nil {
 		return nil, err
 	}
-	err = d.OWID.Sign(t, r)
+	err = oc.Sign(t, r)
 	var c owid.Node
 	c.OWID, err = t.AsByteArray()
 	if err != nil {

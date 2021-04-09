@@ -55,7 +55,7 @@ type Domain struct {
 	Config    *Configuration     // Configuration for the server
 	folder    string             // Location of the directory
 	templates *template.Template // HTML templates
-	OWID      *owid.Creator      // The OWID creator associated with the domain if any
+	owid      *owid.Creator      // The OWID creator associated with the domain if any
 	owidStore owid.Store         // The connection to the OWID store
 	// The HTTP handler to use for this domain
 	handler func(d *Domain, w http.ResponseWriter, r *http.Request)
@@ -111,14 +111,14 @@ func (d *Domain) parseHTML() (*template.Template, error) {
 			if t == nil {
 				t, err = template.New(file.Name()).Funcs(
 					template.FuncMap{"role": infoRole}).Parse(
-					removeHTMLWhiteSpace(string(s)))
+					string(s))
 				if err != nil {
 					return nil, err
 				}
 			} else {
 				t, err = t.New(file.Name()).Funcs(
 					template.FuncMap{"role": infoRole}).Parse(
-					removeHTMLWhiteSpace(string(s)))
+					string(s))
 				if err != nil {
 					return nil, err
 				}
@@ -258,12 +258,12 @@ func (d *Domain) CreateSWANURL(
 // domain.
 func (d *Domain) GetOWIDCreator() (*owid.Creator, error) {
 	var err error
-	if d.OWID == nil {
-		d.OWID, err = d.owidStore.GetCreator(d.Host)
+	if d.owid == nil {
+		d.owid, err = d.owidStore.GetCreator(d.Host)
 		if err != nil {
 			return nil, err
 		}
-		if d.OWID == nil {
+		if d.owid == nil {
 			return nil, fmt.Errorf(
 				"Domain '%s' is not a registered OWID creator. Register the "+
 					"domain for the SWAN demo using http[s]://%s/owid/register",
@@ -271,7 +271,7 @@ func (d *Domain) GetOWIDCreator() (*owid.Creator, error) {
 				d.Host)
 		}
 	}
-	return d.OWID, nil
+	return d.owid, nil
 }
 
 func infoRole(s interface{}) string {
@@ -292,23 +292,4 @@ func infoRole(s interface{}) string {
 		return "Offer"
 	}
 	return ""
-}
-
-// Removes white space from the HTML string provided whilst retaining valid
-// HTML.
-func removeHTMLWhiteSpace(h string) string {
-	var sb strings.Builder
-	for i, r := range h {
-
-		// Only write out runes that are not control characters.
-		if r != '\r' && r != '\n' && r != '\t' {
-
-			// Only write this rune if the rune is not a space, or if it is a
-			// space the preceding rune is not a space.
-			if i == 0 || r != ' ' || h[i-1] != ' ' {
-				sb.WriteRune(r)
-			}
-		}
-	}
-	return sb.String()
 }

@@ -19,39 +19,41 @@ package common
 import (
 	"compress/gzip"
 	"net/http"
-	"strings"
 )
 
-// HandlerHTML returns HTML that does not require a model for the template.
-func HandlerHTML(d *Domain, w http.ResponseWriter, r *http.Request) {
-
-	// If the request is for the OWID creator then direct to that handler.
-	if r.URL.Path == "/create-owid" {
-		handlerCreateOWID(d, w, r)
+// handlerCreateOWID takes an input payload and returns a new OWID.
+func handlerCreateOWID(
+	d *Domain,
+	w http.ResponseWriter,
+	r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
 		return
 	}
 
-	// If the request is being proxied to SWAN then pass to SWAN access node.
-	if strings.HasPrefix(r.URL.Path, "/swan-proxy") {
-		handlerSWANProxy(d, w, r)
-		return
+	// Get the OWID creator for this domain.
+	oc, err := d.GetOWIDCreator()
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
 	}
 
-	// Get the template for the URL path.
-	t := d.LookupHTML(r.URL.Path)
-	if t == nil {
-		http.NotFound(w, r)
-		return
+	// Create and sign the OWID for this domain.
+	o, err := oc.CreateOWIDandSign([]byte(r.Form.Get("payload")))
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
 	}
 
-	// Execute the template without a model.
+	// Return the OWID as a base 64 string.
 	g := gzip.NewWriter(w)
 	defer g.Close()
 	w.Header().Set("Content-Encoding", "gzip")
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache")
-	err := t.Execute(g, nil)
+	_, err = g.Write([]byte(o.AsString()))
 	if err != nil {
-		ReturnServerError(d.Config, w, &SWANError{err, nil})
+		ReturnServerError(d.Config, w, err)
+		return
 	}
 }

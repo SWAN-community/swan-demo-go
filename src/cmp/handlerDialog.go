@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"net/url"
 	"owid"
+	"reflect"
 	"swift"
 
 	uuid "github.com/satori/go.uuid"
@@ -268,13 +269,35 @@ func decryptAndDecode(
 	if e != nil {
 		return e
 	}
-	r := make(map[string]string)
+	r := make(map[string]interface{})
 	err := json.Unmarshal(b, &r)
 	if err != nil {
 		return &common.SWANError{Err: err}
 	}
 	for k, v := range r {
-		m.Set(k, v)
+		switch reflect.TypeOf(v) {
+		case reflect.TypeOf([]interface{}(nil)):
+			for i, a := range v.([]interface{}) {
+				switch i {
+				case 0:
+					m.Set("returnUrl", a.(string))
+					break
+				case 1:
+					m.Set("accessNode", a.(string))
+					break
+				case 2:
+					m.Set("displayUserInterface", a.(string))
+					break
+				case 3:
+					m.Set("postMessageOnComplete", a.(string))
+					break
+				}
+			}
+			break
+		case reflect.TypeOf(""):
+			m.Set(k, v.(string))
+			break
+		}
 	}
 	return nil
 }

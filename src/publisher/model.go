@@ -23,12 +23,15 @@ import (
 	"fmt"
 	"html/template"
 	"math/rand"
+	"net/http"
 	"net/url"
 	"openrtb"
 	"owid"
 	"strings"
 	"swan"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // Model used with HTML templates.
@@ -122,13 +125,13 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	// Use the SWAN network to generate the Offer ID.
-	r, ae := m.newOfferID(placement)
-	if ae != nil {
-		return "", ae.Err
+	r, err := m.newOfferNode()
+	if err != nil {
+		return "", err
 	}
 
 	// Add the publishers signature and then process the supply chain.
-	_, err := openrtb.HandleTransaction(m.Domain, r)
+	_, err = openrtb.SendToSuppliers(m.Domain, r)
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}
@@ -214,34 +217,120 @@ func (m Model) findResult(k string) *swan.Pair {
 	return nil
 }
 
-// newOfferID returns a new Offer OWID Node from the SWAN network.
-func (m *Model) newOfferID(placement string) (*owid.Node, *common.SWANError) {
-	var n owid.Node
-	var err *common.SWANError
-	if m.swid() == nil {
-		return nil, &common.SWANError{Err: fmt.Errorf("SWID missing")}
-	}
-	if m.sid() == nil {
-		return nil, &common.SWANError{Err: fmt.Errorf("SID missing")}
-	}
-	if m.pref() == nil {
-		return nil, &common.SWANError{Err: fmt.Errorf("Pref missing")}
-	}
-	if m.stop() == nil {
-		return nil, &common.SWANError{Err: fmt.Errorf("Stop missing")}
-	}
-	n.OWID, err = m.Domain.CallSWANURL("create-offer-id",
-		func(q url.Values) error {
-			q.Add("placement", placement)
-			q.Add("pubdomain", m.Request.Host)
-			q.Add("swid", m.swid().Value)
-			q.Add("sid", m.sid().Value)
-			q.Add("pref", m.pref().Value)
-			q.Add("stop", m.stop().Value)
-			return nil
-		})
+// newOfferNode returns a new Offer OWID Node.
+func (m *Model) newOfferNode() (*owid.Node, error) {
+	o, err := m.newOfferOWID()
 	if err != nil {
 		return nil, err
 	}
-	return &n, nil
+	b, err := o.AsByteArray()
+	if err != nil {
+		return nil, err
+	}
+	return &owid.Node{OWID: b}, nil
+}
+
+// Creates a new Offer OWID from the form parameters of the request. If values
+// are missing or are invalid then an error is returned.
+func (m *Model) newOfferOWID() (*owid.OWID, error) {
+	of, err := m.newOffer()
+	if err != nil {
+		return nil, err
+	}
+	b, err := of.AsByteArray()
+	if err != nil {
+		return nil, err
+	}
+	oc, err := m.Domain.GetOWIDCreator()
+	if err != nil {
+		return nil, err
+	}
+	o, err := oc.CreateOWIDandSign(b)
+	if err != nil {
+		return nil, err
+	}
+	return o, nil
+}
+
+// Returns a new unsigned swan.Offer ready to be used the byte array payload in
+// an OWID that the caller is generating a a Root Party for the commencement of
+// an advertising request.
+func (m *Model) newOffer() (*swan.Offer, error) {
+	var err error
+	o := swan.NewOffer()
+
+	// Get the page placement from the form parameters.
+	o.Placement, err = getValue(m.Request, "placement")
+	if err != nil {
+		return nil, err
+	}
+
+	// Set the publisher domain from the request.
+	o.PubDomain = m.Request.Host
+
+	// Get the SWID as an OWID.
+	o.SWID, err = getOWID(m.Config(), m.Request, m.swid())
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the Signed in Identifier (SID) as an OWID.
+	o.SID, err = getOWID(m.Config(), m.Request, m.sid())
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the preferences as an OWID.
+	o.Preferences, err = getOWID(m.Config(), m.Request, m.pref())
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the stopped adverts string.
+	o.Stopped = offerGetStopped(m.Request)
+
+	// Random one time data is used to ensure the Offer ID is unique for all
+	// time.
+	o.UUID, err = uuid.New().MarshalBinary()
+	if err != nil {
+		return nil, err
+	}
+
+	return &o, nil
+}
+
+// Returns an array of stopped advert IDs. As the parameter is optional no error
+// is returned.
+func offerGetStopped(r *http.Request) []string {
+	return strings.Split(r.FormValue("stop"), " ")
+}
+
+// Returns the value as a string associated with the form parameter k. If the
+// value is missing then an error is returned.
+func getValue(r *http.Request, k string) (string, error) {
+	v := r.FormValue(k)
+	if v == "" {
+		return "", fmt.Errorf("missing '%s' parameter", k)
+	}
+	return v, nil
+}
+
+// Returns a verified OWID associated with the form parameter k. Returns and
+// error if the value is missing or is not a verified OWID.
+func getOWID(
+	c *common.Configuration,
+	r *http.Request,
+	p *swan.Pair) (*owid.OWID, error) {
+	o, err := owid.FromBase64(p.Value)
+	if err != nil {
+		return nil, err
+	}
+	e, err := o.Verify(c.Scheme)
+	if err != nil {
+		return nil, err
+	}
+	if e == false {
+		return nil, fmt.Errorf("'%s' not a valid OWID", p.Key)
+	}
+	return o, nil
 }

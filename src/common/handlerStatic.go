@@ -23,6 +23,11 @@ import (
 	"strings"
 )
 
+// Map of allowed static files and whether request for file should support CORS
+var allowList = map[string]bool{
+	"swan.json": true,
+}
+
 // handlerStatic locates and returns static content if relevant to the HTTP
 // request. True is returned if static content was returned, otherwise false.
 func handlerStatic(
@@ -112,6 +117,14 @@ func handlerFile(
 	case ".map":
 		http.ServeFile(w, r, f)
 		return true
+	default:
+		if c, ok := allowList[filepath.Base(f)]; ok {
+			if c {
+				w.Header().Set("Access-Control-Allow-Origin", "*")
+			}
+			http.ServeFile(w, r, f)
+			return true
+		}
+		return false
 	}
-	return false
 }

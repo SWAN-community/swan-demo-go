@@ -25,7 +25,8 @@ import (
 
 // Map of allowed static files and whether request for file should support CORS
 var allowList = map[string]bool{
-	"swan.json": true,
+	"swan.json":    true,
+	"animals.json": true,
 }
 
 // handlerStatic locates and returns static content if relevant to the HTTP

@@ -6,6 +6,7 @@
     <title>{{ .Title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/salt.css" rel="stylesheet">
     <style>
     .icon {
         background-color: transparent;
@@ -119,6 +120,19 @@
                             </small>
                         </div>
                         <div class="form-group">
+                            <label for="salt">
+                                <span>Salt</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#emailHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <div id="salt">
+
+                            </div>
+                            <button id="reset-button" type="button" class="btn btn-link">Reset Salt</button>
+                        </div>
+                        
+                        <div class="form-group">
                             <small id="genHelp" class="form-text text-muted">
                                 <p>You may change your preferences at any time by toggling the applicable preference options above. Please see further our <a href="https://github.com/SWAN-community/swan/blob/main/model-terms-explainer.md">Privacy Policy</a>.</p>
                                 <p>These details are shared with the SWAN Network to manage your preferences. See further the SWAN Network <a href="https://github.com/SWAN-community/swan/blob/main/legal-entity-explainer.md">Privacy Notice</a>.</p>
@@ -141,10 +155,19 @@
     <script src="popper.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="holder.min.js"></script>
+    <script src="salt.js"></script>
     <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
+    var element = document.getElementById('salt');
+    var saltUI = new SWANSalt(element);
+    var resetButton = document.getElementById('reset-button');
+    resetButton.addEventListener('click', (event) => {
+            saltUI.reset();
+        });
+
     </script>    
 </body>
 </html>

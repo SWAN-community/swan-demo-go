@@ -1,3 +1,6 @@
+#salt-grid {
+    max-width: 100%;
+}
 #salt-grid.row>.col {
     border: 1px solid rgba(86,61,124,.2);
 }
@@ -6,6 +9,8 @@
 }
 #salt-grid.row {
     background-color: transparent;
+    margin-right: 0px;
+    margin-left: 0px;
 
     transition: background-color 0.5s linear; 
     -moz-transition: background-color 0.5s linear;  

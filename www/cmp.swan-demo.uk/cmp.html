@@ -119,13 +119,15 @@
                                 By providing your email address, you can apply your preferences to your experience when you use other web-enabled devices.
                             </small>
                         </div>
-                        <div class="form-group">
+                        <div id="salt-form-group" class="form-group collapse">
                             <label for="salt">
                                 <span>Salt</span>
-                                <button class="icon" type="button" data-toggle="collapse" data-target="#emailHelp" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="/info-circle.svg">
-                                </button>
                             </label>
+                            <small id="saltHelp" class="form-text text-muted">
+                                Choose four images from the following grid to protected your email address. 
+                                We will send you a brief email to remind you of the icons selected and provide more information. 
+                                Choose the same icons when entering your email on another browser or device to link your activity with this browser.
+                            </small>
                             <div id="salt">
 
                             </div>
@@ -142,7 +144,7 @@
                     </div>        
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="w-75 mx-auto btn btn-primary text-center">Update</button>
+                    <button id="update" type="submit" class="w-75 mx-auto btn btn-primary text-center">Update</button>
                 </div>
             </div>
         </div>
@@ -157,16 +159,51 @@
     <script src="holder.min.js"></script>
     <script src="salt.js"></script>
     <script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
-    var element = document.getElementById('salt');
-    var saltUI = new SWANSalt(element);
-    var resetButton = document.getElementById('reset-button');
-    resetButton.addEventListener('click', (event) => {
+        var element = document.getElementById('salt');
+        var saltUI = new SWANSalt(element);
+
+        var resetButton = document.getElementById('reset-button');
+        resetButton.addEventListener('click', (event) => {
             saltUI.reset();
+            reset();
         });
+
+        function reset() {
+            updateButton.innerHTML = 'Choose 4 Icons';
+            updateButton.setAttribute('disabled', '');
+        }
+
+        function show() {
+            $('#salt-form-group').collapse('show');
+        }
+
+        function clear() {
+            $('#salt-form-group').collapse('hide');
+            complete();
+        }
+
+        function complete() {
+            updateButton.innerHTML = 'Update';
+            updateButton.removeAttribute('disabled'); 
+        }
+
+        var emailField = document.getElementById('email');
+        var updateButton = document.getElementById('update');
+        emailField.addEventListener('input', (event) => {
+            var email = event.target.value;
+            if(email == '') {
+                clear();
+            } else if (/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
+                show();
+                reset();
+            }
+        });
+
+        saltUI.onComplete(complete);
 
     </script>    
 </body>

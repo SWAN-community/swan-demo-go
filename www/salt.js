@@ -3,6 +3,7 @@ function SWANSalt(element) {
     const gridId = 'salt-grid';
     const imgIdPrefix = 'salt-';
     const colIdPrefix = 'salt-col-';
+    const event = new Event('complete');
 
     var selected = [];
     var indicators = [];
@@ -16,12 +17,21 @@ function SWANSalt(element) {
         }
     }
 
+    function onComplete(callBack) {
+        element.addEventListener('complete', function(e) {
+            if (typeof callBack == 'function') {
+                callBack();
+            }
+        })
+    }
+
     function complete() {
         var grid = document.getElementById(gridId);
         grid.classList.add('complete');
+        element.dispatchEvent(event);
     }
 
-    function reset() {
+    function reset(callBack) {
         var grid = document.getElementById(gridId);
         grid.classList.remove('complete');
         selected = [];
@@ -29,6 +39,9 @@ function SWANSalt(element) {
             i.parentNode.removeChild(i);
         });
         indicators = [];
+        if (typeof callBack == 'function') {
+            callBack();
+        }
     }
 
     function getIndicatorClass(value){
@@ -104,13 +117,17 @@ function SWANSalt(element) {
 
     //#region public methods and getters
 
-    this.reset = function () {
-        reset();
+    this.reset = function (callBack) {
+        reset(callBack);
     }
 
     Object.defineProperty(this, 'value', { 
         get: function() { return value(); } 
     });
+
+    this.onComplete = function(callBack) {
+        onComplete(callBack);
+    }
 
     //#endregion
 

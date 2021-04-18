@@ -19,12 +19,14 @@ package cmp
 import (
 	"common"
 	"compress/gzip"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"owid"
 	"reflect"
+	"strings"
 	"swift"
 
 	uuid "github.com/satori/go.uuid"
@@ -135,6 +137,11 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			common.ReturnProxyError(d.Config, w, err)
 		}
+
+		e := sendReminderEmail(r)
+		if e != nil {
+			fmt.Println(err)
+		}
 		http.Redirect(w, r, u, 303)
 
 	} else {
@@ -152,6 +159,56 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func sendReminderEmail(r *http.Request) error {
+	smtp := common.NewSMTP()
+
+	e := r.Form.Get("email")
+
+	s := "Email Protection Reminder"
+	t := "email-template.html"
+
+	b := r.Form.Get("salt")
+
+	var a []byte
+	a, err := base64.RawStdEncoding.DecodeString(b)
+	if err != nil {
+		return err
+	}
+
+	s1, s2 := a[0]&0xF, a[0]>>4
+	s3, s4 := a[1]&0xF, a[1]>>4
+
+	var arr = []byte{s1, s2, s3, s4}
+
+	var hidden []string
+
+	for i := 0; i < 16; i++ {
+		var g = ""
+		for k, l := range arr {
+			if byte(i) == l {
+				g = fmt.Sprintf("%d", k)
+				hidden = append(hidden, "#i"+g)
+			}
+		}
+	}
+
+	var hiddenString = strings.Join(hidden, ",") + " { display: none; }"
+
+	td := struct {
+		Hidden string
+	}{
+		Hidden: hiddenString,
+	}
+
+	err = smtp.Send(e, s, t, td)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
+
 func dialogUpdateModel(
 	d *common.Domain,
 	r *http.Request,
@@ -160,6 +217,7 @@ func dialogUpdateModel(
 	// Copy the field values from the form.
 	m.Values.Set("swid", r.Form.Get("swid"))
 	m.Values.Set("email", r.Form.Get("email"))
+	m.Values.Set("salt", r.Form.Get("salt"))
 	m.Values.Set("pref", r.Form.Get("pref"))
 
 	// Check to see if the post is as a result of the SWID reset.
@@ -174,6 +232,7 @@ func dialogUpdateModel(
 
 		// Replace the data.
 		m.Set("email", "")
+		m.Set("salt", "")
 		m.Set("pref", "")
 		return setNewSWID(d, m)
 	}
@@ -222,6 +281,14 @@ func getRedirectUpdateURL(
 				break
 			case "email":
 				err = setSWANData(c, &q, k, []byte(v[0]))
+				break
+			case "salt":
+				var a []byte
+				a, err = base64.RawStdEncoding.DecodeString(v[0])
+				if err != nil {
+					break
+				}
+				err = setSWANData(c, &q, k, a)
 				break
 			default:
 				for _, i := range v {

@@ -90,7 +90,9 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		if isSet(p) {
 
 			// Check to see if the values need to be revalidated.
-			if d.SwanPostMessage == false && revalidateNeeded(p) {
+			if d.SwanPostMessage == false &&
+				d.SwanJavaScript == false &&
+				revalidateNeeded(p) {
 				redirectToSWANFetch(d, w, r, p)
 			} else {
 				handlerPublisherPage(d, w, r, p)
@@ -99,7 +101,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, getCMPURL(d, r, p), 303)
 		}
 	} else {
-		if d.SwanPostMessage == false {
+		if d.SwanPostMessage == false && d.SwanJavaScript == false {
 			redirectToSWANFetch(d, w, r, p)
 		} else {
 			handlerPublisherPage(d, w, r, p)
@@ -241,6 +243,11 @@ func setFlags(d *common.Domain, q *url.Values) {
 		q.Set("useHomeNode", "true")
 	} else {
 		q.Set("useHomeNode", "false")
+	}
+	if d.SwanJavaScript {
+		q.Set("javaScript", "true")
+	} else {
+		q.Set("javaScript", "false")
 	}
 }
 

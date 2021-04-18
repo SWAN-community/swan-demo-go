@@ -5,13 +5,12 @@
    "swanBackgroundColor": "aliceblue",
    "swanMessageColor": "#5a5a5a",
    "swanProgressColor": "#5a5a5a",
-   "swanDisplayUserInterface" : false,
-   "swanPostMessage": false,
    "swanUseHomeNode": true,
    "swanJavaScript": true,
+   "cmpNodeCount": 10,
    "cmp": "liveramp.swan-demo.uk",
    "SWANAccessNode": "51db.uk",
-   "SWANAccessKey": "PubKeyCurrentBun",
+   "SWANAccessKey": "PubKeyBiscuitNews",
    "suppliers": [
       "magnite.swan-demo.uk",
       "pubmatic.swan-demo.uk"

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
   <title>Biscuit News | SWAN Demo</title>
+  <script src="owid-js/v1.js" type="text/javascript"></script>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link href="carousel.css" rel="stylesheet">
   <link href="advert.css" rel="stylesheet">
@@ -60,84 +61,68 @@
 
   <main role="main">
 
+    {{ if eq .IsCrawler false }}
     <div class="carousel">
       <div class="carousel-inner">
         <div class="carousel-item">
           <div class="container">
             <div class="carousel-caption">
-
-              {{ if eq .SWIDAsString "" }}
-              {{ if eq .IsCrawler false }}
-              <script>
-                var swanWindow = null;
-                var swanOpenTime = null;
-                var p = document.currentScript.parentNode;
-                function getCookie(n) {
-                  var c = new RegExp(n + "=([^;]+)").exec(document.cookie);
-                  return c? c[1] : "";
-                }
-                function getCookieAsString(n)
-                {
-                  var s = "";
-                  Uint8Array.from(getCookie(n), c => s += c);
-                  return s;
-                }
-                function getOWIDCookieAsString(n)
-                {
-                  var v = getCookie(n);
-                  return (v != null) ? unescape(new owid().parse(v).payloadAsString()) : null;
-                }
-                function getOWIDCookieAsPrintable(n)
-                {
-                  var v = getCookie(n);
-                  return (v != null) ? unescape(new owid().parse(v).payloadAsPrintable()) : null;
-                }
-                function fetchAdvert(data) {
-                  var u = "/advert?placement=heading";
-                  if (data) {
-                    u += "&encrypted=" + data;
-                  }
-                  fetch(u)
-                    .then(r => r.text())
-                    .then(m => {
-                      if (getCookie("swan-pref") == "") {
-                        window.location.href = "{{ .CMPURL }}";
-                      } else {
-                        var a = document.createElement("div");
-                        a.innerHTML = m;
-                        p.insertBefore(a, p.firstChild);
-                        document.getElementById("swid").innerText = getOWIDCookieAsPrintable("swan-swid");
-                        document.getElementById("sid").innerText = getOWIDCookieAsPrintable("swan-sid");
-                        document.getElementById("pref").innerText = getOWIDCookieAsString("swan-pref");
-                        document.getElementById("stop").innerText = getCookieAsString("swan-stop");
-                      }
-                    })
-                    .catch(x => {
-                      console.log(x);
-                    });
-                }
-                function swiftComplete(d) {
-                  console.log(d);
-                  fetchAdvert(d);
-                }
-              </script>
-              <script src="{{ .SWANURL }}"></script>
-              {{ end }}
-              {{ else }}
-
-              {{ if eq .IsNew true }}
-                <div class="bg-light text-dark rounded py-4">
-                  <h3 class="text-danger">Select these publishers to experience hassle free future access.</h3>
-                  <ol class="list-unstyled">
-                    {{ range $publisher := .DomainsByCategory "Publisher" }}
-                    <li><a href="//{{ $publisher.Host }}">{{ $publisher.Name }}</a></li>
-                    {{ end }}
-                  </ol>
-                  <p>The secure cross web domain ID is '{{ .SWIDAsString }}'.</p>
-                </div>
-              {{ else }}
               <figure class="figure" style="height:277px">
-                {{ if eq .IsCrawler false }}
+                {{ if eq .SWIDAsString "" }}
+                <script>
+                  var p = document.currentScript.parentNode;
+                  function getCookie(n) {
+                    var c = new RegExp(n + "=([^;]+)").exec(document.cookie);
+                    return c? c[1] : "";
+                  }
+                  function getCookieAsString(n)
+                  {
+                    var s = "";
+                    Uint8Array.from(getCookie(n), c => s += c);
+                    return s;
+                  }
+                  function getOWIDCookieAsString(n)
+                  {
+                    var v = getCookie(n);
+                    return (v != null) ? unescape(new owid().parse(v).payloadAsString()) : null;
+                  }
+                  function getOWIDCookieAsPrintable(n)
+                  {
+                    var v = getCookie(n);
+                    return (v != null) ? unescape(new owid().parse(v).payloadAsPrintable()) : null;
+                  }
+                  function fetchAdvert(data) {
+                    var u = "/advert?placement=heading";
+                    if (data) {
+                      u += "&encrypted=" + data;
+                    }
+                    fetch(u)
+                      .then(r => r.text())
+                      .then(m => {
+                        if (getCookie("swan-pref") == "") {
+                          window.location.href = "{{ .CMPURL }}";
+                        } else {
+                          var a = document.createElement("div");
+                          a.innerHTML = m;
+                          p.insertBefore(a, p.firstChild);
+                          document.getElementById("swid").innerText = getOWIDCookieAsPrintable("swan-swid");
+                          document.getElementById("sid").innerText = getOWIDCookieAsPrintable("swan-sid");
+                          document.getElementById("pref").innerText = getOWIDCookieAsString("swan-pref");
+                          document.getElementById("stop").innerText = getCookieAsString("swan-stop");
+                        }
+                      })
+                      .catch(x => {
+                        console.log(x);
+                      });
+                  }
+                  function swanComplete(d) {
+                    fetchAdvert(d);
+                  }
+                  var s = document.createElement("script");
+                  s.src = "{{ .SWANURL }}";
+                  p.appendChild(s);
+                </script>
+                {{ else }}
                   {{ if .Personalized }}
                   <script>
                     var p = document.currentScript.parentNode;
@@ -152,20 +137,17 @@
                       });
                   </script>
                   {{ else }}
-                  <p>Personalization needed to show adverts.</p>
+                    <p>Personalization needed to show adverts.</p>
                   {{ end }}
-                {{ else }}
-                  <p>Adverts not displayed to crawlers.</p>
                 {{ end }}
                 <figcaption class="figure-caption text-white">advert</figcaption>
               </figure>
-              {{ end }}
-              {{ end }}
             </div>
           </div>
         </div>
       </div>
     </div>
+    {{ end }}
 
     <!-- Marketing messaging and featurettes
       ================================================== -->

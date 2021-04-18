@@ -285,6 +285,9 @@ func getCMPURL(d *common.Domain, r *http.Request, p []*swan.Pair) string {
 	q := u.Query()
 	q.Set("returnUrl", common.GetCleanURL(d.Config, r).String())
 	q.Set("accessNode", d.SWANAccessNode)
+	if d.CmpNodeCount > 0 {
+		q.Set("nodeCount", fmt.Sprintf("%d", d.CmpNodeCount))
+	}
 	addSWANParams(r, &q, p)
 	setFlags(d, &q)
 	u.RawQuery = q.Encode()

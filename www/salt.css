@@ -4,8 +4,9 @@
 #salt-grid.row>.col {
     border: 1px solid rgba(86,61,124,.2);
 }
-#salt-grid.row>.col>img {
+#salt-grid.row>.col>svg {
     max-width: 100%;
+    pointer-events: none;
 }
 #salt-grid.row {
     background-color: transparent;
@@ -25,6 +26,7 @@
     color: #fff;
     text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
     font-size: 2em;
+    pointer-events: none;
 }
 .top-left {
     top: 0px;

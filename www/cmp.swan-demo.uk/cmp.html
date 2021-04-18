@@ -128,9 +128,10 @@
                                 We will send you a brief email to remind you of the icons selected and provide more information. 
                                 Choose the same icons when entering your email on another browser or device to link your activity with this browser.
                             </small>
-                            <div id="salt">
+                            <div id="salt-container">
 
                             </div>
+                            <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp">
                             <button id="reset-button" type="button" class="btn btn-link">Reset Salt</button>
                         </div>
                         
@@ -163,7 +164,7 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        var element = document.getElementById('salt');
+        var element = document.getElementById('salt-container');
         var saltUI = new SWANSalt(element);
 
         var resetButton = document.getElementById('reset-button');
@@ -187,6 +188,10 @@
         }
 
         function complete() {
+            var saltField = document.getElementById('salt');
+
+            saltField.value = saltUI.stringValue;
+
             updateButton.innerHTML = 'Update';
             updateButton.removeAttribute('disabled'); 
         }

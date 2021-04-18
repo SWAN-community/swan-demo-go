@@ -8,13 +8,27 @@ function SWANSalt(element) {
     var selected = [];
     var indicators = [];
 
-    function value() {
+    function stringValue() {
+        var binary = "";
+        var v = byteValue();
+        var len = v.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(v[i]);
+        }
+        return btoa(binary).replace(/\=/, '');
+    }
+
+    function byteValue() {
         if(selected.length == 4){
             var b1 = (selected[0] << 4) | selected[1];
             var b2 = (selected[2] << 4) | selected[3];
 
             return new Uint8Array([b1, b2]);
         }
+    }
+
+    function value() {
+        return selected.join('-');
     }
 
     function onComplete(callBack) {
@@ -117,13 +131,21 @@ function SWANSalt(element) {
 
     //#region public methods and getters
 
-    this.reset = function (callBack) {
-        reset(callBack);
-    }
-
     Object.defineProperty(this, 'value', { 
         get: function() { return value(); } 
     });
+
+    Object.defineProperty(this, 'byteValue', { 
+        get: function() { return byteValue(); } 
+    });
+
+    Object.defineProperty(this, 'stringValue', { 
+        get: function() { return stringValue(); } 
+    });
+    
+    this.reset = function (callBack) {
+        reset(callBack);
+    }
 
     this.onComplete = function(callBack) {
         onComplete(callBack);

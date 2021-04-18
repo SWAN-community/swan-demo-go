@@ -328,8 +328,16 @@ func redirectToSWANDialog(
 		func(q url.Values) {
 
 			// User Interface Provider fetch operations only need to consider
-			// one node as the caller will have already recently accessed SWAN.
-			q.Add("nodeCount", "1")
+			// one node if the caller will have already recently accessed SWAN.
+			// This will be true for callers that have not used third party
+			// cookies to fetch data from SWAN prior to calling this API. if the
+			// request has a node count then use that, otherwise use 1 to get
+			// the data from the home node.
+			if r.Form.Get("nodeCount") != "" {
+				q.Add("nodeCount", r.Form.Get("nodeCount"))
+			} else {
+				q.Add("nodeCount", "1")
+			}
 
 			// Use the return URL provided in the request to this URL as the
 			// final return URL after the update has occurred. Store in the

@@ -118,6 +118,9 @@
                             <small id="emailHelp" class="form-text text-muted collapse">
                                 By providing your email address, you can apply your preferences to your experience when you use other web-enabled devices.
                             </small>
+                            {{ if (ne .Email "")}}
+                            <button id="forget-me" type="button" class="btn btn-link">Forget Me</button>
+                            {{ end }}
                         </div>
                         <div id="salt-form-group" class="form-group collapse">
                             <label for="salt">
@@ -131,7 +134,7 @@
                             <div id="salt-container">
 
                             </div>
-                            <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp">
+                            <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp" value="{{ .Salt }}">
                             <button id="reset-button" type="button" class="btn btn-link">Reset Salt</button>
                         </div>
                         
@@ -209,6 +212,13 @@
         });
 
         saltUI.onComplete(complete);
+
+        var forgetButton = document.getElementById('forget-me')
+        if (forgetButton != undefined) {
+            forgetButton.addEventListener('click', (event) => {
+                show();
+            });
+        }
 
     </script>    
 </body>

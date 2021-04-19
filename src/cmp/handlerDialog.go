@@ -46,6 +46,9 @@ func (m *dialogModel) SWIDAsOWID() string { return m.Get("swid") }
 // Email as a string.
 func (m *dialogModel) Email() string { return m.Get("email") }
 
+// Salt as a string
+func (m *dialogModel) Salt() string { return m.Get("salt") }
+
 // Pref as a string.
 func (m *dialogModel) Pref() string { return m.Get("pref") }
 
@@ -169,10 +172,18 @@ func sendReminderEmail(r *http.Request) error {
 
 	b := r.Form.Get("salt")
 
+	if b == "" {
+		return nil
+	}
+
 	var a []byte
 	a, err := base64.RawStdEncoding.DecodeString(b)
 	if err != nil {
 		return err
+	}
+
+	if len(a) != 2 {
+		return nil
 	}
 
 	s1, s2 := a[0]&0xF, a[0]>>4

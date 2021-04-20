@@ -18,11 +18,13 @@ package common
 
 import (
 	"bytes"
+	"crypto/tls"
 	"errors"
 	"fmt"
+	"html/template"
+	"log"
 	"net/smtp"
 	"os"
-	"text/template"
 )
 
 type SMTP struct {
@@ -46,15 +48,14 @@ func NewSMTP() *SMTP {
 func (s *SMTP) Send(
 	email string,
 	subject string,
-	templateFile string,
+	emailTemplate *template.Template,
 	data interface{}) error {
-
 	err := canSend(s)
 	if err != nil {
-		fmt.Println("Sending failed:", err)
+		return err
 	}
 
-	b, err := build(templateFile, subject, data)
+	b, err := build(emailTemplate, subject, data)
 	if err != nil {
 		return err
 	}
@@ -85,11 +86,6 @@ func send(s *SMTP, email string, body *bytes.Buffer) error {
 	from := s.Sender
 	password := s.Password
 
-	// Receiver email address.
-	to := []string{
-		email,
-	}
-
 	// smtp server configuration.
 	smtpHost := s.Host
 	smtpPort := s.Port
@@ -97,29 +93,65 @@ func send(s *SMTP, email string, body *bytes.Buffer) error {
 	// Authentication.
 	auth := smtp.PlainAuth("", from, password, smtpHost)
 
-	// Sending email.
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, body.Bytes())
-	if err != nil {
-		return err
+	tlsconfig := &tls.Config{
+		ServerName: smtpHost,
 	}
+
+	conn, err := tls.Dial("tcp", smtpHost+":"+smtpPort, tlsconfig)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	c, err := smtp.NewClient(conn, smtpHost)
+	if err != nil {
+		log.Print(err)
+	}
+
+	// Auth
+	if err = c.Auth(auth); err != nil {
+		log.Print(err)
+	}
+
+	// To && From
+	if err = c.Mail(s.Sender); err != nil {
+		log.Print(err)
+	}
+
+	if err = c.Rcpt(email); err != nil {
+		log.Print(err)
+	}
+
+	w, err := c.Data()
+	if err != nil {
+		log.Print(err)
+	}
+
+	_, err = w.Write(body.Bytes())
+	if err != nil {
+		log.Print(err)
+	}
+
+	err = w.Close()
+	if err != nil {
+		log.Print(err)
+	}
+
+	c.Quit()
+
 	return nil
 }
 
 func build(
-	templateFile string,
+	emailTemplate *template.Template,
 	subject string,
 	data interface{}) (*bytes.Buffer, error) {
-	t, err := template.ParseFiles(templateFile)
-	if err != nil {
-		return nil, err
-	}
 
 	var body bytes.Buffer
 
 	mimeHeaders := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
 	body.Write([]byte(fmt.Sprintf("Subject: Email Protection Reminder \n%s\n\n", mimeHeaders)))
 
-	t.Execute(&body, data)
+	emailTemplate.Execute(&body, data)
 
 	return &body, nil
 }

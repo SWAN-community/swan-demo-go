@@ -18,6 +18,55 @@ function SWANSalt(element) {
         '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 95 118.75" enable-background="new 0 0 95 95" xml:space="preserve"><path d="M83.799,31.74c0-6.328-5.129-11.455-11.454-11.455c-0.978,0-1.921,0.135-2.828,0.365  c-0.778-5.859-5.783-10.383-11.855-10.383c-3.254,0-6.2,1.301-8.358,3.408c-1.447-3.822-5.13-6.545-9.458-6.545  c-5.59,0-10.121,4.531-10.121,10.121c0,0.758,0.09,1.494,0.249,2.205c-1.172-0.5-2.459-0.779-3.813-0.779  c-5.354,0-9.693,4.34-9.693,9.691c0,1.441,0.322,2.805,0.887,4.033c-3.598,1.402-6.152,4.891-6.152,8.984  c0,2.828,1.225,5.363,3.162,7.127c-0.475,1.324-0.746,2.744-0.746,4.23c0,6.928,5.615,12.545,12.543,12.545  c3.9,0,7.379-1.785,9.677-4.578c4.28,3.328,8.583,10.787,2.296,27.158h16.035c0,0-9.892-15.344,0.021-24  c1.956,2.826,5.193,4.697,8.89,4.697c5.984,0,10.835-4.85,10.835-10.832c0-0.521-0.05-1.031-0.12-1.531  c5.375-0.711,9.527-5.301,9.527-10.871c0-2.391-0.771-4.596-2.069-6.396C82.843,36.967,83.799,34.467,83.799,31.74z M37.177,58.672  c0.171-0.316,0.356-0.625,0.499-0.959c1.646-0.047,3.215-0.385,4.659-0.973c-0.324,0.926-0.528,1.982-0.496,3.188  C41.867,61.031,39.664,59.941,37.177,58.672z M44.958,58.463c1.147,0.631,2.398,1.092,3.728,1.34  c-0.357,0.484-0.729,1.01-1.146,1.623C44.831,65.434,44.61,62.186,44.958,58.463z M51.461,63.707  c-3.552,2.748-2.287-0.598-0.687-3.701c0.063,0,0.125,0.01,0.188,0.01c0.51,0,1.008-0.041,1.502-0.098  c0.177,0.869,0.492,1.682,0.865,2.461C52.752,62.754,52.134,63.186,51.461,63.707z"/></svg>',
         '<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 64 80" x="0px" y="0px"><path d="M54,54.93A8,8,0,0,0,61,47a8,8,0,0,0-7,4.13v-8.2A8,8,0,0,0,61,35V31c-2,0-2,2-4,2s-2-2-4-2-2,2-4,2-2-2-4-2v4a8,8,0,0,0,7,7.93v6.2A8,8,0,0,0,45,45a8,8,0,0,0,7,7.93V60H33V33A12,12,0,0,0,44,21a12,12,0,0,0-11,7.21V20A10,10,0,0,0,42,10V2c-2.5,0-2.5,4-5,4s-2.5-4-5-4-2.5,4-5,4S24.5,2,22,2v8a10,10,0,0,0,9,10V30.21A12,12,0,0,0,20,23,12,12,0,0,0,31,35V60H12V56.93A8,8,0,0,0,19,49a8,8,0,0,0-7,4.13v-8.2A8,8,0,0,0,19,37V33c-2,0-2,2-4,2s-2-2-4-2-2,2-4,2-2-2-4-2v4a8,8,0,0,0,7,7.93v6.2A8,8,0,0,0,3,47a8,8,0,0,0,7,7.93V60H1v2H63V60H54ZM31,16a7,7,0,0,0,7-7h2a9,9,0,0,1-9,9Z"/></svg>',
     ]
+
+    const gridStyle = `
+    #salt-grid {
+        max-width: 100%;
+    }
+    #salt-grid.row>.col {
+        border: 1px solid rgba(86,61,124,.2);
+    }
+    #salt-grid.row>.col>svg {
+        max-width: 100%;
+        pointer-events: none;
+    }
+    #salt-grid.row {
+        background-color: transparent;
+        margin-right: 0px;
+        margin-left: 0px;
+    
+        transition: background-color 0.5s linear; 
+        -moz-transition: background-color 0.5s linear;  
+        -webkit-transition: background-color 0.5s linear; 
+        -ms-transition: background-color 0.5s linear; 
+    }
+    #salt-grid.row.complete {
+        background-color: green;
+    }
+    .top-left, .top-right, .bottom-left, .bottom-right {
+        position: absolute;
+        color: #fff;
+        text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
+        font-size: 2em;
+        pointer-events: none;
+    }
+    .top-left {
+        top: 0px;
+        left: 1em;
+    }
+    .top-right {
+        top: 0px;
+        right: 1em;
+    }
+    .bottom-left {
+        bottom: 0px;
+        left: 1em;
+    }
+    .bottom-right {
+        bottom: 0px;
+        right: 1em;
+    }
+    `
             
     const gridId = 'salt-grid';
     const colIdPrefix = 'salt-col-';
@@ -25,6 +74,12 @@ function SWANSalt(element) {
 
     var selected = [];
     var indicators = [];
+
+    function addStyle() {
+        const style = document.createElement('style');
+        style.textContent = gridStyle;
+        document.head.append(style);
+      }
 
     function stringValue() {
         var binary = "";
@@ -171,5 +226,6 @@ function SWANSalt(element) {
     //#endregion
 
     // generate grid;
+    addStyle();
     salt();
 }

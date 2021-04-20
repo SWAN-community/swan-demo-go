@@ -21,10 +21,8 @@ import (
 )
 
 type EmailTemplate struct {
-	Salt                 []byte
-	PublisherDomain      string
-	PublisherUrl         string
-	UpdatePreferencesUrl string
+	Salt           []byte
+	PreferencesUrl string
 }
 
 func (t EmailTemplate) Show(i string) bool {

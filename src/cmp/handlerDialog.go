@@ -22,6 +22,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"owid"
@@ -88,13 +89,37 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// If all the form variables are present in the query string then these can
+	// be used with the form and the update initiated. A new SWID will be used.
+	// TODO: This values will need to be encrypted as a part of a long lived
+	// SWIFT storage transaction before production use.
 	if r.Form.Get("email") != "" &&
 		r.Form.Get("salt") != "" &&
 		r.Form.Get("pref") != "" &&
+		r.Form.Get("accessNode") != "" &&
 		r.Form.Get("returnUrl") != "" {
-		decode(d, r, &m)
+
+		// Copy the key values.
+		m.Values.Set("email", r.Form.Get("email"))
+		m.Values.Set("salt", r.Form.Get("salt"))
+		m.Values.Set("pref", r.Form.Get("pref"))
+		m.Values.Set("accessNode", r.Form.Get("accessNode"))
+		m.Values.Set("returnUrl", r.Form.Get("returnUrl"))
+
+		// Get a new SWID.
+		se := setNewSWID(d, &m)
+		if se != nil {
+			common.ReturnProxyError(d.Config, w, se)
+			return
+		}
+
+		// Automatically trigger the update with the values provided.
+		m.update = true
+
 	} else {
-		// Get the SWAN data from the request path.
+
+		// Not parameters were provided so get the SWAN data from the request
+		// path.
 		s := common.GetSWANDataFromRequest(r)
 		if s == "" {
 			redirectToSWANDialog(d, w, r)
@@ -145,19 +170,20 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			common.ReturnProxyError(d.Config, w, err)
 		}
-
-		// TODO: email redirect url
-		re := ""
-
 		if err != nil {
 			common.ReturnProxyError(d.Config, w, err)
 		}
 
-		ur := getCMPURL(d, r, &m)
-		e := sendReminderEmail(d, m.Values, re, ur)
+		// Get the CMP URL for the email.
+		eu := getCMPURL(d, r, &m)
+
+		// Send the email if the SMTP server is setup.
+		e := sendReminderEmail(d, m.Values, eu)
 		if e != nil {
 			fmt.Println(err)
 		}
+
+		// Redirect the response to the return URL.
 		http.Redirect(w, r, u, 303)
 
 	} else {
@@ -175,12 +201,12 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func sendReminderEmail(d *common.Domain, m url.Values, p string, r string) error {
+func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 	smtp := common.NewSMTP()
 
 	e := m.Get("email")
 
-	s := "Email Protection Reminder"
+	s := "SWAN Demo: Email Reminder"
 	t := d.LookupHTML("email-template.html")
 
 	b := m.Get("salt")
@@ -205,11 +231,11 @@ func sendReminderEmail(d *common.Domain, m url.Values, p string, r string) error
 	var arr = []byte{s1, s2, s3, s4}
 
 	td := EmailTemplate{
-		Salt:                 arr,
-		PublisherDomain:      m.Get("returnUrl"),
-		PublisherUrl:         p,
-		UpdatePreferencesUrl: r,
+		Salt:           arr,
+		PreferencesUrl: u,
 	}
+
+	log.Println(u)
 
 	err = smtp.Send(e, s, t, td)
 	if err != nil {
@@ -386,6 +412,7 @@ func decode(
 	setNewSWID(d, m)
 
 	m.Set("returnUrl", r.Form.Get("returnUrl"))
+	m.Set("accessNode", r.Form.Get("accessNode"))
 	m.update = true
 
 	return nil

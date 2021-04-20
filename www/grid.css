@@ -27,3 +27,18 @@ hr {
 margin-top: 2rem;
 margin-bottom: 2rem;
 }
+
+.salt-container {
+    transition: all 0.5s linear;
+}
+
+.salt-collapsed {
+    display: none;
+    opacity: 0;
+}
+
+.salt-expanded {
+    max-width: 600px;
+    margin-top: 15px;
+    display: block;
+  }

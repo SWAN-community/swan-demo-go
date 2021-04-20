@@ -224,8 +224,8 @@ func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 		return nil
 	}
 
-	s1, s2 := a[0]&0xF, a[0]>>4
-	s3, s4 := a[1]&0xF, a[1]>>4
+	s1, s2 := a[0]>>4, a[0]&0xF
+	s3, s4 := a[1]>>4, a[1]&0xF
 
 	var arr = []byte{s1, s2, s3, s4}
 
@@ -324,12 +324,12 @@ func getRedirectUpdateURL(
 				err = setSWANData(c, &q, k, []byte(v[0]))
 				break
 			case "salt":
-				var a []byte
-				a, err = base64.RawStdEncoding.DecodeString(v[0])
-				if err != nil {
-					break
-				}
-				err = setSWANData(c, &q, k, a)
+				// var a []byte
+				// a, err = base64.RawStdEncoding.DecodeString(v[0])
+				// if err != nil {
+				// 	break
+				// }
+				err = setSWANData(c, &q, k, []byte(v[0]))
 				break
 			default:
 				for _, i := range v {
@@ -392,7 +392,7 @@ func decode(
 	}
 
 	err = decodeOWID("salt", r, m, func(o *owid.OWID) string {
-		return o.PayloadAsBase64()
+		return o.PayloadAsString()
 	})
 	if err != nil {
 		return &common.SWANError{Err: err}

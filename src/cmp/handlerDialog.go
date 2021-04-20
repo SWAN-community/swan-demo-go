@@ -205,6 +205,10 @@ func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 
 	e := m.Get("email")
 
+	if e == "" {
+		return nil
+	}
+
 	s := "SWAN Demo: Email Reminder"
 	t := d.LookupHTML("email-template.html")
 

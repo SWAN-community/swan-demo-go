@@ -227,14 +227,15 @@
 
                     // Show the salt form group.
                     function saltShow() {
-                        saltElement.classList.remove('salt-collapsed')
-                        saltElement.classList.add('salt-expanded')
+                        saltElement.classList.remove('salt-collapsed');
+                        saltElement.classList.add('salt-expanded');
                     }
 
                     // Clear the salt 
                     function saltClear() {
-                        saltElement.classList.remove('salt-expanded')
-                        saltElement.classList.add('salt-collapsed')
+                        saltElement.classList.remove('salt-expanded');
+                        saltElement.classList.add('salt-collapsed');
+                        saltUI.reset()
                         saltComplete();
                     }
 

@@ -10,3 +10,6 @@
 [submodule "www/owid-js"]
 	path = www/owid-js
 	url = https://github.com/SWAN-community/owid-js
+[submodule "www/salt-js"]
+	path = www/salt-js
+	url = https://github.com/SWAN-community/salt-js.git

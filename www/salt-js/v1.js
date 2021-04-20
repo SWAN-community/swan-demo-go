@@ -1,3 +1,10 @@
+/* This implementation needs to be modified to support screen readers and ARIA 
+ * prior to production use. It is provided for conceptual demonstration purposes 
+ * only at this time.
+ */
+
+/* Icons provided by the Noun Project under creative commons licence. */ 
+
 function SWANSalt(element) {
 
     const images = [
@@ -176,28 +183,15 @@ function SWANSalt(element) {
         var txt = `<div id="${gridId}" class="row">`;
         for (var i = 0; i < images.length; i++) {
             var image = images[i];
-
             txt += `<div id="${colIdPrefix + i}" class="col" data-value="${i}" style="z-index: 1;">${image}</div>`;
-
             if ((i + 1) % 4 == 0) {
                 txt += '<div class="w-100"></div>';
             }
         }
-        txt += '</div>';
-        txt += `<small id="saltNote" class="form-text text-muted">
-            This implementation needs to be modified to support screen readers and ARIA prior to production use. 
-            It is provided for conceptual demonstration purposes only at this time.
-        </small>
-        <small id="saltNote" class="form-text text-muted">
-            Icons provided by the Noun Project under creative commons licence.
-        </small>
-        `;
         element.innerHTML = txt;
-
         for (var i = 0; i < 16; i++) {
-            var animal = document.getElementById(colIdPrefix + i);
-
-            animal.addEventListener('click', add);
+            document.getElementById(colIdPrefix + i)
+                .addEventListener('click', add);
         }
     }
 

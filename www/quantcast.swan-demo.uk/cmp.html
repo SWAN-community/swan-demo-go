@@ -113,12 +113,33 @@
                                     <img src="/info-circle.svg">
                                 </button>
                             </label>
+                            <input class="button-link reset" type="submit" value="Reset" name="reset-email-salt"/>
                             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Optional email" value="{{ .Email }}">
-                            <small id="emailHelp" class="form-text text-muted collapse">
+                            <small id="emailHelp" class="form-text text-muted my-2 collapse">
                                 By providing your email address, you can apply your preferences to your experience when you use other web-enabled devices.
                             </small>
                         </div>
-                        <div class="form-group">
+                        <div id="salt-form-group" class="form-group collapse">
+                            <label for="salt">
+                                <span>Tap 4 icons to protect your email</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#saltHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <button id="reset-salt" type="button" class="btn reset">Reset Icons</button>
+                            <small id="saltHelp" class="form-text text-muted collapse">
+                                <p>Choose four images from the following grid to protected your email address.</p>
+                                <p>We will send you a brief email to remind you of the icons selected and provide more information. </p>
+                                <p>Choose the same icons when entering your email on another browser or device to link your activity with this browser.</p>
+                                <hr/>
+                                <p>This implementation needs to be modified to support screen readers and ARIA prior to production use. It is provided for conceptual demonstration purposes only at this time.</p>
+                                <p>Icons provided by the Noun Project under creative commons licence.</p>
+                            </small>
+                            <div class="my-2" id="salt-container">
+                            </div>
+                            <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp" value="{{ .Salt }}">
+                        </div>
+                        <div class="form-group mt-2">
                             <small id="genHelp" class="form-text text-muted">
                                 <p>You may change your preferences at any time by toggling the applicable preference options above. Please see further our <a href="https://github.com/SWAN-community/swan/blob/main/model-terms-explainer.md">Privacy Policy</a>.</p>
                                 <p>These details are shared with the SWAN Network to manage your preferences. See further the SWAN Network <a href="https://github.com/SWAN-community/swan/blob/main/legal-entity-explainer.md">Privacy Notice</a>.</p>
@@ -128,7 +149,7 @@
                     </div>        
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="w-75 mx-auto btn btn-primary text-center">Update</button>
+                    <button type="submit" id="update" class="w-75 mx-auto btn btn-primary text-center">Update</button>
                 </div>
             </div>
         </div>
@@ -141,6 +162,8 @@
     <script src="popper.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="holder.min.js"></script>
+    <script src="/salt-js/v1.js"></script>
+    <script src="/cmp.js"></script>
     <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

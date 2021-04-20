@@ -113,31 +113,33 @@
                                     <img src="/info-circle.svg">
                                 </button>
                             </label>
+                            <input class="button-link reset" type="submit" value="Reset" name="reset-email-salt"/>
                             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Optional email" value="{{ .Email }}">
-                            <small id="emailHelp" class="form-text text-muted collapse">
+                            <small id="emailHelp" class="form-text text-muted my-2 collapse">
                                 By providing your email address, you can apply your preferences to your experience when you use other web-enabled devices.
                             </small>
-                            {{ if (ne .Email "")}}
-                            <button id="forget-me" type="button" class="btn btn-link">Forget Me</button>
-                            {{ end }}
                         </div>
                         <div id="salt-form-group" class="form-group collapse">
                             <label for="salt">
                                 <span>Tap 4 icons to protect your email</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#saltHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
                             </label>
-                            <small id="saltHelp" class="form-text text-muted">
-                                Choose four images from the following grid to protected your email address. 
-                                We will send you a brief email to remind you of the icons selected and provide more information. 
-                                Choose the same icons when entering your email on another browser or device to link your activity with this browser.
+                            <button id="reset-salt" type="button" class="btn reset">Reset Icons</button>
+                            <small id="saltHelp" class="form-text text-muted collapse">
+                                <p>Choose four images from the following grid to protected your email address.</p>
+                                <p>We will send you a brief email to remind you of the icons selected and provide more information. </p>
+                                <p>Choose the same icons when entering your email on another browser or device to link your activity with this browser.</p>
+                                <hr/>
+                                <p>This implementation needs to be modified to support screen readers and ARIA prior to production use. It is provided for conceptual demonstration purposes only at this time.</p>
+                                <p>Icons provided by the Noun Project under creative commons licence.</p>
                             </small>
-                            <div id="salt-container">
-
+                            <div class="my-2" id="salt-container">
                             </div>
                             <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp" value="{{ .Salt }}">
-                            <button id="reset-button" type="button" class="btn btn-link">Reset Selection</button>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                             <small id="genHelp" class="form-text text-muted">
                                 <p>You may change your preferences at any time by toggling the applicable preference options above. Please see further our <a href="https://github.com/SWAN-community/swan/blob/main/model-terms-explainer.md">Privacy Policy</a>.</p>
                                 <p>These details are shared with the SWAN Network to manage your preferences. See further the SWAN Network <a href="https://github.com/SWAN-community/swan/blob/main/legal-entity-explainer.md">Privacy Notice</a>.</p>
@@ -161,64 +163,11 @@
     <script src="bootstrap.min.js"></script>
     <script src="holder.min.js"></script>
     <script src="/salt-js/v1.js"></script>
+    <script src="/cmp.js"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
-
-        var element = document.getElementById('salt-container');
-        var saltUI = new SWANSalt(element);
-
-        var resetButton = document.getElementById('reset-button');
-        resetButton.addEventListener('click', (event) => {
-            saltUI.reset();
-            reset();
-        });
-
-        function reset() {
-            updateButton.innerHTML = 'Choose 4 Icons';
-            updateButton.setAttribute('disabled', '');
-        }
-
-        function show() {
-            $('#salt-form-group').collapse('show');
-        }
-
-        function clear() {
-            $('#salt-form-group').collapse('hide');
-            complete();
-        }
-
-        function complete() {
-            var saltField = document.getElementById('salt');
-
-            saltField.value = saltUI.stringValue;
-
-            updateButton.innerHTML = 'Update';
-            updateButton.removeAttribute('disabled'); 
-        }
-
-        var emailField = document.getElementById('email');
-        var updateButton = document.getElementById('update');
-        emailField.addEventListener('input', (event) => {
-            var email = event.target.value;
-            if(email == '') {
-                clear();
-            } else if (/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
-                show();
-                reset();
-            }
-        });
-
-        saltUI.onComplete(complete);
-
-        var forgetButton = document.getElementById('forget-me')
-        if (forgetButton != undefined) {
-            forgetButton.addEventListener('click', (event) => {
-                show();
-            });
-        }
-
     </script>    
 </body>
 </html>

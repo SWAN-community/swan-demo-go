@@ -238,6 +238,13 @@ func dialogUpdateModel(
 		return setNewSWID(d, m)
 	}
 
+	// Check to see if the email and salt are being reset.
+	if r.Form.Get("reset-email-salt") != "" {
+		m.Set("email", "")
+		m.Set("salt", "")
+		return nil
+	}
+
 	// Check to see if the post is as a result for all data.
 	if r.Form.Get("reset-all") != "" {
 

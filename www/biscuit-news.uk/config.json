@@ -1,0 +1,18 @@
+{
+   "category": "Publisher",
+   "name": "Biscuit News",
+   "swanMessage": "Cookies, cookies, cookies. We love cookies.",
+   "swanBackgroundColor": "aliceblue",
+   "swanMessageColor": "#5a5a5a",
+   "swanProgressColor": "#5a5a5a",
+   "swanUseHomeNode": true,
+   "swanJavaScript": true,
+   "cmpNodeCount": 10,
+   "cmp": "liveramp.swan-demo.uk",
+   "SWANAccessNode": "51db.uk",
+   "SWANAccessKey": "PubKeyBiscuitNews",
+   "suppliers": [
+      "magnite.swan-demo.uk",
+      "pubmatic.swan-demo.uk"
+   ]
+}

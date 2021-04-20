@@ -46,7 +46,8 @@ func (m Model) CMPURL() string {
 }
 
 // SWANURL returns the URL for the SWAN operation. Used when the SWAN
-// transaction is completed in a pop up window or iFrame.
+// transaction is completed in a pop up window, iFrame or is a JavaScript
+// include.
 func (m Model) SWANURL() string {
 	u, _ := getSWANURL(m.Domain, m.Request, m.swanData)
 	return u
@@ -60,9 +61,11 @@ func (m Model) HomeNode() string {
 
 // IsNew returns true if the SWID is newly created, otherwise false.
 func (m Model) IsNew() bool {
-	o, _ := m.swid().AsOWID()
-	if o != nil {
-		return o.Age() <= 1
+	if m.swid() != nil {
+		o, _ := m.swid().AsOWID()
+		if o != nil {
+			return o.Age() <= 1
+		}
 	}
 	return false
 }

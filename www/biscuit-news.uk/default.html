@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
+  <title>Biscuit News | SWAN Demo</title>
+  <script src="owid-js/v1.js" type="text/javascript"></script>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link href="carousel.css" rel="stylesheet">
+  <link href="advert.css" rel="stylesheet">
+  <style>
+    .featurette {
+      background-color: white;
+      padding: 1em;
+    }
+
+    .carousel-item {
+      display: block;
+    }
+  </style>
+</head>
+
+<body style="background-color:{{ .Domain.SwanBackgroundColor }};">
+
+  {{ if .SupportsHTTPS}}
+  <script>
+    if (location.protocol !== "https:"){
+      location.replace(window.location.href.replace("http:", "https:"));
+    }
+  </script>
+  {{ end }}
+
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="//swan-demo.uk">SWAN Demo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="//swan-demo.uk">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="//swan-demo.uk">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="//swan-demo.uk">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+
+    {{ if eq .IsCrawler false }}
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item">
+          <div class="container">
+            <div class="carousel-caption">
+              <figure class="figure" style="height:277px">
+                {{ if eq .SWIDAsString "" }}
+                <script>
+                  var p = document.currentScript.parentNode;
+                  function getCookie(n) {
+                    var c = new RegExp(n + "=([^;]+)").exec(document.cookie);
+                    return c? c[1] : "";
+                  }
+                  function getCookieAsString(n)
+                  {
+                    var s = "";
+                    Uint8Array.from(getCookie(n), c => s += c);
+                    return s;
+                  }
+                  function getOWIDCookieAsString(n)
+                  {
+                    var v = getCookie(n);
+                    return (v != null) ? unescape(new owid().parse(v).payloadAsString()) : null;
+                  }
+                  function getOWIDCookieAsPrintable(n)
+                  {
+                    var v = getCookie(n);
+                    return (v != null) ? unescape(new owid().parse(v).payloadAsPrintable()) : null;
+                  }
+                  function fetchAdvert(data) {
+                    var u = "/advert?placement=heading";
+                    if (data) {
+                      u += "&encrypted=" + data;
+                    }
+                    fetch(u)
+                      .then(r => r.text())
+                      .then(m => {
+                        if (getCookie("swan-pref") == "") {
+                          window.location.href = "{{ .CMPURL }}";
+                        } else {
+                          var a = document.createElement("div");
+                          a.innerHTML = m;
+                          p.insertBefore(a, p.firstChild);
+                          document.getElementById("swid").innerText = getOWIDCookieAsPrintable("swan-swid");
+                          document.getElementById("sid").innerText = getOWIDCookieAsPrintable("swan-sid");
+                          document.getElementById("pref").innerText = getOWIDCookieAsString("swan-pref");
+                          document.getElementById("stop").innerText = getCookieAsString("swan-stop");
+                        }
+                      })
+                      .catch(x => {
+                        console.log(x);
+                      });
+                  }
+                  function swanComplete(d) {
+                    fetchAdvert(d);
+                  }
+                  var s = document.createElement("script");
+                  s.src = "{{ .SWANURL }}";
+                  p.appendChild(s);
+                </script>
+                {{ else }}
+                  {{ if .Personalized }}
+                  <script>
+                    var p = document.currentScript.parentNode;
+                    fetch("/advert?placement=heading")
+                      .then(r => r.text() )
+                      .then(m => {
+                        var a = document.createElement("div");
+                        a.innerHTML = m;
+                        p.insertBefore(a, p.firstChild);})
+                      .catch(x => {
+                        console.log(x);
+                      });
+                  </script>
+                  {{ else }}
+                    <p>Personalization needed to show adverts.</p>
+                  {{ end }}
+                {{ end }}
+                <figcaption class="figure-caption text-white">advert</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- Marketing messaging and featurettes
+      ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+          <!-- https://unsplash.com/photos/ZRns2R5azu0 -->
+          <img class="rounded-circle" src="photo-1494976388531-d1058494cdd8.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Touring</h2>
+          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
+            vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus
+            magna.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <!-- https://unsplash.com/photos/YApiWyp0lqo -->
+          <img class="rounded-circle" src="photo-1568605117036-5fe5e7bab0b7.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Racing</h2>
+          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
+            mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+            condimentum nibh.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <!-- https://unsplash.com/photos/NyRe1Mj1pm4 -->
+          <img class="rounded-circle" src="photo-1569171206684-dfb2749d96fd.jpg" alt="Generic placeholder image" width="140" height="140">
+          <h2>Classic</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta
+            felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+            massa justo sit amet risus.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Central control.</h2>
+          <p class="lead">
+            These publishers all use the same SWAN network.
+          </p>
+          <ol class="list-unstyled">
+            {{ range $publisher := .DomainsByCategory "Publisher" }}
+            <li><a href="//{{ $publisher.Host }}">{{ $publisher.Name }}</a></li>
+            {{ end }}
+          </ol>
+          </p>
+          <p>Consent preferences and IDs are shared. Express once. Use everywhere. Change anytime.</p>
+        </div>
+        <div class="col-md-5 order-md-2">
+          <table class="table">
+            <thead>
+              <th>Field</th>
+              <th>Value</th>
+            </thead>
+            <tbody>
+              <tr>
+                <th>SWID</th>
+                <td id="swid" style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .SWIDDomain }} {{ .SWIDDate }}">{{ .SWIDAsString }}</td>
+              </tr>
+              <tr>
+                <th>SID</th>
+                <td id="sid" style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .SIDDomain }} {{ .SIDDate }}">{{ .SIDAsString }}</td>
+              </tr>
+              <tr>
+                <th>Personalize</th>
+                <td id="pref" style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .PrefDomain }} {{ .PrefDate }}">{{ .PrefAsString }}</td>
+              </tr>
+              <tr>
+                <th>Stopped Ads.</th>
+                <td id="stop">
+                  {{range .Stopped}}
+                  <span>{{.}}</span>
+                  {{end}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <a href="{{ .CMPURL }}">Update Privacy Preferences</a>
+          </p>
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+
+
+    <!-- FOOTER -->
+    <footer class="container">
+      <p class="float-right"><a href="#">Back to top</a></p>
+      <p><a href="{{ .CMPURL }}">Update Privacy Preferences</a></p>
+    </footer>
+  </main>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="jquery-3.2.1.slim.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="popper.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  <script src="holder.min.js"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+  {{ if not .Personalized }}
+  <script type="text/javascript">
+    $(window).on('load', function() {
+        $('#personalize').modal('show');
+    });
+  </script>
+  {{ end }}
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none"
+    style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;">
+    <defs>
+      <style type="text/css"></style>
+    </defs><text x="0" y="25"
+      style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text>
+  </svg>
+</body>
+
+</html>

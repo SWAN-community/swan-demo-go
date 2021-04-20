@@ -21,10 +21,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 )
 
-func getPort() string {
+type HTTPSHandler struct {
+}
+
+func getPortHTTP() string {
 	var port string
 	if os.Getenv("HTTP_PLATFORM_PORT") != "" {
 		// Get the port environment variable from Azure App Services.
@@ -32,14 +37,21 @@ func getPort() string {
 	} else if os.Getenv("PORT") != "" {
 		// Get the port environment variable from Amazon Web Services.
 		port = os.Getenv("PORT")
-	} else {
-		// If there is no environment variable use 5000, the default for AWS.
-		port = "5000"
+	}
+	return port
+}
+
+func getPortHTTPS() string {
+	var port string
+	if os.Getenv("HTTPS_PLATFORM_PORT") != "" {
+		// Get the port environment variable from Azure App Services.
+		port = os.Getenv("HTTPS_PLATFORM_PORT")
 	}
 	return port
 }
 
 func main() {
+	var err error
 	var settingsFile string
 
 	// Get the path to the settings file.
@@ -49,11 +61,40 @@ func main() {
 		settingsFile = "appsettings.json"
 	}
 
+	// Get the ports for HTTP or HTTPS.
+	portHttp := getPortHTTP()
+	portHttps := getPortHTTPS()
+
 	// Add the SWAN handlers.
 	demo.AddHandlers(settingsFile)
 
-	// Start the web server on the port provided.
-	port := getPort()
-	log.Printf("Listenning on port: %s\n", port)
-	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+	// Start the HTTPS proxy if there is a provided port.
+	if portHttps != "" {
+		go func() {
+			log.Printf("Listenning on HTTPS port: %s\n", portHttps)
+			err := http.ListenAndServeTLS(
+				fmt.Sprintf(":%s", portHttps),
+				"uk.crt",
+				"uk.key",
+				&HTTPSHandler{})
+			if err != nil {
+				log.Println(err)
+			}
+		}()
+	}
+
+	// Start the HTTP web server on the port provided.
+	log.Printf("Listenning on HTTP port: %s\n", portHttp)
+	err = http.ListenAndServe(fmt.Sprintf(":%s", portHttp), nil)
+	if err != nil {
+		log.Println(err)
+	}
+}
+
+func (h HTTPSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	var u url.URL
+	u.Scheme = "http"
+	u.Host = r.Host
+	p := httputil.NewSingleHostReverseProxy(&u)
+	p.ServeHTTP(w, r)
 }

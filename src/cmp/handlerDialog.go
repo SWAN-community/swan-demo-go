@@ -22,7 +22,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"owid"
@@ -234,8 +233,6 @@ func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 		Salt:           arr,
 		PreferencesUrl: u,
 	}
-
-	log.Println(u)
 
 	err = smtp.Send(e, s, t, td)
 	if err != nil {

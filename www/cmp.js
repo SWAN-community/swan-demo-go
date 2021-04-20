@@ -9,7 +9,7 @@ var saltField = document.getElementById('salt');
 var saltInnerHTML = saltUpdateButton.innerHTML;
 
 // Initialize the salt element and user interface.
-var saltUI = new SWANSalt(saltElement);
+var saltUI = new SWANSalt(saltElement, saltField.value);
 
 // Change the update button to explain 4 icons need to be selected and disable 
 // it.
@@ -62,5 +62,10 @@ saltResetButton.addEventListener('click', (event) => {
 // When the salt UI completes call this function.
 saltUI.onComplete(saltComplete);
 
-// Finally trigger the display of the salt grid if the email address is present.
+// Trigger the display of the salt grid if the email address is present.
 saltEmailChange(saltEmailField);
+
+// Set the salt to complete if the salt is already provided.
+if (saltField.value != "") {
+    saltComplete();
+}

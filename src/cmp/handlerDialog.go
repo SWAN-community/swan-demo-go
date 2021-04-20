@@ -26,7 +26,6 @@ import (
 	"net/url"
 	"owid"
 	"reflect"
-	"swift"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -147,13 +146,8 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			common.ReturnProxyError(d.Config, w, err)
 		}
 
-		//re, err := getSWANFetch(d, w, r, &m)
-		//re, err := getReturnURL(d, r, m.Values)
-		re, err := d.CreateSWANURL(r, m.Get("returnUrl"), "update", func(q url.Values) {
-			for k, v := range m.Values {
-				q.Set(k, v[0])
-			}
-		})
+		// TODO: email redirect url
+		re := ""
 
 		if err != nil {
 			common.ReturnProxyError(d.Config, w, err)
@@ -271,62 +265,6 @@ func setNewSWID(d *common.Domain, m *dialogModel) *common.SWANError {
 	}
 	m.Set("swid", o.AsString())
 	return nil
-}
-
-func getReturnURL(
-	d *common.Domain,
-	r *http.Request,
-	m url.Values) (string, *common.SWANError) {
-	c, err := d.GetOWIDCreator()
-	if err != nil {
-		return "", &common.SWANError{Err: err}
-	}
-
-	var u url.URL
-	u.Scheme = d.Config.Scheme
-	u.Host = d.Host
-	u.Path = "/preferences/"
-	q := u.Query()
-
-	q.Set("accessNode", d.SWANAccessNode)
-
-	for k, v := range m {
-		switch k {
-		case "pref":
-			a := v[0]
-			if a == "" {
-				a = "off"
-			}
-			err = setSWANData(c, &q, k, []byte(a))
-			break
-		case "email":
-			err = setSWANData(c, &q, k, []byte(v[0]))
-			break
-		case "salt":
-			var a []byte
-			a, err = base64.RawStdEncoding.DecodeString(v[0])
-			if err != nil {
-				break
-			}
-			err = setSWANData(c, &q, k, a)
-			break
-		case "returnUrl":
-			for _, i := range v {
-				q.Add(k, i)
-			}
-			break
-		}
-		if err != nil {
-			return "", &common.SWANError{Err: err}
-		}
-	}
-
-	q.Set("postMessageOnComplete", "false")
-	q.Set("displayUserInterface", "false")
-	q.Set("useHomeNode", "false")
-
-	u.RawQuery = q.Encode()
-	return u.String(), nil
 }
 
 func getRedirectUpdateURL(
@@ -561,35 +499,6 @@ func getCMPURL(d *common.Domain, r *http.Request, m *dialogModel) string {
 	return u.String()
 }
 
-// func getSWANFetch(
-// 	d *common.Domain,
-// 	w http.ResponseWriter,
-// 	r *http.Request,
-// 	m *dialogModel) (string, *common.SWANError) {
-// 	u, err := getSWANURL(d, r, m)
-// 	if err != nil {
-// 		return "", &common.SWANError{Err: err}
-// 	}
-// 	return u, nil
-// }
-
-// func getSWANURL(
-// 	d *common.Domain,
-// 	r *http.Request,
-// 	m *dialogModel) (string, *common.SWANError) {
-// 	return d.CreateSWANURL(
-// 		r,
-// 		common.GetCleanURL(d.Config, r).String(),
-// 		"fetch",
-// 		func(q url.Values) {
-// 			addSWANParams(r, &q, m)
-// 			setFlags(d, &q)
-// 			if d.SwanNodeCount > 0 {
-// 				q.Set("nodeCount", fmt.Sprintf("%d", d.SwanNodeCount))
-// 			}
-// 		})
-// }
-
 func setFlags(d *common.Domain, q *url.Values) {
 	if d.SwanPostMessage {
 		q.Set("postMessageOnComplete", "true")
@@ -614,20 +523,4 @@ func addSWANParams(r *http.Request, q *url.Values, m *dialogModel) {
 			q.Set(k, v[0])
 		}
 	}
-}
-
-// All the values from the SWIFT storage operation are OWIDs. Returns the OWID
-// for the key provided.
-func getOWID(r *swift.Results, k string) (*owid.OWID, error) {
-	v := r.Get(k)
-	if v != nil {
-		return nil, fmt.Errorf("Key '%s' does not exist", k)
-	}
-	if len(v.Value()) != 1 {
-		return nil, fmt.Errorf(
-			"Key '%s' contains '%d' values",
-			k,
-			len(v.Values()))
-	}
-	return owid.FromByteArray(v.Values()[0])
 }

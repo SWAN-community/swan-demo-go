@@ -110,6 +110,7 @@ func handlerFile(
 		http.ServeFile(w, r, f)
 		return true
 	case ".js":
+		w.Header().Set("Content-Type", "application/json")
 		http.ServeFile(w, r, f)
 		return true
 	case ".svg":

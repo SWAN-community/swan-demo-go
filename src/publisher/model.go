@@ -30,8 +30,6 @@ import (
 	"strings"
 	"swan"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // Model used with HTML templates.
@@ -125,10 +123,11 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 		return template.HTML("<p>Preferences not set</p>"), nil
 	}
 
+	// Seed the random number generator to get a random advert in the demo.
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	// Use the SWAN network to generate the Impression ID.
-	r, err := m.newImpressionNode()
+	// Use the SWAN network to generate the swan.ID.
+	r, err := m.newSWANIDNode()
 	if err != nil {
 		return "", err
 	}
@@ -225,9 +224,10 @@ func (m Model) findResult(k string) *swan.Pair {
 	return nil
 }
 
-// newImpressionNode returns a new Impression OWID Node.
-func (m *Model) newImpressionNode() (*owid.Node, error) {
-	o, err := m.newImpressionOWID()
+// newSWANIDNode returns a new SWAN OWID Node from the form parameters of the
+// request. If values are missing or are invalid then an error is returned.
+func (m *Model) newSWANIDNode() (*owid.Node, error) {
+	o, err := m.newSWANIDOWID()
 	if err != nil {
 		return nil, err
 	}
@@ -238,10 +238,10 @@ func (m *Model) newImpressionNode() (*owid.Node, error) {
 	return &owid.Node{OWID: b}, nil
 }
 
-// Creates a new Impression OWID from the form parameters of the request. If values
-// are missing or are invalid then an error is returned.
-func (m *Model) newImpressionOWID() (*owid.OWID, error) {
-	of, err := m.newImpression()
+// newSWANIDOWID returns a new SWAN OWID from the form parameters of the
+// request. If values are missing or are invalid then an error is returned.
+func (m *Model) newSWANIDOWID() (*owid.OWID, error) {
+	of, err := m.newSWANID()
 	if err != nil {
 		return nil, err
 	}
@@ -260,15 +260,13 @@ func (m *Model) newImpressionOWID() (*owid.OWID, error) {
 	return o, nil
 }
 
-// Returns a new unsigned swan.Impression ready to be used the byte array payload in
+// Returns a new unsigned swan.ID ready to be used the byte array payload in
 // an OWID that the caller is generating a a Root Party for the commencement of
 // an advertising request.
-func (m *Model) newImpression() (*swan.Impression, error) {
-	var err error
-	o := swan.NewImpression()
+func (m *Model) newSWANID() (*swan.ID, error) {
 
-	// Get the page placement from the form parameters.
-	o.Placement, err = getValue(m.Request, "placement")
+	// Create the new SWAN ID with random UUID.
+	o, err := swan.NewID()
 	if err != nil {
 		return nil, err
 	}
@@ -295,21 +293,14 @@ func (m *Model) newImpression() (*swan.Impression, error) {
 	}
 
 	// Get the stopped adverts string.
-	o.Stopped = impressionGetStopped(m.Request, m.stop())
+	o.Stopped = getStopped(m.Request, m.stop())
 
-	// Random one time data is used to ensure the Impression ID is unique for all
-	// time.
-	o.UUID, err = uuid.New().MarshalBinary()
-	if err != nil {
-		return nil, err
-	}
-
-	return &o, nil
+	return o, nil
 }
 
 // Returns an array of stopped advert IDs. As the parameter is optional no error
 // is returned.
-func impressionGetStopped(r *http.Request, p *swan.Pair) []string {
+func getStopped(r *http.Request, p *swan.Pair) []string {
 	var s []string
 
 	// Get stopped adverts from swan pair.

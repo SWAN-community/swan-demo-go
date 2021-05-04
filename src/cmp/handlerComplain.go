@@ -58,47 +58,46 @@ Regards,
 [INSERT YOU NAME]
 
 --- DO NOT CHANGE THE TEXT BELOW THIS LINE ---
-{{ .ImpressionID }}
+{{ .IDAsString }}
 --- DO NOT CHANGE THE TEXT ABOVE THIS LINE ---`)
 
 // Complaint used to format an email template.
 type Complaint struct {
-	Impression   *swan.Impression // The impression that the complaint relates to
+	ID           *swan.ID // The swan.ID that the complaint relates to
 	DPRURL       string
 	Organization string
 	Country      string
-	impressionID *owid.OWID
-	swanOWID     *owid.OWID
+	idOWID       *owid.OWID // The ID as an OWID
 }
 
 // Date to use in the email template.
 func (c *Complaint) Date() string {
-	return c.swanOWID.Date.Format("2006-01-02 15:01")
+	return c.idOWID.Date.Format("2006-01-02 15:01")
 }
 
 // SWID to use in the email template.
 func (c *Complaint) SWID() string {
-	return c.Impression.SWID.AsString()
+	return c.ID.SWID.AsString()
 }
 
 // SID to use in the email template.
 func (c *Complaint) SID() string {
-	return c.Impression.SID.AsString()
+	return c.ID.SID.AsString()
 }
 
 // Preferences string to use in the email template.
 func (c *Complaint) Preferences() string {
-	return c.Impression.PreferencesAsString()
+	return c.ID.PreferencesAsString()
 }
 
-// ImpressionID as a string
-func (c *Complaint) ImpressionID() string {
-	return c.impressionID.AsString()
+// ID as a string
+func (c *Complaint) IDAsString() (string, error) {
+	return c.ID.AsString()
 }
 
 // SWANOWID as a string
 func (c *Complaint) SWANOWID() string {
-	return c.swanOWID.AsString()
+	return c.idOWID.AsString()
 }
 
 func newComplaintTemplate(n string, b string) *template.Template {
@@ -111,8 +110,8 @@ func newComplaintTemplate(n string, b string) *template.Template {
 
 func newComplaint(
 	cfg *common.Configuration,
-	impressionID *owid.OWID,
-	swanID *owid.OWID) (*Complaint, error) {
+	swanOWID *owid.OWID,
+	partyOWID *owid.OWID) (*Complaint, error) {
 	var err error
 
 	// Set the static information associated with the complaint. These are
@@ -120,18 +119,17 @@ func newComplaint(
 	c.DPRURL = "URL of the DPR"
 	c.Country = "Region of the CMP"
 
-	// Work out the impression ID from the OWID provided.
-	c.Impression, err = swan.ImpressionFromOWID(impressionID)
+	// Set the ID as an OWID.
+	c.idOWID = partyOWID
+
+	// Work out the swan.ID from the ID OWID provided.
+	c.ID, err = swan.IDFromOWID(swanOWID)
 	if err != nil {
 		return nil, err
 	}
 
-	// Set the OWIDs as strings.
-	c.impressionID = impressionID
-	c.swanOWID = swanID
-
 	// Set the organization as the domain for the moment.
-	c.Organization = swanID.Domain
+	c.Organization = partyOWID.Domain
 
 	// Return the complain data structure ready for the template email.
 	return &c, nil
@@ -149,46 +147,45 @@ func handlerComplain(
 		return
 	}
 
-	// Check that the impression ID and the SWAN ID are present.
-	if r.Form.Get("impressionid") == "" {
+	// Check that the SWAN ID and the Party ID are present.
+	if r.Form.Get("swanid") == "" {
 		common.ReturnStatusCodeError(
 			d.Config,
 			w,
-			fmt.Errorf("'impressionid' missing"),
+			fmt.Errorf("'swanid' missing"),
 			http.StatusBadRequest)
 		return
 	}
-	if r.Form.Get("swanowid") == "" {
+	if r.Form.Get("partyid") == "" {
 		common.ReturnStatusCodeError(
 			d.Config,
 			w,
-			fmt.Errorf("'swanowid' missing"),
+			fmt.Errorf("'partyid' missing"),
 			http.StatusBadRequest)
 		return
 	}
 
-	// Get the SWAN OWIDs from the parameters.
-	impressionID, err := owid.FromBase64(r.Form.Get("impressionid"))
+	swanOWID, err := owid.FromBase64(r.Form.Get("swanid"))
 	if err != nil {
 		common.ReturnStatusCodeError(
 			d.Config,
 			w,
-			fmt.Errorf("'impressionid' not a valid OWID"),
+			fmt.Errorf("'swanid' not a valid OWID"),
 			http.StatusBadRequest)
 		return
 	}
-	swanOWID, err := owid.FromBase64(r.Form.Get("swanowid"))
+	partyOWID, err := owid.FromBase64(r.Form.Get("partyid"))
 	if err != nil {
 		common.ReturnStatusCodeError(
 			d.Config,
 			w,
-			fmt.Errorf("'swanowid' not a valid OWID"),
+			fmt.Errorf("'partyid' not a valid OWID"),
 			http.StatusBadRequest)
 		return
 	}
 
 	// Create the complaint object.
-	c, err := newComplaint(d.Config, impressionID, swanOWID)
+	c, err := newComplaint(d.Config, swanOWID, partyOWID)
 	if err != nil {
 		common.ReturnServerError(d.Config, w, err)
 		return
@@ -210,7 +207,7 @@ func handlerComplain(
 
 	// Create the URL for the email.
 	u := fmt.Sprintf("mailto:info@%s?subject=%s&body=%s",
-		c.swanOWID.Domain,
+		c.idOWID.Domain,
 		url.PathEscape(subject.String()),
 		url.PathEscape(body.String()))
 

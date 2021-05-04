@@ -28,7 +28,6 @@ import (
 	"path/filepath"
 	"strings"
 	"swan"
-	"swift"
 )
 
 // Domain represents the information held in the domain configuration file
@@ -60,6 +59,7 @@ type Domain struct {
 	templates *template.Template // HTML templates
 	owid      *owid.Creator      // The OWID creator associated with the domain if any
 	owidStore owid.Store         // The connection to the OWID store
+	swan      *swan.Connection   // The connection to SWAN
 	// The HTTP handler to use for this domain
 	handler func(d *Domain, w http.ResponseWriter, r *http.Request)
 }
@@ -94,6 +94,21 @@ func NewDomain(
 		return nil, err
 	}
 	d.owidStore = c.owid
+	d.swan = swan.NewConnection(swan.Operation{
+		Client: swan.Client{
+			SWAN: swan.SWAN{
+				AccessKey: d.SWANAccessKey,
+				Operator:  d.SWANAccessNode,
+				Scheme:    d.Config.Scheme}},
+		BackgroundColor:       d.SwanBackgroundColor,
+		Message:               d.SwanMessage,
+		MessageColor:          d.SwanMessageColor,
+		ProgressColor:         d.SwanProgressColor,
+		NodeCount:             d.SwanNodeCount,
+		DisplayUserInterface:  d.SwanDisplayUserInterface,
+		PostMessageOnComplete: d.SwanPostMessage,
+		JavaScript:            d.SwanJavaScript,
+		UseHomeNode:           d.SwanUseHomeNode})
 	return &d, nil
 }
 
@@ -103,6 +118,92 @@ func (d *Domain) SetHandler(fn func(
 	w http.ResponseWriter,
 	r *http.Request)) {
 	d.handler = fn
+}
+
+// LookupHTML based on the templates available to the domain.
+func (d *Domain) LookupHTML(p string) *template.Template {
+	if d.templates == nil {
+		return nil
+	}
+
+	// Try to find the template that relates to the file path.
+	t := d.templates.Lookup(filepath.Base(p))
+
+	// If no template can be found try finding one for the category of the
+	// domain.
+	if t == nil {
+		t = d.templates.Lookup(strings.ToLower(d.Category) + ".html")
+	}
+
+	// Finally, if no template is found try the default one.
+	if t == nil {
+		t = d.templates.Lookup("default.html")
+	}
+	return t
+}
+
+func (d *Domain) NewSWAN() *swan.SWAN {
+	return d.swan.NewSWAN()
+}
+
+func (d *Domain) NewClient(r *http.Request) *swan.Client {
+	return d.swan.NewClient(r)
+}
+
+func (d *Domain) NewSWANUpdate(r *http.Request, u *url.URL) *swan.Update {
+	return d.swan.NewUpdate(r, u)
+}
+
+func (d *Domain) NewSWANFetch(r *http.Request, u *url.URL) *swan.Fetch {
+	return d.swan.NewFetch(r, u)
+}
+
+func (d *Domain) NewSWANStop(r *http.Request, u *url.URL, h string) *swan.Stop {
+	return d.swan.NewStop(r, u, h)
+}
+
+func (d *Domain) NewSWANDecrypt(e string) *swan.Decrypt {
+	return d.swan.NewDecrypt(e)
+}
+
+// GetOWIDCreator returns the OWID creator from the OWID store for the the
+// domain.
+func (d *Domain) GetOWIDCreator() (*owid.Creator, error) {
+	var err error
+	if d.owid == nil {
+		d.owid, err = d.owidStore.GetCreator(d.Host)
+		if err != nil {
+			return nil, err
+		}
+		if d.owid == nil {
+			return nil, fmt.Errorf(
+				"Domain '%s' is not a registered OWID creator. Register the "+
+					"domain for the SWAN demo using http[s]://%s/owid/register",
+				d.Host,
+				d.Host)
+		}
+	}
+	return d.owid, nil
+}
+
+func infoRole(s interface{}) string {
+	_, fok := s.(*swan.Failed)
+	_, bok := s.(*swan.Bid)
+	_, eok := s.(*swan.Empty)
+	_, iok := s.(*swan.ID)
+	if fok {
+		return "Failed"
+	}
+	if bok {
+		return "Bid"
+	}
+	if eok {
+		return "Empty"
+	}
+	if iok {
+		return "ID"
+	}
+	return ""
 }
 
 func (d *Domain) parseHTML() (*template.Template, error) {
@@ -136,169 +237,4 @@ func (d *Domain) parseHTML() (*template.Template, error) {
 		}
 	}
 	return t, nil
-}
-
-// LookupHTML based on the templates available to the domain.
-func (d *Domain) LookupHTML(p string) *template.Template {
-	if d.templates == nil {
-		return nil
-	}
-
-	// Try to find the template that relates to the file path.
-	t := d.templates.Lookup(filepath.Base(p))
-
-	// If no template can be found try finding one for the category of the
-	// domain.
-	if t == nil {
-		t = d.templates.Lookup(strings.ToLower(d.Category) + ".html")
-	}
-
-	// Finally, if no template is found try the default one.
-	if t == nil {
-		t = d.templates.Lookup("default.html")
-	}
-	return t
-}
-
-// CallSWANStorageURL is like CallSWANURL but adds the parameters needed for the
-// home node calculation.
-func (d *Domain) CallSWANStorageURL(
-	r *http.Request,
-	action string,
-	addParams func(url.Values) error) ([]byte, *SWANError) {
-	return d.CallSWANURL(action, func(q url.Values) error {
-		swift.SetHomeNodeHeaders(r, &q)
-		if addParams != nil {
-			return addParams(q)
-		}
-		return nil
-	})
-}
-
-// CallSWANURL constructs a URL, gets the response, and then returns the
-// response as a byte array. If an error occurs then an API error is returned.
-// action to be performed
-// addParams optional method to add parameters to the call to SWAN
-func (d *Domain) CallSWANURL(
-	action string,
-	addParams func(url.Values) error) ([]byte, *SWANError) {
-	if d.SWANAccessNode == "" {
-		return nil, &SWANError{fmt.Errorf(
-			"Verify '%s' config.json for missing SWANAccessNode",
-			d.Host), nil}
-	}
-	if d.SWANAccessKey == "" {
-		return nil, &SWANError{fmt.Errorf(
-			"Verify '%s' config.json for missing SWANAccessKey",
-			d.Host), nil}
-	}
-	var u url.URL
-	u.Scheme = d.Config.Scheme
-	u.Host = d.SWANAccessNode
-	u.Path = "/swan/api/v1/" + action
-
-	// Add the parameters for the query.
-	p := url.Values{}
-	p.Set("accessKey", d.SWANAccessKey)
-	if addParams != nil {
-		err := addParams(p)
-		if err != nil {
-			return nil, &SWANError{err, nil}
-		}
-	}
-
-	// Post the parameters to the SWAN url.
-	res, err := http.PostForm(u.String(), p)
-	if err != nil {
-		return nil, &SWANError{err, nil}
-	}
-	if res.StatusCode != http.StatusOK {
-		return nil, NewSWANError(d.Config, res)
-	}
-
-	// Read the response and return as a byte array.
-	b, e := ioutil.ReadAll(res.Body)
-	if e != nil {
-		return nil, &SWANError{e, nil}
-	}
-	return b, nil
-}
-
-// CreateSWANURL returns a URL from SWAN to pass to the web browser navigation.
-func (d *Domain) CreateSWANURL(
-	r *http.Request,
-	returnURL string,
-	action string,
-	addParams func(url.Values)) (string, *SWANError) {
-	b, err := d.CallSWANStorageURL(r, action, func(q url.Values) error {
-
-		// Set the return URL after the operation completes.
-		q.Set("returnUrl", returnURL)
-
-		// Add user interface parameters for the SWAN operation and the user
-		// interface.
-		if d.SwanMessage != "" {
-			q.Set("message", d.SwanMessage)
-		}
-		if d.SwanBackgroundColor != "" {
-			q.Set("backgroundColor", d.SwanBackgroundColor)
-		}
-		if d.SwanProgressColor != "" {
-			q.Set("progressColor", d.SwanProgressColor)
-		}
-		if d.SwanMessageColor != "" {
-			q.Set("messageColor", d.SwanMessageColor)
-		}
-
-		// Add any additional parameters needed by the action if a function was
-		// provided.
-		if addParams != nil {
-			addParams(q)
-		}
-		return nil
-	})
-	if err != nil {
-		return "", err
-	}
-	return string(b), nil
-}
-
-// GetOWIDCreator returns the OWID creator from the OWID store for the the
-// domain.
-func (d *Domain) GetOWIDCreator() (*owid.Creator, error) {
-	var err error
-	if d.owid == nil {
-		d.owid, err = d.owidStore.GetCreator(d.Host)
-		if err != nil {
-			return nil, err
-		}
-		if d.owid == nil {
-			return nil, fmt.Errorf(
-				"Domain '%s' is not a registered OWID creator. Register the "+
-					"domain for the SWAN demo using http[s]://%s/owid/register",
-				d.Host,
-				d.Host)
-		}
-	}
-	return d.owid, nil
-}
-
-func infoRole(s interface{}) string {
-	_, fok := s.(*swan.Failed)
-	_, bok := s.(*swan.Bid)
-	_, eok := s.(*swan.Empty)
-	_, iok := s.(*swan.Impression)
-	if fok {
-		return "Failed"
-	}
-	if bok {
-		return "Bid"
-	}
-	if eok {
-		return "Empty"
-	}
-	if iok {
-		return "Impression"
-	}
-	return ""
 }

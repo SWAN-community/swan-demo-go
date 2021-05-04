@@ -21,6 +21,7 @@ import (
 	"compress/gzip"
 	"fmt"
 	"net/http"
+	"swan"
 )
 
 // HandlerAdvert for the request for adverts for the publisher web pages.
@@ -31,7 +32,7 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	m.Domain = d
 	m.Request = r
 
-	// Get the form parameters which will include the placement.
+	// Get the form parameters which will include the encrypted data.
 	err := r.ParseForm()
 	if err != nil {
 		common.ReturnServerError(d.Config, w, err)
@@ -41,7 +42,7 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// See if there is also SWAN data in the request. If so then use it for this
 	// advert and set cookies to store it in the response.
 	if r.Form.Get("encrypted") != "" {
-		var e *common.SWANError
+		var e *swan.Error
 		m.swanData, e = newSWANData(d, r.Form.Get("encrypted"))
 		if e != nil {
 			common.ReturnProxyError(d.Config, w, e)

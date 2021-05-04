@@ -24,8 +24,8 @@
         </a>
         <hr/>
         <h2 class="h4 my-4 font-weight-normal">Advert Suppliers</h2>
-        {{ if .Impression }}
-        {{ $personalize := eq .Impression.PreferencesAsString "on" }}
+        {{ if .ID }}
+        {{ $personalize := eq .ID.PreferencesAsString "on" }}
         {{ if $personalize }}
         <p>The companies with green dots next to them helped choose this advert and might have personalized this advert for you.</p>
         {{ else }}

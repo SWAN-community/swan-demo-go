@@ -29,7 +29,7 @@ import (
 // MarketerModel used with HTML templates.
 type MarketerModel struct {
 	common.PageModel
-	impression *owid.Node // The impression and tree associated with the page
+	idNode *owid.Node // The swan.ID as a node and tree associated with the page
 }
 
 // Stop returns true if the request includes the key Stop to indicate that the
@@ -45,11 +45,11 @@ func (m *MarketerModel) Stop() bool {
 
 // TreeAsJSON return the transaction as JSON.
 func (m *MarketerModel) TreeAsJSON() (template.HTML, error) {
-	if m.impression == nil {
+	if m.idNode == nil {
 		return template.HTML("<p>Advert not source of request.</p>"), nil
 	}
 
-	b, err := m.impression.AsJSON()
+	b, err := m.idNode.AsJSON()
 	if err != nil {
 		return "", err
 	}
@@ -61,28 +61,28 @@ func (m *MarketerModel) TreeAsJSON() (template.HTML, error) {
 	return template.HTML(html.String()), nil
 }
 
-// ImpressionID returns the impression ID string for the advert.
-func (m *MarketerModel) ImpressionID() (string, error) {
-	if m.impression == nil {
+// ID returns the SWAN ID string for the advert.
+func (m *MarketerModel) ID() (string, error) {
+	if m.idNode == nil {
 		return "", nil
 	}
-	o, err := m.impression.GetOWID()
+	o, err := m.idNode.GetOWID()
 	if err != nil {
 		return "", err
 	}
 	return o.AsString(), nil
 }
 
-// ImpressionIDUnpacked returns the unpacked Impression ID
-func (m *MarketerModel) ImpressionIDUnpacked() (template.HTML, error) {
-	if m.impression == nil {
+// IDUnpacked returns the unpacked SWAN ID.
+func (m *MarketerModel) IDUnpacked() (template.HTML, error) {
+	if m.idNode == nil {
 		return template.HTML("<p>Advert not source of request.</p>"), nil
 	}
-	o, err := m.impression.GetOWID()
+	o, err := m.idNode.GetOWID()
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}
-	s, err := swan.ImpressionFromOWID(o)
+	s, err := swan.IDFromOWID(o)
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}
@@ -121,9 +121,6 @@ func (m *MarketerModel) ImpressionIDUnpacked() (template.HTML, error) {
 		"<tr><td>Pub. domain</td><td>%s</td></tr>",
 		s.PubDomain))
 	html.WriteString(fmt.Sprintf(
-		"<tr><td>Placement</td><td>%s</td></tr>",
-		s.Placement))
-	html.WriteString(fmt.Sprintf(
 		"<tr><td>Unique</td><td style=\"word-break:break-all\">%s</td></tr>",
 		convertToString(s.UUID)))
 	html.WriteString(fmt.Sprintf(
@@ -141,11 +138,11 @@ func owidTitle(o *owid.OWID) string {
 // that resulted in the request to this page.
 func (m *MarketerModel) AuditWinnerHTML() (template.HTML, error) {
 	var html bytes.Buffer
-	if m.impression == nil {
+	if m.idNode == nil {
 		return template.HTML("<p>Advert not source of request.</p>"), nil
 	}
 
-	w, err := swan.WinningNode(m.impression)
+	w, err := swan.WinningNode(m.idNode)
 	if err != nil {
 		return "", nil
 	}
@@ -165,18 +162,18 @@ func (m *MarketerModel) AuditWinnerHTML() (template.HTML, error) {
 // AuditFullHTML returns the audit information from the bid used in the advert
 // that resulted in the request to this page.
 func (m *MarketerModel) AuditFullHTML() (template.HTML, error) {
-	if m.impression == nil {
+	if m.idNode == nil {
 		return template.HTML("<p>Advert not source of request.</p>"), nil
 	}
 
-	w, err := swan.WinningNode(m.impression)
+	w, err := swan.WinningNode(m.idNode)
 	if err != nil {
 		return "", err
 	}
 
 	var html bytes.Buffer
 	htmlAddHeader(&html)
-	err = appendOWIDAndChildren(m.Domain, &html, m.impression, w, 0)
+	err = appendOWIDAndChildren(m.Domain, &html, m.idNode, w, 0)
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}

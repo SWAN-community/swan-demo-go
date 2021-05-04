@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+	"swan"
 )
 
 // Map of allowed static files and whether request for file should support CORS
@@ -65,7 +66,7 @@ func handleStaticFolder(
 	// Get all the file system items in the folder provided.
 	files, err := ioutil.ReadDir(folder)
 	if err != nil {
-		return false, &SWANError{err, nil}
+		return false, &swan.Error{err, nil}
 	}
 
 	// Loop through the file system items to find any that match the request.

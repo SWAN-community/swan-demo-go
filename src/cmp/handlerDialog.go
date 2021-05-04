@@ -20,12 +20,15 @@ import (
 	"common"
 	"compress/gzip"
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
+	"html/template"
 	"net/http"
 	"net/url"
 	"owid"
 	"reflect"
+	"strconv"
+	"strings"
+	"swan"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -64,6 +67,20 @@ func (m *dialogModel) PublisherHost() string {
 	return ""
 }
 
+// HiddenFields turns the parameters from the storage operation into hidden
+// fields so they are available when the form is posted.
+func (m *dialogModel) HiddenFields() template.HTML {
+	b := strings.Builder{}
+	for k, v := range m.Values {
+		if k != "salt" && k != "swid" && k != "email" && k != "pref" {
+			b.WriteString(fmt.Sprintf(
+				"<input type=\"hidden\" id=\"%s\" name=\"%s\" value=\"%s\"/>",
+				k, k, v[0]))
+		}
+	}
+	return template.HTML(b.String())
+}
+
 // SWIDAsString returns the SWID as a readable string without the OWID data.
 func (m *dialogModel) SWIDAsString() (string, error) {
 	o, err := owid.FromBase64(m.Get("swid"))
@@ -92,7 +109,8 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// be used with the form and the update initiated. A new SWID will be used.
 	// TODO: This values will need to be encrypted as a part of a long lived
 	// SWIFT storage transaction before production use.
-	if r.Form.Get("email") != "" &&
+	if r.Method == "GET" &&
+		r.Form.Get("email") != "" &&
 		r.Form.Get("salt") != "" &&
 		r.Form.Get("pref") != "" &&
 		r.Form.Get("accessNode") != "" &&
@@ -125,19 +143,25 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Call the SWAN access node for the CMP to turn the data provided in the
-		// URL into usable data for the dialog.
-		e := decryptAndDecode(d, s, &m)
-		if e != nil {
+		// Call the SWAN access node for the CMP to turn the data provided in
+		// the URL into usable data for the dialog if this is a GET method.
+		if r.Method == "GET" {
+			e := decryptAndDecode(d, s, &m)
+			if e != nil {
 
-			// If the data can't be decrypted rather than another type of error
-			// then redirect via SWAN to the dialog.
-			if e.StatusCode() >= 400 && e.StatusCode() < 500 {
-				redirectToSWANDialog(d, w, r)
+				// If the data can't be decrypted rather than another type of
+				// error then redirect via SWAN to the dialog.
+				if e.StatusCode() >= 400 && e.StatusCode() < 500 {
+					redirectToSWANDialog(d, w, r)
+					return
+				}
+				common.ReturnStatusCodeError(
+					d.Config,
+					w,
+					e.Err,
+					http.StatusBadRequest)
 				return
 			}
-			common.ReturnStatusCodeError(d.Config, w, e.Err, http.StatusBadRequest)
-			return
 		}
 	}
 
@@ -250,7 +274,7 @@ func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 func dialogUpdateModel(
 	d *common.Domain,
 	r *http.Request,
-	m *dialogModel) *common.SWANError {
+	m *dialogModel) *swan.Error {
 
 	// Copy the field values from the form.
 	m.Values.Set("swid", r.Form.Get("swid"))
@@ -288,14 +312,15 @@ func dialogUpdateModel(
 	return nil
 }
 
-func setNewSWID(d *common.Domain, m *dialogModel) *common.SWANError {
-	c, se := createSWID(d)
-	if se != nil {
-		return se
-	}
-	o, err := owid.FromByteArray(c)
+func setNewSWID(d *common.Domain, m *dialogModel) *swan.Error {
+	c, err := createSWID(d)
 	if err != nil {
-		return &common.SWANError{Err: err}
+		return err
+	}
+	var o *owid.OWID
+	o, err.Err = owid.FromByteArray(c)
+	if err != nil {
+		return err
 	}
 	m.Set("swid", o.AsString())
 	return nil
@@ -304,70 +329,62 @@ func setNewSWID(d *common.Domain, m *dialogModel) *common.SWANError {
 func getRedirectUpdateURL(
 	d *common.Domain,
 	r *http.Request,
-	m url.Values) (string, *common.SWANError) {
+	m url.Values) (string, *swan.Error) {
+
+	// Get the OWID creator which is needed to sign the data just captured.
 	c, err := d.GetOWIDCreator()
 	if err != nil {
-		return "", &common.SWANError{Err: err}
+		return "", &swan.Error{Err: err}
 	}
-	b, se := d.CallSWANStorageURL(r, "update", func(q url.Values) error {
-		var err error
 
-		// Loop through all the key value pairs in the model values. If the key
-		// relates to SWAN data then turn the value into an OWID with this UIP
-		// as the signatory.
-		for k, v := range m {
-			switch k {
-			case "pref":
-				a := v[0]
-				if a == "" {
-					a = "off"
-				}
-				err = setSWANData(c, &q, k, []byte(a))
-				break
-			case "email":
-				err = setSWANData(c, &q, k, []byte(v[0]))
-				break
-			case "salt":
-				// var a []byte
-				// a, err = base64.RawStdEncoding.DecodeString(v[0])
-				// if err != nil {
-				// 	break
-				// }
-				err = setSWANData(c, &q, k, []byte(v[0]))
-				break
-			default:
-				for _, i := range v {
-					q.Add(k, i)
-				}
-				break
-			}
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	})
-	if se != nil {
-		return "", se
-	}
-	return string(b), nil
-}
-
-func setSWANData(c *owid.Creator, q *url.Values, k string, v []byte) error {
-	o, err := c.CreateOWIDandSign(v)
+	// Configure the update operation from this demo domain's configuration.
+	returnUrl, err := url.Parse(r.Form.Get("returnUrl"))
 	if err != nil {
-		return err
+		return "", &swan.Error{Err: err}
 	}
-	q.Set(k, o.AsString())
-	return nil
+	u := d.NewSWANUpdate(r, returnUrl)
+
+	// Use the form to get any information from the initial storage operation
+	// to configure the update storage operation.
+	if r.Form.Get("accessNode") != "" {
+		u.AccessNode = r.Form.Get("accessNode")
+	}
+	if r.Form.Get("backgroundColor") != "" {
+		u.BackgroundColor = r.Form.Get("backgroundColor")
+	}
+	if r.Form.Get("displayUserInterface") != "" {
+		u.DisplayUserInterface = r.Form.Get("displayUserInterface") == "true"
+	}
+	if r.Form.Get("javaScript") != "" {
+		u.JavaScript = r.Form.Get("javaScript") == "true"
+	}
+	if r.Form.Get("message") != "" {
+		u.Message = r.Form.Get("message")
+	}
+	if r.Form.Get("messageColor") != "" {
+		u.MessageColor = r.Form.Get("messageColor")
+	}
+	if r.Form.Get("postMessageOnComplete") != "" {
+		u.PostMessageOnComplete = r.Form.Get("postMessageOnComplete") == "true"
+	}
+	if r.Form.Get("progressColor") != "" {
+		u.ProgressColor = r.Form.Get("progressColor")
+	}
+	if r.Form.Get("title") != "" {
+		u.Title = r.Form.Get("title")
+	}
+	if r.Form.Get("useHomeNode") != "" {
+		u.UseHomeNode = r.Form.Get("useHomeNode") == "true"
+	}
+	u.Pref = m.Get("pref") == "on"
+	u.Email = m.Get("email")
+	u.Salt = []byte(m.Get("salt"))
+	u.SWID = m.Get("swid")
+	return u.GetURL(c)
 }
 
-func createSWID(d *common.Domain) ([]byte, *common.SWANError) {
-	b, e := d.CallSWANURL("create-swid", nil)
-	if e != nil {
-		return nil, e
-	}
-	return b, nil
+func createSWID(d *common.Domain) ([]byte, *swan.Error) {
+	return d.NewSWAN().CreateSWID()
 }
 
 func decodeOWID(
@@ -386,20 +403,20 @@ func decodeOWID(
 func decode(
 	d *common.Domain,
 	r *http.Request,
-	m *dialogModel) *common.SWANError {
+	m *dialogModel) *swan.Error {
 
 	err := decodeOWID("email", r, m, func(o *owid.OWID) string {
 		return o.PayloadAsString()
 	})
 	if err != nil {
-		return &common.SWANError{Err: err}
+		return &swan.Error{Err: err}
 	}
 
 	err = decodeOWID("salt", r, m, func(o *owid.OWID) string {
 		return o.PayloadAsString()
 	})
 	if err != nil {
-		return &common.SWANError{Err: err}
+		return &swan.Error{Err: err}
 	}
 
 	err = decodeOWID("pref", r, m,
@@ -407,7 +424,7 @@ func decode(
 			return o.PayloadAsString()
 		})
 	if err != nil {
-		return &common.SWANError{Err: err}
+		return &swan.Error{Err: err}
 	}
 
 	setNewSWID(d, m)
@@ -422,18 +439,10 @@ func decode(
 func decryptAndDecode(
 	d *common.Domain,
 	v string,
-	m *dialogModel) *common.SWANError {
-	b, e := d.CallSWANURL("decrypt-raw", func(q url.Values) error {
-		q.Set("encrypted", v)
-		return nil
-	})
-	if e != nil {
-		return e
-	}
-	r := make(map[string]interface{})
-	err := json.Unmarshal(b, &r)
+	m *dialogModel) *swan.Error {
+	r, err := d.NewSWANDecrypt(v).DecryptRaw()
 	if err != nil {
-		return &common.SWANError{Err: err}
+		return err
 	}
 	for k, v := range r {
 		switch reflect.TypeOf(v) {
@@ -467,13 +476,46 @@ func redirectToSWANDialog(
 	d *common.Domain,
 	w http.ResponseWriter,
 	r *http.Request) {
-	f, err := common.GetReturnURL(r)
+
+	// Create the fetch function returning to this URL.
+	f := d.NewSWANFetch(r, common.GetCleanURL(d.Config, r))
+
+	// User Interface Provider fetch operations only need to consider
+	// one node if the caller will have already recently accessed SWAN.
+	// This will be true for callers that have not used third party
+	// cookies to fetch data from SWAN prior to calling this API. if the
+	// request has a node count then use that, otherwise use 1 to get
+	// the data from the home node.
+	if r.Form.Get("nodeCount") != "" {
+		i, err := strconv.ParseInt(r.Form.Get("nodeCount"), 10, 32)
+		if err != nil {
+			common.ReturnStatusCodeError(
+				d.Config,
+				w,
+				err,
+				http.StatusBadRequest)
+			return
+		}
+		f.NodeCount = int(i)
+	} else {
+		f.NodeCount = 1
+	}
+
+	f.State = make([]string, 4)
+
+	// Use the return URL provided in the request to this URL as the
+	// final return URL after the update has occurred. Store in the
+	// state for use when the CMP dialogue updates.
+	returnUrl, err := common.GetReturnURL(r)
 	if err != nil {
 		common.ReturnServerError(d.Config, w, err)
 		return
 	}
-	a := r.Form.Get("accessNode")
-	if a == "" {
+	f.State[0] = returnUrl.String()
+
+	// Also also add the access node to the state store.
+	f.State[1] = r.Form.Get("accessNode")
+	if f.State[1] == "" {
 		common.ReturnStatusCodeError(
 			d.Config,
 			w,
@@ -481,39 +523,15 @@ func redirectToSWANDialog(
 			http.StatusBadRequest)
 		return
 	}
-	u, e := d.CreateSWANURL(
-		r,
-		// Use this CMP page as the return URL for fetching the SWAN data.
-		common.GetCurrentPage(d.Config, r).String(),
-		"fetch",
-		func(q url.Values) {
 
-			// User Interface Provider fetch operations only need to consider
-			// one node if the caller will have already recently accessed SWAN.
-			// This will be true for callers that have not used third party
-			// cookies to fetch data from SWAN prior to calling this API. if the
-			// request has a node count then use that, otherwise use 1 to get
-			// the data from the home node.
-			if r.Form.Get("nodeCount") != "" {
-				q.Add("nodeCount", r.Form.Get("nodeCount"))
-			} else {
-				q.Add("nodeCount", "1")
-			}
+	// Add the flags.
+	f.State[2] = r.Form.Get("displayUserInterface")
+	f.State[3] = r.Form.Get("postMessageOnComplete")
 
-			// Use the return URL provided in the request to this URL as the
-			// final return URL after the update has occurred. Store in the
-			// state for use when the CMP dialogue updates.
-			q.Add("state", f.String())
-
-			// Also also add the access node to the state store.
-			q.Add("state", a)
-
-			// Add the flags.
-			q.Add("state", r.Form.Get("displayUserInterface"))
-			q.Add("state", r.Form.Get("postMessageOnComplete"))
-		})
-	if e != nil {
-		common.ReturnProxyError(d.Config, w, e)
+	// Get the URL.
+	u, se := f.GetURL()
+	if se != nil {
+		common.ReturnProxyError(d.Config, w, se)
 		return
 	}
 	http.Redirect(w, r, u, 303)
@@ -526,8 +544,8 @@ func getCMPURL(d *common.Domain, r *http.Request, m *dialogModel) string {
 	u.Host = d.Host
 	u.Path = "/preferences/"
 	q := u.Query()
-	q.Set("returnUrl", common.GetCleanURL(d.Config, r).String())
-	q.Set("accessNode", d.SWANAccessNode)
+	q.Set("returnUrl", r.Form.Get("returnUrl"))
+	q.Set("accessNode", r.Form.Get("accessNode"))
 	addSWANParams(r, &q, m)
 	setFlags(d, &q)
 	u.RawQuery = q.Encode()

@@ -20,6 +20,7 @@ import (
 	"compress/gzip"
 	"net/http"
 	"strings"
+	"swan"
 )
 
 // HandlerHTML returns HTML that does not require a model for the template.
@@ -52,6 +53,6 @@ func HandlerHTML(d *Domain, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	err := t.Execute(g, nil)
 	if err != nil {
-		ReturnServerError(d.Config, w, &SWANError{err, nil})
+		ReturnServerError(d.Config, w, &swan.Error{err, nil})
 	}
 }

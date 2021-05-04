@@ -22,26 +22,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"swan"
 )
-
-// SWANError is used to pass back errors from methods that call APIs. If the
-// Response member is set then the called method can use this information in
-// its response. If it is not set then an internal server error can be assumed.
-type SWANError struct {
-	Err      error          // The underlying error message.
-	Response *http.Response // The HTTP response that caused the error.
-}
-
-// StatusCode returns the status code of the response.
-func (e *SWANError) StatusCode() int {
-	if e.Response != nil {
-		return e.Response.StatusCode
-	}
-	return 0
-}
-
-// Error returns the error message as a string from an HTTPError reference.
-func (e *SWANError) Error() string { return e.Err.Error() }
 
 // Handler for all HTTP requests to domains controlled by the demo.
 func Handler(d []*Domain) http.HandlerFunc {
@@ -83,41 +65,37 @@ func Handler(d []*Domain) http.HandlerFunc {
 	}
 }
 
-// NewSWANError creates an error instance that includes the details of the
+// NewError creates an error instance that includes the details of the
 // response returned. This is needed to pass the correct status codes and
 // context back to the caller.
-func NewSWANError(c *Configuration, r *http.Response) *SWANError {
+func NewError(c *Configuration, r *http.Response) *swan.Error {
 	var u string
 	in, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		return &SWANError{err, nil}
+		return &swan.Error{Err: err}
 	}
 	if c.Debug {
 		u = r.Request.URL.String()
 	} else {
 		u = r.Request.Host
 	}
-	return &SWANError{
-		fmt.Errorf("SWAN '%s' status '%d' message '%s'",
+	return &swan.Error{
+		Err: fmt.Errorf("SWAN '%s' status '%d' message '%s'",
 			u,
 			r.StatusCode,
 			strings.TrimSpace(string(in))),
-		r}
+		Response: r}
 }
 
 // ReturnProxyError returns an error where the request is related to a proxy
 // request being passed to another end point.
-func ReturnProxyError(c *Configuration, w http.ResponseWriter, e *SWANError) {
-	s := http.StatusInternalServerError
-	if e.Response != nil {
-		s = e.Response.StatusCode
-	}
-	ReturnStatusCodeError(c, w, e.Err, s)
+func ReturnProxyError(c *Configuration, w http.ResponseWriter, err error) {
+	ReturnStatusCodeError(c, w, err, http.StatusInternalServerError)
 }
 
 // ReturnServerError returns an internal server error.
-func ReturnServerError(c *Configuration, w http.ResponseWriter, e error) {
-	ReturnStatusCodeError(c, w, e, http.StatusInternalServerError)
+func ReturnServerError(c *Configuration, w http.ResponseWriter, err error) {
+	ReturnStatusCodeError(c, w, err, http.StatusInternalServerError)
 }
 
 // ReturnStatusCodeError returns the HTTP status code specified.

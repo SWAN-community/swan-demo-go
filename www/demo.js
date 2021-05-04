@@ -23,8 +23,8 @@ stop = function(s, d, r, a) {
 appendComplaintEmail = function(e, d, o, s, g) {
     loadOWID().then(() => {
         fetch((d ? "//" + d : "") + "/complain?" +
-            "offerid=" + encodeURIComponent(o) + "&" +
-            "swanowid=" + encodeURIComponent(s),
+            "swanid=" + encodeURIComponent(o) + "&" +
+            "partyid=" + encodeURIComponent(s),
             { method: "GET", mode: "cors", cache: "no-cache" })
             .then(r => r.text() )
             .then(m => {

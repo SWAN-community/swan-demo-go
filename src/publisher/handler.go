@@ -19,7 +19,6 @@ package publisher
 import (
 	"common"
 	"compress/gzip"
-	"encoding/json"
 	"fmt"
 	"fod"
 	"log"
@@ -147,32 +146,13 @@ func newSWANDataFromCookies(r *http.Request) ([]*swan.Pair, error) {
 
 func newSWANData(
 	d *common.Domain,
-	v string) ([]*swan.Pair, *common.SWANError) {
-	var p []*swan.Pair
-
-	// Decrypt the SWAN data string.
-	in, e := decode(d, v)
-	if e != nil {
-		return nil, e
-	}
-
-	// If debug is enabled then output the JSON.
-	if d.Config.Debug {
-		log.Println(string(in))
-	}
-
-	// Get the results.
-	err := json.Unmarshal(in, &p)
-	if err != nil {
-		return nil, &common.SWANError{Err: err}
-	}
-
-	return p, nil
+	v string) ([]*swan.Pair, *swan.Error) {
+	return d.NewSWANDecrypt(v).Decrypt()
 }
 
 func newSWANDataFromPath(
 	d *common.Domain,
-	r *http.Request) ([]*swan.Pair, *common.SWANError) {
+	r *http.Request) ([]*swan.Pair, *swan.Error) {
 
 	// Get the section of the URL that has the SWAN data.
 	b := common.GetSWANDataFromRequest(r)
@@ -215,51 +195,14 @@ func redirectToSWANFetch(
 func getSWANURL(
 	d *common.Domain,
 	r *http.Request,
-	p []*swan.Pair) (string, *common.SWANError) {
-	return d.CreateSWANURL(
-		r,
-		common.GetCleanURL(d.Config, r).String(),
-		"fetch",
-		func(q url.Values) {
-			addSWANParams(r, &q, p)
-			setFlags(d, &q)
-			if d.SwanNodeCount > 0 {
-				q.Set("nodeCount", fmt.Sprintf("%d", d.SwanNodeCount))
-			}
-		})
-}
-
-func setFlags(d *common.Domain, q *url.Values) {
-	if d.SwanPostMessage {
-		q.Set("postMessageOnComplete", "true")
-	} else {
-		q.Set("postMessageOnComplete", "false")
-	}
-	if d.SwanDisplayUserInterface {
-		q.Set("displayUserInterface", "true")
-	} else {
-		q.Set("displayUserInterface", "false")
-	}
-	if d.SwanUseHomeNode {
-		q.Set("useHomeNode", "true")
-	} else {
-		q.Set("useHomeNode", "false")
-	}
-	if d.SwanJavaScript {
-		q.Set("javaScript", "true")
-	} else {
-		q.Set("javaScript", "false")
-	}
+	p []*swan.Pair) (string, *swan.Error) {
+	return d.NewSWANFetch(r, common.GetCleanURL(d.Config, r)).GetURL()
 }
 
 func getHomeNode(
 	d *common.Domain,
-	r *http.Request) (string, *common.SWANError) {
-	b, err := d.CallSWANStorageURL(r, "home-node", nil)
-	if err != nil {
-		return "", err
-	}
-	return string(b), nil
+	r *http.Request) (string, *swan.Error) {
+	return d.NewClient(r).HomeNode()
 }
 
 func setCookies(r *http.Request, w http.ResponseWriter, p []*swan.Pair) {
@@ -339,9 +282,25 @@ func revalidateNeeded(d []*swan.Pair) bool {
 	return false
 }
 
-func decode(d *common.Domain, v string) ([]byte, *common.SWANError) {
-	return d.CallSWANURL("decrypt", func(q url.Values) error {
-		q.Set("encrypted", v)
-		return nil
-	})
+func setFlags(d *common.Domain, q *url.Values) {
+	if d.SwanPostMessage {
+		q.Set("postMessageOnComplete", "true")
+	} else {
+		q.Set("postMessageOnComplete", "false")
+	}
+	if d.SwanDisplayUserInterface {
+		q.Set("displayUserInterface", "true")
+	} else {
+		q.Set("displayUserInterface", "false")
+	}
+	if d.SwanUseHomeNode {
+		q.Set("useHomeNode", "true")
+	} else {
+		q.Set("useHomeNode", "false")
+	}
+	if d.SwanJavaScript {
+		q.Set("javaScript", "true")
+	} else {
+		q.Set("javaScript", "false")
+	}
 }

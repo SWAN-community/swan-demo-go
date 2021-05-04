@@ -43,30 +43,35 @@ func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u, e := d.CreateSWANURL(
-		r,
-		r.Form.Get("returnUrl"),
-		"stop",
-		func(q url.Values) {
+	// Configure the update operation from this demo domain's configuration with
+	// the return URL and host.
+	returnUrl, err := url.Parse(r.Form.Get("returnUrl"))
+	if err != nil {
+		common.ReturnStatusCodeError(
+			d.Config,
+			w,
+			err,
+			http.StatusBadRequest)
+	}
+	s := d.NewSWANStop(r, returnUrl, r.Form.Get("host"))
 
-			// Take the host name from
-			q.Set("host", r.Form.Get("host"))
+	// Use the access node from the form as this will be used by the publisher
+	// to decrypt the result.
+	if r.Form.Get("accessNode") != "" {
+		s.AccessNode = r.Form.Get("accessNode")
+	}
 
-			// Use the access node from the form as this will be used by the
-			// publisher to decrypt the result.
-			if r.Form.Get("accessNode") != "" {
-				q.Set("accessNode", r.Form.Get("accessNode"))
-			}
+	// Demonstrate the CMP can change the SWAN operation messages.
+	if r.Form.Get("message") == "" {
+		s.Message = fmt.Sprintf(
+			"Bye, bye %s. Thanks for letting us know.",
+			s.Host)
+	}
 
-			// Demonstrate the CMP can set all the messages.
-			if q.Get("message") == "" {
-				q.Set("message", fmt.Sprintf(
-					"Bye, bye %s. Thanks for letting us know.",
-					r.Form.Get("host")))
-			}
-		})
-	if e != nil {
-		common.ReturnProxyError(d.Config, w, e)
+	// Get the URL to process the stop data.
+	u, se := s.GetURL()
+	if se != nil {
+		common.ReturnProxyError(d.Config, w, se)
 		return
 	}
 

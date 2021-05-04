@@ -19,6 +19,7 @@ package common
 import (
 	"compress/gzip"
 	"net/http"
+	"owid"
 )
 
 // handlerCreateOWID takes an input payload and returns a new OWID.
@@ -38,8 +39,13 @@ func handlerCreateOWID(
 		ReturnServerError(d.Config, w, err)
 	}
 
+	ot, err := DecodeOthers(r.Form["others"])
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
+	}
+
 	// Create and sign the OWID for this domain.
-	o, err := oc.CreateOWIDandSign([]byte(r.Form.Get("payload")))
+	o, err := oc.CreateOWIDandSign([]byte(r.Form.Get("payload")), ot...)
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 	}
@@ -56,4 +62,19 @@ func handlerCreateOWID(
 		ReturnServerError(d.Config, w, err)
 		return
 	}
+}
+
+func DecodeOthers(v []string) ([]*owid.OWID, error) {
+	var os []*owid.OWID
+
+	for _, o := range v {
+		o, err := owid.FromBase64(o)
+		if err != nil {
+			return nil, err
+		}
+
+		os = append(os, o)
+	}
+
+	return os, nil
 }

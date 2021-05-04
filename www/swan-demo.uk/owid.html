@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
+    <title>SWAN Example</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="grid.css" rel="stylesheet">
+    <script src="/owid-js/v1.js" type="text/javascript"></script>
+    <script src="/salt-js/v1.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Buttons to trigger the display of OWID data or creating an OWID -->
+        <h4>Actions:</h4>
+        <p>
+        <form id="display-form" name="display" onsubmit="return false;">
+            <div class="form-group">
+                <label for="owid">OWID</label>
+                <input type="text" id="owid" class="form-control" name="owid">
+                <div id="display-feedback" class="invalid-feedback" style="display: none;"></div>
+            </div>
+            <button class="btn btn-secondary" onclick="owidBeginDisplay();">Display</button>
+            <button class="btn btn-secondary" onclick="owidBeginCreate();">Create New</button>
+        </form>
+        </p>
+
+        <!-- Form that is displayed to create an OWID -->
+        <form id="create-form" name="create" onsubmit="owidCreate(); return false;" style="display: none;">
+            <h5>Create an OWID</h5>
+            <div class="form-group">
+                <label for="payload">Payload</label>
+                <input type="text" id="payload" class="form-control" name="payload">
+            </div>
+            <div class="form-group">
+                <label for="create-others">Other OWIDs (new-line separated)</label>
+                <textarea class="form-control" id="create-others" name="create-others" rows="3"></textarea>
+            </div>
+            <button id="create" class="btn btn-primary" type="submit">Create</button>
+        </form>
+
+        <!-- Table to display the data -->
+        <table id="table" class="table" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            
+            </tbody>
+        </table>
+        <form id="verify-form" name="verify" onsubmit="return false;" style="display: none;">
+            <div class="form-group">
+                <label for="others">Other OWIDs (Optional)</label>
+                <textarea class="form-control" id="others" rows="3"></textarea>
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    New line separated
+                </small>
+                <div id="verify-feedback" class="invalid-feedback" style="display: none;"></div>
+            </div>
+            <button id="verify" class="btn btn-primary" onclick="owidVerify()">Verify</button>
+        </form>
+    </div>
+    <script>
+        var table = document.getElementById("table");
+        var tableBody = document.getElementById("table-body");
+        var verifyForm = document.getElementById("verify-form");
+        var displayForm = document.getElementById("display-form");
+        var createForm = document.getElementById("create-form");
+        var displayFeedback = document.getElementById("display-feedback");
+        var verifyFeedback = document.getElementById("verify-feedback");
+
+        // Calls the demo only end point /create-owid to create an OWID for the
+        // data provided. In production all OWID creation must occur server side
+        // after other validation has been applied. As OWID creation requires 
+        // a private key it can never be conducted client side.
+        function createOWID(v, o) {
+            console.log(v);
+            console.log(o);
+            var p = new URLSearchParams({ "payload": v });
+            if(o != undefined) {
+                if (Array.isArray(o)) {
+                    o.forEach(other => {
+                        p.append("others", other)    
+                    })
+                } else {
+                    p.append("others", o)
+                }
+            }
+            return fetch("/create-owid", { method: "POST", body: p })
+                .then(r => {
+                    if (r.status === 200) {
+                        return r.text();
+                    }
+                    throw new Error(r.statusText);
+                });
+        }
+
+        function display() {
+            createForm.style.display = "none";
+
+            displayForm.style.display = null;
+            displayForm.classList.remove("was-validated");
+            displayFeedback.style.display = "none";
+            displayFeedback.innerText = "";
+
+            table.style.display = null;
+
+            verifyForm.style.display = null;
+            verifyForm.classList.remove("was-validated");
+            verifyFeedback.style.display = "none";
+            verifyFeedback.innerText = "";
+        }
+
+        function create() {
+            createForm.style.display = null;
+
+            displayForm.style.display = "none";
+            table.style.display = "none";
+            verifyForm.style.display = "none";
+        }
+
+        function clearTable() {
+            while(tableBody.hasChildNodes())
+            {
+                tableBody.removeChild(tableBody.lastChild);
+            }
+        }
+
+        // Adds a row to the table.
+        function displayKeyValue(k, v) {
+            var ek = document.getElementById(`${k}-key`);
+            var ev = document.getElementById(`${k}-value`);
+
+            if (ek == null || ev == null) {
+                var et = document.getElementById("table-body");
+                var er = document.createElement("tr");
+                ek = document.createElement("td");
+                ev = document.createElement("td");
+                ek.setAttribute("id", `${k}-key`);
+                ev.setAttribute("id", `${k}-value`);
+                ev.style.wordBreak = "break-all";
+                ek.innerText = k;
+                ev.innerText = v;
+                er.appendChild(ek);
+                er.appendChild(ev);
+                et.appendChild(er);
+            } else {
+                ek.innerText = k;
+                ev.innerText = v;
+            }
+        }
+
+        function owidBeginDisplay() {
+            try {
+                var value = document.display.owid.value;
+                if (!value) {
+                    throw `'${value}'' is not a valid owid.`;
+                }
+
+                var o = new owid(document.display.owid.value);
+
+                if (o) {
+                    clearTable();
+                    display();
+                    for (var property in o["owid"]) {
+                        if (o.owid.hasOwnProperty(property)) {
+
+                            if(typeof o.owid[property] == "function") {
+                                displayKeyValue(property, o.owid[property]())
+                            } else {
+                                displayKeyValue(property, o.owid[property])
+                            }
+                            
+                        }
+                    }
+                }
+            } catch (err) {
+                displayForm.classList.add("was-validated");
+                displayFeedback.style.display = "block";
+                displayFeedback.innerText = err;
+            }
+        }
+
+        function owidBeginCreate() {
+            create();
+        }
+
+        function owidCreate() {
+            var payload = document.create.payload.value;
+            var others = document.create["create-others"].value;
+
+            if (others == "") {
+                others = undefined;
+            } else {
+                others = others
+                    .split("\n")
+                    .filter(other => other != "");
+            }
+
+            createOWID(payload, others)
+            .then(o => {
+                document.display.owid.value = o;
+                owidBeginDisplay();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+
+        function owidVerify(o) {
+            verifyForm.classList.remove("was-validated");
+            verifyFeedback.style.display = "none";
+            verifyFeedback.innerText = "";
+            
+            if (!o) {
+                o = new owid(document.display.owid.value);
+            }
+
+            var others = document.verify.others.value;
+
+            if (others == "") {
+                others = undefined;
+            } else {
+                others = others
+                    .split("\n")
+                    .filter(other => other != "");
+            }
+
+            try {
+                o.verify(others)
+                .then(r => {
+                    displayKeyValue("valid", r);
+                })
+                .catch(err => {
+                    displayKeyValue("valid", "false");
+                    verifyForm.classList.add("was-validated");
+                    verifyFeedback.style.display = "block";
+                    verifyFeedback.innerText = err;
+                });
+            } catch (err) {
+                displayKeyValue("valid", "false");
+                verifyForm.classList.add("was-validated");
+                verifyFeedback.style.display = "block";
+                verifyFeedback.innerText = err; 
+            }
+        }
+    </script>  
+</body>
+</html>

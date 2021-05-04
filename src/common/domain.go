@@ -22,7 +22,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"os"
 	"owid"
 	"path/filepath"
@@ -142,28 +141,8 @@ func (d *Domain) LookupHTML(p string) *template.Template {
 	return t
 }
 
-func (d *Domain) NewSWAN() *swan.SWAN {
-	return d.swan.NewSWAN()
-}
-
-func (d *Domain) NewClient(r *http.Request) *swan.Client {
-	return d.swan.NewClient(r)
-}
-
-func (d *Domain) NewSWANUpdate(r *http.Request, u *url.URL) *swan.Update {
-	return d.swan.NewUpdate(r, u)
-}
-
-func (d *Domain) NewSWANFetch(r *http.Request, u *url.URL) *swan.Fetch {
-	return d.swan.NewFetch(r, u)
-}
-
-func (d *Domain) NewSWANStop(r *http.Request, u *url.URL, h string) *swan.Stop {
-	return d.swan.NewStop(r, u, h)
-}
-
-func (d *Domain) NewSWANDecrypt(e string) *swan.Decrypt {
-	return d.swan.NewDecrypt(e)
+func (d *Domain) SWAN() *swan.Connection {
+	return d.swan
 }
 
 // GetOWIDCreator returns the OWID creator from the OWID store for the the

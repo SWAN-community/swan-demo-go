@@ -53,7 +53,7 @@ func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			err,
 			http.StatusBadRequest)
 	}
-	s := d.NewSWANStop(r, returnUrl, r.Form.Get("host"))
+	s := d.SWAN().NewStop(r, returnUrl, r.Form.Get("host"))
 
 	// Use the access node from the form as this will be used by the publisher
 	// to decrypt the result.

@@ -313,12 +313,7 @@ func dialogUpdateModel(
 }
 
 func setNewSWID(d *common.Domain, m *dialogModel) *swan.Error {
-	c, err := createSWID(d)
-	if err != nil {
-		return err
-	}
-	var o *owid.OWID
-	o, err.Err = owid.FromByteArray(c)
+	o, err := d.SWAN().CreateSWID()
 	if err != nil {
 		return err
 	}
@@ -342,7 +337,7 @@ func getRedirectUpdateURL(
 	if err != nil {
 		return "", &swan.Error{Err: err}
 	}
-	u := d.NewSWANUpdate(r, returnUrl)
+	u := d.SWAN().NewUpdate(r, returnUrl)
 
 	// Use the form to get any information from the initial storage operation
 	// to configure the update storage operation.
@@ -381,10 +376,6 @@ func getRedirectUpdateURL(
 	u.Salt = []byte(m.Get("salt"))
 	u.SWID = m.Get("swid")
 	return u.GetURL(c)
-}
-
-func createSWID(d *common.Domain) ([]byte, *swan.Error) {
-	return d.NewSWAN().CreateSWID()
 }
 
 func decodeOWID(
@@ -440,7 +431,7 @@ func decryptAndDecode(
 	d *common.Domain,
 	v string,
 	m *dialogModel) *swan.Error {
-	r, err := d.NewSWANDecrypt(v).DecryptRaw()
+	r, err := d.SWAN().DecryptRaw(v)
 	if err != nil {
 		return err
 	}
@@ -478,7 +469,7 @@ func redirectToSWANDialog(
 	r *http.Request) {
 
 	// Create the fetch function returning to this URL.
-	f := d.NewSWANFetch(r, common.GetCleanURL(d.Config, r))
+	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r))
 
 	// User Interface Provider fetch operations only need to consider
 	// one node if the caller will have already recently accessed SWAN.

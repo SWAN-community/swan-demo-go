@@ -147,7 +147,7 @@ func newSWANDataFromCookies(r *http.Request) ([]*swan.Pair, error) {
 func newSWANData(
 	d *common.Domain,
 	v string) ([]*swan.Pair, *swan.Error) {
-	return d.NewSWANDecrypt(v).Decrypt()
+	return d.SWAN().Decrypt(v)
 }
 
 func newSWANDataFromPath(
@@ -196,13 +196,13 @@ func getSWANURL(
 	d *common.Domain,
 	r *http.Request,
 	p []*swan.Pair) (string, *swan.Error) {
-	return d.NewSWANFetch(r, common.GetCleanURL(d.Config, r)).GetURL()
+	return d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r)).GetURL()
 }
 
 func getHomeNode(
 	d *common.Domain,
 	r *http.Request) (string, *swan.Error) {
-	return d.NewClient(r).HomeNode()
+	return d.SWAN().HomeNode(r)
 }
 
 func setCookies(r *http.Request, w http.ResponseWriter, p []*swan.Pair) {

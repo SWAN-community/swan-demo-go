@@ -38,6 +38,7 @@
             <div class="form-group">
                 <label for="create-others">Other OWIDs (new-line separated)</label>
                 <textarea class="form-control" id="create-others" name="create-others" rows="3"></textarea>
+                <div id="create-feedback" class="invalid-feedback" style="display: none;"></div>
             </div>
             <button id="create" class="btn btn-primary" type="submit">Create</button>
         </form>
@@ -67,6 +68,7 @@
         </form>
     </div>
     <script>
+        // DOM items to be read and manipulated.
         var table = document.getElementById("table");
         var tableBody = document.getElementById("table-body");
         var verifyForm = document.getElementById("verify-form");
@@ -74,6 +76,7 @@
         var createForm = document.getElementById("create-form");
         var displayFeedback = document.getElementById("display-feedback");
         var verifyFeedback = document.getElementById("verify-feedback");
+        var createFeedback = document.getElementById("create-feedback");
 
         // Calls the demo only end point /create-owid to create an OWID for the
         // data provided. In production all OWID creation must occur server side
@@ -101,30 +104,29 @@
                 });
         }
 
+        // Display the page components required to display the OWID details.
         function display() {
             createForm.style.display = "none";
-
             displayForm.style.display = null;
-            displayForm.classList.remove("was-validated");
+            document.display.owid.classList.remove("is-invalid");
             displayFeedback.style.display = "none";
             displayFeedback.innerText = "";
-
             table.style.display = null;
-
             verifyForm.style.display = null;
-            verifyForm.classList.remove("was-validated");
+            document.verify.others.classList.remove("is-invalid");
             verifyFeedback.style.display = "none";
             verifyFeedback.innerText = "";
         }
 
+        // Display the page components required to create a new OWID.
         function create() {
             createForm.style.display = null;
-
             displayForm.style.display = "none";
             table.style.display = "none";
             verifyForm.style.display = "none";
         }
 
+        // Clear the table containing the unpacked OWID.
         function clearTable() {
             while(tableBody.hasChildNodes())
             {
@@ -156,6 +158,18 @@
             }
         }
 
+        // Takes a Uint8Array and converts it into a base 64 string.
+        function parseToString(v) {
+            var binary = "";
+            var len = v.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(v[i]);
+            }
+            return btoa(binary);
+        }
+
+
+        // Set up the demo to unpack the given OWID and display the values.
         function owidBeginDisplay() {
             try {
                 var value = document.display.owid.value;
@@ -170,28 +184,36 @@
                     display();
                     for (var property in o["owid"]) {
                         if (o.owid.hasOwnProperty(property)) {
-
-                            if(typeof o.owid[property] == "function") {
-                                displayKeyValue(property, o.owid[property]())
+                            if (typeof o.owid[property] == "function") {
+                                displayKeyValue(property, o.owid[property]());
+                            } else if (o.owid[property].constructor === "Uint8Array" ||
+                                Object.prototype.toString.call(o.owid[property]) === "[object Uint8Array]") {
+                                displayKeyValue(property, parseToString(o.owid[property]));
                             } else {
-                                displayKeyValue(property, o.owid[property])
+                                displayKeyValue(property, o.owid[property]);
                             }
-                            
+                           
                         }
                     }
                 }
             } catch (err) {
-                displayForm.classList.add("was-validated");
+                document.display.owid.classList.add("is-invalid");
                 displayFeedback.style.display = "block";
                 displayFeedback.innerText = err;
             }
         }
 
+        // Set up the demo to create an OWID
         function owidBeginCreate() {
             create();
         }
 
+        // Create a new OWID
         function owidCreate() {
+            document.create["create-others"].classList.add("is-invalid");
+            createFeedback.style.display = "none";
+            createFeedback.innerText = "";
+
             var payload = document.create.payload.value;
             var others = document.create["create-others"].value;
 
@@ -210,11 +232,20 @@
             })
             .catch(err => {
                 console.log(err);
+                document.create["create-others"].classList.add("is-invalid");
+                createFeedback.style.display = "block";
+                createFeedback.innerText = err; 
             })
         }
 
+        // Verify OWID method gets any data for other OWIDs and then, 
+        // on the owid object, calls the owid.verify method. This is a function
+        // of the owid-js library which will attempt to verify the OWID using 
+        // the public key of the creator. If the window does not support 'crypto'
+        // then the verification is performed server side by calling the 'verify' 
+        // well-known endpoint.
         function owidVerify(o) {
-            verifyForm.classList.remove("was-validated");
+            document.verify.others.classList.remove("is-invalid");
             verifyFeedback.style.display = "none";
             verifyFeedback.innerText = "";
             
@@ -223,7 +254,6 @@
             }
 
             var others = document.verify.others.value;
-
             if (others == "") {
                 others = undefined;
             } else {
@@ -236,16 +266,10 @@
                 o.verify(others)
                 .then(r => {
                     displayKeyValue("valid", r);
-                })
-                .catch(err => {
-                    displayKeyValue("valid", "false");
-                    verifyForm.classList.add("was-validated");
-                    verifyFeedback.style.display = "block";
-                    verifyFeedback.innerText = err;
                 });
             } catch (err) {
                 displayKeyValue("valid", "false");
-                verifyForm.classList.add("was-validated");
+                document.verify.others.classList.add("is-invalid");
                 verifyFeedback.style.display = "block";
                 verifyFeedback.innerText = err; 
             }

@@ -144,24 +144,22 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Call the SWAN access node for the CMP to turn the data provided in
-		// the URL into usable data for the dialog if this is a GET method.
-		if r.Method == "GET" {
-			e := decryptAndDecode(d, s, &m)
-			if e != nil {
+		// the URL into usable data for the dialog.
+		e := decryptAndDecode(d, s, &m)
+		if e != nil {
 
-				// If the data can't be decrypted rather than another type of
-				// error then redirect via SWAN to the dialog.
-				if e.StatusCode() >= 400 && e.StatusCode() < 500 {
-					redirectToSWANDialog(d, w, r)
-					return
-				}
-				common.ReturnStatusCodeError(
-					d.Config,
-					w,
-					e.Err,
-					http.StatusBadRequest)
+			// If the data can't be decrypted rather than another type of
+			// error then redirect via SWAN to the dialog.
+			if e.StatusCode() >= 400 && e.StatusCode() < 500 {
+				redirectToSWANDialog(d, w, r)
 				return
 			}
+			common.ReturnStatusCodeError(
+				d.Config,
+				w,
+				e.Err,
+				http.StatusBadRequest)
+			return
 		}
 	}
 

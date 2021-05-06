@@ -126,6 +126,7 @@ The following host resolutions are used in the sample configuration:
   127.0.0.1	zeta.swan-demo.uk
   127.0.0.1	liveramp.swan-demo.uk
   127.0.0.1	quantcast.swan-demo.uk
+  127.0.0.1	sirdata.swan-demo.uk
   # swift access nodes
   127.0.0.1	51da.uk
   127.0.0.1	51db.uk
@@ -451,7 +452,7 @@ following roles.
     * At least two different domains for marketers. For example 
     ``cool-bikes.uk`` and ``cool-creams.uk``.
 
-    * A domain for SSPs, Exchanges, DPSs and CMPs. For the purposes of the demo they can be sub domains. For example ``dsp.swan-demo.uk`` amd ``cmp.swan-demo.uk``
+    * A domain for SSPs, Exchanges, DPSs and CMPs. For the purposes of the demo they can be sub domains. For example ``dsp.swan-demo.uk`` and ``cmp.swan-demo.uk``
 
 * Setup SSL certificates in Azure using 
 [App Service Certificates](https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.CertificateRegistration%2FcertificateOrders) 

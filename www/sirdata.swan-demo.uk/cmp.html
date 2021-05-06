@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="data:;base64,=">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{ .Title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/bootstrap.min.css" rel="stylesheet">
+    <link href="/cmp.css" rel="stylesheet">
+</head>
+<body>
+    <div class="blur"></div>
+    <form method="POST">
+        {{ .HiddenFields }}
+        <div class="modal" style="display: block" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Sirdata: {{ .Title }}</h5>
+                    <button type="submit" class="close" value="close" name="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="pt-3 pb-3">
+                        <div class="form-group mb-6">
+                            <label for="swid">
+                                <span>Secure Web ID</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#swidHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <input class="button-link reset" type="submit" value="Reset" name="reset-swid"/>
+                            <input type="text" class="form-control" value="{{ .SWIDAsString }}" readonly>
+                            <input type="hidden" id="swid" name="swid" value="{{ .SWIDAsOWID }}">
+                            <small id="swidHelp" class="form-text text-muted collapse">
+                                You have a right to be forgotten, which you can exercise at any time by resetting this browser's Secure Web ID. You can also obtain a temporary Secure Web ID by using the incognito/private browsing function of your browser.
+                            </small>
+                        </div>
+                        <div class="form-group form-check mb-6 pl-2 py-4">
+                            <input type="checkbox" id="pref" name="pref" {{ if eq .Pref "on" }} checked {{ end }}>
+                            <label class="form-check-label small" for="pref">
+                                <span>Personalize Marketing</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#prefHelp2" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <small id="prefHelp" class="form-text text-muted">
+                                Select “personalized marketing” to consent to receive targeted content to a web-enabled device based on your browsing activity and interactions.
+                                The parties listed <a target="_blank" href="https://swan-community.github.io/swan-parties/">on this page</a>, which may change over time, may receive your personal information. 
+                            </small>
+                            <small id="prefHelp2" class="form-text text-muted collapse">
+                                You may still receive targeted content unrelated to your browsing activity or interactions. Your consent will automatically expire 2 years after you provide it.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                <span>Email address (optional)</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#emailHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <input class="button-link reset" type="submit" value="Reset" name="reset-email-salt"/>
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Optional email" value="{{ .Email }}">
+                            <small id="emailHelp" class="form-text text-muted my-2 collapse">
+                                By providing your email address, you can apply your preferences to your experience when you use other web-enabled devices.
+                            </small>
+                        </div>
+                        <div id="salt-form-group" class="form-group collapse">
+                            <label for="salt">
+                                <span>Tap 4 icons to protect your email</span>
+                                <button class="icon" type="button" data-toggle="collapse" data-target="#saltHelp" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="/info-circle.svg">
+                                </button>
+                            </label>
+                            <button id="reset-salt" type="button" class="btn reset">Reset Icons</button>
+                            <small id="saltHelp" class="form-text text-muted collapse">
+                                <p>Choose four images from the following grid to protected your email address.</p>
+                                <p>We will send you a brief email to remind you of the icons selected and provide more information. </p>
+                                <p>Choose the same icons when entering your email on another browser or device to link your activity with this browser.</p>
+                                <hr/>
+                                <p>This implementation needs to be modified to support screen readers and ARIA prior to production use. It is provided for conceptual demonstration purposes only at this time.</p>
+                                <p>Icons provided by the Noun Project under creative commons licence.</p>
+                            </small>
+                            <div class="my-2" id="salt-container">
+                            </div>
+                            <input type="hidden" class="form-control" id="salt" name="salt" aria-describedby="saltHelp" value="{{ .Salt }}">
+                        </div>
+                        <div class="form-group mt-2">
+                            <small id="genHelp" class="form-text text-muted">
+                                <p>You may change your preferences at any time by toggling the applicable preference options above. Please see further our <a href="https://github.com/SWAN-community/swan/blob/main/model-terms-explainer.md">Privacy Policy</a>.</p>
+                                <p>These details are shared with the SWAN Network to manage your preferences. See further the SWAN Network <a href="https://github.com/SWAN-community/swan/blob/main/legal-entity-explainer.md">Privacy Notice</a>.</p>
+                                <p>Note: links are to explainers not real privacy policies. All data is used for demonstration purposes only.</p>
+                            </small>
+                        </div>
+                    </div>        
+                </div>
+                <div class="modal-footer">
+                    <button id="update" type="submit" class="w-75 mx-auto btn btn-primary text-center">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-3.2.1.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="holder.min.js"></script>
+    <script src="/salt-js/v1.js"></script>
+    <script src="/cmp.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>    
+</body>
+</html>

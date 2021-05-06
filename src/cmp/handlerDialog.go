@@ -19,9 +19,9 @@ package cmp
 import (
 	"common"
 	"compress/gzip"
-	"encoding/base64"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"net/url"
 	"owid"
@@ -96,7 +96,6 @@ func (m *dialogModel) SWIDAsString() (string, error) {
 
 func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	var m dialogModel
-	m.Values = make(url.Values)
 
 	// Parse the form variables.
 	err := r.ParseForm()
@@ -105,23 +104,19 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Set the model variables to the form.
+	m.Values = r.Form
+
 	// If all the form variables are present in the query string then these can
 	// be used with the form and the update initiated. A new SWID will be used.
 	// TODO: This values will need to be encrypted as a part of a long lived
 	// SWIFT storage transaction before production use.
 	if r.Method == "GET" &&
-		r.Form.Get("email") != "" &&
-		r.Form.Get("salt") != "" &&
-		r.Form.Get("pref") != "" &&
-		r.Form.Get("accessNode") != "" &&
-		r.Form.Get("returnUrl") != "" {
-
-		// Copy the key values.
-		m.Values.Set("email", r.Form.Get("email"))
-		m.Values.Set("salt", r.Form.Get("salt"))
-		m.Values.Set("pref", r.Form.Get("pref"))
-		m.Values.Set("accessNode", r.Form.Get("accessNode"))
-		m.Values.Set("returnUrl", r.Form.Get("returnUrl"))
+		m.Get("email") != "" &&
+		m.Get("salt") != "" &&
+		m.Get("pref") != "" &&
+		m.Get("accessNode") != "" &&
+		m.Get("returnUrl") != "" {
 
 		// Get a new SWID.
 		se := setNewSWID(d, &m)
@@ -135,8 +130,8 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 	} else {
 
-		// Not parameters were provided so get the SWAN data from the request
-		// path.
+		// No parameters were provided so get the SWAN data from the request
+		// path. If no data is present then redirect to SWAN.
 		s := common.GetSWANDataFromRequest(r)
 		if s == "" {
 			redirectToSWANDialog(d, w, r)
@@ -174,7 +169,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// If the method is POST then update the model with the data from the form.
 	if r.Method == "POST" {
-		se := dialogUpdateModel(d, r, &m)
+		se := dialogUpdateModel(d, &m)
 		if se != nil {
 			common.ReturnProxyError(d.Config, w, se)
 			return
@@ -186,24 +181,32 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	if m.update == true {
 
 		// The user has request that the data be updated in the SWAN network.
-		// Set the redirection URL for the operation to store the data. The web
+
+		// Prepare the SWAN update operation.
+		o, err := getUpdate(d, r, m.Values)
+
+		// Get the OWID creator which is needed to sign the data just captured.
+		c, err := d.GetOWIDCreator()
+		if err != nil {
+			common.ReturnServerError(d.Config, w, err)
+			return
+		}
+
+		// Set the redirection URL for the operation to store the data. Web
 		// browser will then be redirected to that URL, the data saved and the
 		// return URL for the publisher returned to.
-		u, err := getRedirectUpdateURL(d, r, m.Values)
-		if err != nil {
-			common.ReturnProxyError(d.Config, w, err)
+		u, se := o.GetURL(c)
+		if se != nil {
+			common.ReturnProxyError(d.Config, w, se)
+			return
 		}
-		if err != nil {
-			common.ReturnProxyError(d.Config, w, err)
-		}
-
-		// Get the CMP URL for the email.
-		eu := getCMPURL(d, r, &m)
 
 		// Send the email if the SMTP server is setup.
-		e := sendReminderEmail(d, m.Values, eu)
-		if e != nil {
-			fmt.Println(err)
+		if o.Email != "" && strings.Contains(o.Email, "@") {
+			err = sendReminderEmail(d, o, c)
+			if err != nil {
+				log.Println(err)
+			}
 		}
 
 		// Redirect the response to the return URL.
@@ -224,45 +227,36 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
-	smtp := common.NewSMTP()
+func sendReminderEmail(
+	d *common.Domain,
+	o *swan.Update,
+	c *owid.Creator) error {
 
-	e := m.Get("email")
+	// Get the salt for display of the grid in the email.
+	m := EmailTemplate{Salt: []byte{
+		o.Salt[0] >> 4,
+		o.Salt[0] & 0xF,
+		o.Salt[1] >> 4,
+		o.Salt[1] & 0xF}}
 
-	if e == "" {
-		return nil
-	}
-
-	s := "SWAN Demo: Email Reminder"
-	t := d.LookupHTML("email-template.html")
-
-	b := m.Get("salt")
-
-	if b == "" {
-		return nil
-	}
-
-	var a []byte
-	a, err := base64.RawStdEncoding.DecodeString(b)
+	// Set the URL using the parameters contained in the update operation.
+	u := url.URL{
+		Scheme: d.Config.Scheme,
+		Host:   d.Host,
+		Path:   "/preferences"}
+	q, err := o.GetValues(c)
 	if err != nil {
 		return err
 	}
+	u.RawQuery = q.Encode()
+	m.PreferencesUrl = u.String()
 
-	if len(a) != 2 {
-		return nil
-	}
-
-	s1, s2 := a[0]>>4, a[0]&0xF
-	s3, s4 := a[1]>>4, a[1]&0xF
-
-	var arr = []byte{s1, s2, s3, s4}
-
-	td := EmailTemplate{
-		Salt:           arr,
-		PreferencesUrl: u,
-	}
-
-	err = smtp.Send(e, s, t, td)
+	// Set the email with the model populated.
+	err = common.NewSMTP().Send(
+		o.Email,
+		"SWAN Demo: Email Reminder",
+		d.LookupHTML("email-template.html"),
+		m)
 	if err != nil {
 		return err
 	}
@@ -271,38 +265,32 @@ func sendReminderEmail(d *common.Domain, m url.Values, u string) error {
 
 }
 
-func dialogUpdateModel(
-	d *common.Domain,
-	r *http.Request,
-	m *dialogModel) *swan.Error {
-
-	// Copy the field values from the form.
-	m.Values.Set("swid", r.Form.Get("swid"))
-	m.Values.Set("email", r.Form.Get("email"))
-	m.Values.Set("salt", r.Form.Get("salt"))
-	m.Values.Set("pref", r.Form.Get("pref"))
+func dialogUpdateModel(d *common.Domain, m *dialogModel) *swan.Error {
 
 	// Check to see if the post is as a result of the SWID reset.
-	if r.Form.Get("reset-swid") != "" {
+	if m.Get("reset-swid") != "" {
 
 		// Replace the SWID with a new random value.
+		m.Del("reset-swid")
 		return setNewSWID(d, m)
 	}
 
 	// Check to see if the email and salt are being reset.
-	if r.Form.Get("reset-email-salt") != "" {
+	if m.Get("reset-email-salt") != "" {
 		m.Set("email", "")
 		m.Set("salt", "")
+		m.Del("reset-email-salt")
 		return nil
 	}
 
 	// Check to see if the post is as a result for all data.
-	if r.Form.Get("reset-all") != "" {
+	if m.Get("reset-all") != "" {
 
 		// Replace the data.
 		m.Set("email", "")
 		m.Set("salt", "")
 		m.Set("pref", "")
+		m.Del("reset-all")
 		return setNewSWID(d, m)
 	}
 
@@ -321,21 +309,15 @@ func setNewSWID(d *common.Domain, m *dialogModel) *swan.Error {
 	return nil
 }
 
-func getRedirectUpdateURL(
+func getUpdate(
 	d *common.Domain,
 	r *http.Request,
-	m url.Values) (string, *swan.Error) {
-
-	// Get the OWID creator which is needed to sign the data just captured.
-	c, err := d.GetOWIDCreator()
-	if err != nil {
-		return "", &swan.Error{Err: err}
-	}
+	m url.Values) (*swan.Update, error) {
 
 	// Configure the update operation from this demo domain's configuration.
 	returnUrl, err := url.Parse(r.Form.Get("returnUrl"))
 	if err != nil {
-		return "", &swan.Error{Err: err}
+		return nil, err
 	}
 	u := d.SWAN().NewUpdate(r, returnUrl)
 
@@ -371,11 +353,14 @@ func getRedirectUpdateURL(
 	if r.Form.Get("useHomeNode") != "" {
 		u.UseHomeNode = r.Form.Get("useHomeNode") == "true"
 	}
+
+	// Set the parameters for the update.
 	u.Pref = m.Get("pref") == "on"
 	u.Email = m.Get("email")
 	u.Salt = []byte(m.Get("salt"))
 	u.SWID = m.Get("swid")
-	return u.GetURL(c)
+
+	return u, nil
 }
 
 func decodeOWID(
@@ -526,45 +511,4 @@ func redirectToSWANDialog(
 		return
 	}
 	http.Redirect(w, r, u, 303)
-}
-
-// Returns the CMP preferences URL.
-func getCMPURL(d *common.Domain, r *http.Request, m *dialogModel) string {
-	var u url.URL
-	u.Scheme = d.Config.Scheme
-	u.Host = d.Host
-	u.Path = "/preferences/"
-	q := u.Query()
-	q.Set("returnUrl", r.Form.Get("returnUrl"))
-	q.Set("accessNode", r.Form.Get("accessNode"))
-	addSWANParams(r, &q, m)
-	setFlags(d, &q)
-	u.RawQuery = q.Encode()
-	return u.String()
-}
-
-func setFlags(d *common.Domain, q *url.Values) {
-	if d.SwanPostMessage {
-		q.Set("postMessageOnComplete", "true")
-	} else {
-		q.Set("postMessageOnComplete", "false")
-	}
-	if d.SwanDisplayUserInterface {
-		q.Set("displayUserInterface", "true")
-	} else {
-		q.Set("displayUserInterface", "false")
-	}
-	if d.SwanUseHomeNode {
-		q.Set("useHomeNode", "true")
-	} else {
-		q.Set("useHomeNode", "false")
-	}
-}
-
-func addSWANParams(r *http.Request, q *url.Values, m *dialogModel) {
-	if m != nil {
-		for k, v := range m.Values {
-			q.Set(k, v[0])
-		}
-	}
 }

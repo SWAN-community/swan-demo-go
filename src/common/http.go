@@ -89,8 +89,12 @@ func NewError(c *Configuration, r *http.Response) *swan.Error {
 
 // ReturnProxyError returns an error where the request is related to a proxy
 // request being passed to another end point.
-func ReturnProxyError(c *Configuration, w http.ResponseWriter, err error) {
-	ReturnStatusCodeError(c, w, err, http.StatusInternalServerError)
+func ReturnProxyError(c *Configuration, w http.ResponseWriter, e *swan.Error) {
+	s := http.StatusInternalServerError
+	if e.Response != nil {
+		s = e.Response.StatusCode
+	}
+	ReturnStatusCodeError(c, w, e.Err, s)
 }
 
 // ReturnServerError returns an internal server error.

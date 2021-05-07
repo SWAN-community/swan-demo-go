@@ -40,4 +40,8 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		handlerComplain(d, w, r)
 		return
 	}
+	if strings.HasPrefix(r.URL.Path, "/update") {
+		handlerUpdate(d, w, r)
+		return
+	}
 }

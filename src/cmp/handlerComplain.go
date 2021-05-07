@@ -33,33 +33,33 @@ var complaintSubjectTemplate = newComplaintTemplate(
 	"subject",
 	"SWAN Complaint: {{ .Organization }}")
 var complaintBodyTemplate = newComplaintTemplate("body", `
-To whom it may concern,
-
-I believe that {{ .Organization }} used my personal information without a 
-legal basis on {{ .Date }}. 
-
-I provided you the following permissions for use of this data.
-
-	Personalize Marketing: {{ .Preferences }}
-
-You cryptographically signed this information. We therefore agree that you were
-in posession of the information.
-
-As an organization operating in '{{ .Country }}' you are bound by the following 
-rules.
-
-	{{ .DPRURL }}
-
-I would be grateful if you can respond by email to this address within 7 
-working days.
-
-Regards,
-
-[INSERT YOU NAME]
-
---- DO NOT CHANGE THE TEXT BELOW THIS LINE ---
-{{ .IDAsString }}
---- DO NOT CHANGE THE TEXT ABOVE THIS LINE ---`)
+ To whom it may concern,
+ 
+ I believe that {{ .Organization }} used my personal information without a 
+ legal basis on {{ .Date }}. 
+ 
+ I provided you the following permissions for use of this data.
+ 
+	 Personalize Marketing: {{ .Preferences }}
+ 
+ You cryptographically signed this information. We therefore agree that you were
+ in posession of the information.
+ 
+ As an organization operating in '{{ .Country }}' you are bound by the following 
+ rules.
+ 
+	 {{ .DPRURL }}
+ 
+ I would be grateful if you can respond by email to this address within 7 
+ working days.
+ 
+ Regards,
+ 
+ [INSERT YOU NAME]
+ 
+ --- DO NOT CHANGE THE TEXT BELOW THIS LINE ---
+ {{ .IDAsString }}
+ --- DO NOT CHANGE THE TEXT ABOVE THIS LINE ---`)
 
 // Complaint used to format an email template.
 type Complaint struct {

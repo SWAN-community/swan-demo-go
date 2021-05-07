@@ -196,7 +196,7 @@ func getSWANURL(
 	d *common.Domain,
 	r *http.Request,
 	p []*swan.Pair) (string, *swan.Error) {
-	return d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r)).GetURL()
+	return d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r), p).GetURL()
 }
 
 func getHomeNode(
@@ -206,12 +206,7 @@ func getHomeNode(
 }
 
 func setCookies(r *http.Request, w http.ResponseWriter, p []*swan.Pair) {
-	var s bool
-	if r.URL.Scheme == "https" {
-		s = true
-	} else {
-		s = false
-	}
+	s := r.URL.Scheme == "https"
 	for _, i := range p {
 		if i.Value != "" {
 			c := i.AsCookie(r, w, s)

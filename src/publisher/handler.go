@@ -150,16 +150,14 @@ func newSWANData(
 	return d.SWAN().Decrypt(v)
 }
 
+// Get the section of the URL that has the SWAN data.
 func newSWANDataFromPath(
 	d *common.Domain,
 	r *http.Request) ([]*swan.Pair, *swan.Error) {
-
-	// Get the section of the URL that has the SWAN data.
 	b := common.GetSWANDataFromRequest(r)
 	if b == "" {
 		return nil, nil
 	}
-
 	return newSWANData(d, b)
 }
 
@@ -179,6 +177,9 @@ func redirectToCleanURL(
 	http.Redirect(w, r, u, 303)
 }
 
+// Redirect back to the current URL after fetching the SWAN data. If SWAN data
+// does not exist then use the values contained in the swan pairs provided in
+// parameter p.
 func redirectToSWANFetch(
 	d *common.Domain,
 	w http.ResponseWriter,

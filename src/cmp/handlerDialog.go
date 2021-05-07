@@ -19,6 +19,7 @@ package cmp
 import (
 	"common"
 	"compress/gzip"
+	"encoding/base64"
 	"fmt"
 	"html/template"
 	"log"
@@ -194,7 +195,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				http.StatusBadRequest)
 			return
 		}
-		err = o.SetSalt(c, []byte(r.Form.Get("salt")))
+		err = o.SetSalt(c, r.Form.Get("salt"))
 		if err != nil {
 			common.ReturnStatusCodeError(
 				d.Config,
@@ -253,13 +254,17 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 // browsers.
 func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 
-	// Get the salt for display of the grid in the email.
-	s := o.Salt.Payload
-	m := EmailTemplate{Salt: []byte{
-		s[0] >> 4,
-		s[0] & 0xF,
-		s[1] >> 4,
-		s[1] & 0xF}}
+	// Get the salt to display the grid in the email.
+	s, err := base64.RawStdEncoding.DecodeString(o.Salt.PayloadAsString())
+	if err != nil {
+		return err
+	}
+	if len(s) != 2 {
+		return fmt.Errorf("Invalid salt")
+	}
+	s1, s2 := s[0]>>4, s[0]&0xF
+	s3, s4 := s[1]>>4, s[1]&0xF
+	m := ModelEmail{Salt: []byte{s1, s2, s3, s4}}
 
 	// Set the URL using the parameters contained in the update operation.
 	u := url.URL{

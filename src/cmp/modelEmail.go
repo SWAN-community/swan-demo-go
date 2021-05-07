@@ -21,34 +21,25 @@ import (
 	"strings"
 )
 
-type EmailTemplate struct {
+// ModelEmail used with the email template.
+type ModelEmail struct {
 	Salt           []byte
 	PreferencesUrl string
 }
 
-func (t EmailTemplate) Show(i string) bool {
-	b, err := strconv.ParseInt(i, 10, 8)
-	if err != nil {
-		return false
-	}
-
-	for _, v := range t.Salt {
-		if v == byte(b-1) {
+func (m ModelEmail) Show(i int) bool {
+	for _, v := range m.Salt {
+		if v == byte(i-1) {
 			return true
 		}
 	}
 	return false
 }
 
-func (t EmailTemplate) Number(i string) string {
-	b, err := strconv.ParseInt(i, 10, 8)
-	if err != nil {
-		return ""
-	}
-
+func (m ModelEmail) Number(i int) string {
 	var is []string
-	for n, v := range t.Salt {
-		if v == byte(b-1) {
+	for n, v := range m.Salt {
+		if v == byte(i-1) {
 			is = append(is, strconv.Itoa(n+1))
 		}
 	}

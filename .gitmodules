@@ -16,3 +16,6 @@
 [submodule "src/swanop"]
 	path = src/swanop
 	url = https://github.com/SWAN-community/swan-op-go.git
+[submodule "src/salt"]
+	path = src/salt
+	url = https://github.com/SWAN-community/salt-go.git

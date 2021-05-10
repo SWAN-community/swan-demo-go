@@ -197,7 +197,10 @@ func getSWANURL(
 	d *common.Domain,
 	r *http.Request,
 	p []*swan.Pair) (string, *swan.Error) {
-	return d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r), p).GetURL()
+	return d.SWAN().NewFetch(
+		r,
+		common.GetCleanURL(d.Config, r).String(),
+		p).GetURL()
 }
 
 func getHomeNode(

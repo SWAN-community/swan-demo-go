@@ -344,7 +344,7 @@ func getUpdate(
 	if err != nil {
 		return nil, err
 	}
-	u := d.SWAN().NewUpdate(r, returnUrl)
+	u := d.SWAN().NewUpdate(r, returnUrl.String())
 
 	// Use the form to get any information from the initial storage operation
 	// to configure the update storage operation.
@@ -423,7 +423,7 @@ func decryptAndDecode(
 func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Create the fetch function returning to this URL.
-	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r), nil)
+	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r).String(), nil)
 
 	// User Interface Provider fetch operations only need to consider
 	// one node if the caller will have already recently accessed SWAN.

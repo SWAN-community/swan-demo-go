@@ -224,8 +224,8 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Send the email if the SMTP server is setup.
-		if o.Email.PayloadAsString() != "" &&
-			strings.Contains(o.Email.PayloadAsString(), "@") {
+		if o.Email().PayloadAsString() != "" &&
+			strings.Contains(o.Email().PayloadAsString(), "@") {
 			err = sendReminderEmail(d, o)
 			if err != nil {
 				log.Println(err)
@@ -255,7 +255,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 
 	// Get the salt to display the grid in the email.
-	s, err := base64.RawStdEncoding.DecodeString(o.Salt.PayloadAsString())
+	s, err := base64.RawStdEncoding.DecodeString(o.Salt().PayloadAsString())
 	if err != nil {
 		return err
 	}
@@ -280,7 +280,7 @@ func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 
 	// Set the email with the model populated.
 	err = common.NewSMTP().Send(
-		o.Email.PayloadAsString(),
+		o.Email().PayloadAsString(),
 		"SWAN Demo: Email Reminder",
 		d.LookupHTML("email-template.html"),
 		m)

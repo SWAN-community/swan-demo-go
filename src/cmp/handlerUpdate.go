@@ -19,7 +19,6 @@ package cmp
 import (
 	"common"
 	"net/http"
-	"owid"
 )
 
 func handlerUpdate(
@@ -38,7 +37,7 @@ func handlerUpdate(
 	o, err := getUpdate(d, r, &r.Form)
 
 	// Add the values from the form parameters.
-	o.Pref, err = owid.FromBase64(r.Form.Get("pref"))
+	err = o.SetPrefFromOWID(r.Form.Get("pref"))
 	if err != nil {
 		common.ReturnStatusCodeError(
 			d.Config,
@@ -47,7 +46,7 @@ func handlerUpdate(
 			http.StatusBadRequest)
 		return
 	}
-	o.Email, err = owid.FromBase64(r.Form.Get("email"))
+	err = o.SetEmailFromOWID(r.Form.Get("email"))
 	if err != nil {
 		common.ReturnStatusCodeError(
 			d.Config,
@@ -56,7 +55,7 @@ func handlerUpdate(
 			http.StatusBadRequest)
 		return
 	}
-	o.Salt, err = owid.FromBase64(r.Form.Get("salt"))
+	err = o.SetSaltFromOWID(r.Form.Get("salt"))
 	if err != nil {
 		common.ReturnStatusCodeError(
 			d.Config,

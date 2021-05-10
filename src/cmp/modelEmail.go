@@ -17,31 +17,23 @@
 package cmp
 
 import (
-	"strconv"
-	"strings"
+	"salt"
 )
 
 // ModelEmail used with the email template.
 type ModelEmail struct {
-	Salt           []byte
+	*salt.Salt
 	PreferencesUrl string
 }
 
-func (m ModelEmail) Show(i int) bool {
-	for _, v := range m.Salt {
-		if v == byte(i-1) {
-			return true
-		}
-	}
-	return false
-}
+func NewModelEmail(s string) (*ModelEmail, error) {
+	var m ModelEmail
 
-func (m ModelEmail) Number(i int) string {
-	var is []string
-	for n, v := range m.Salt {
-		if v == byte(i-1) {
-			is = append(is, strconv.Itoa(n+1))
-		}
+	sa, err := salt.NewSalt(s)
+	if err != nil {
+		return nil, err
 	}
-	return strings.Join(is[:], " ")
+
+	m.Salt = sa
+	return &m, nil
 }

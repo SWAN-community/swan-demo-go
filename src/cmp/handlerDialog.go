@@ -19,7 +19,6 @@ package cmp
 import (
 	"common"
 	"compress/gzip"
-	"encoding/base64"
 	"fmt"
 	"html/template"
 	"log"
@@ -255,16 +254,10 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 
 	// Get the salt to display the grid in the email.
-	s, err := base64.RawStdEncoding.DecodeString(o.Salt.PayloadAsString())
+	m, err := NewModelEmail(o.Salt.PayloadAsString())
 	if err != nil {
 		return err
 	}
-	if len(s) != 2 {
-		return fmt.Errorf("Invalid salt")
-	}
-	s1, s2 := s[0]>>4, s[0]&0xF
-	s3, s4 := s[1]>>4, s[1]&0xF
-	m := ModelEmail{Salt: []byte{s1, s2, s3, s4}}
 
 	// Set the URL using the parameters contained in the update operation.
 	u := url.URL{

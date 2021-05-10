@@ -114,7 +114,8 @@ func ReturnStatusCodeError(
 	}
 }
 
-// GetCleanURL returns a URL with the SWAN data removed.
+// GetCleanURL returns a URL with the SWAN data removed and no query string
+// parameters.
 func GetCleanURL(c *Configuration, r *http.Request) *url.URL {
 	var u url.URL
 	u.Scheme = c.Scheme

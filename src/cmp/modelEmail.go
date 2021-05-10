@@ -25,15 +25,3 @@ type ModelEmail struct {
 	*salt.Salt
 	PreferencesUrl string
 }
-
-func NewModelEmail(s string) (*ModelEmail, error) {
-	var m ModelEmail
-
-	sa, err := salt.NewSalt(s)
-	if err != nil {
-		return nil, err
-	}
-
-	m.Salt = sa
-	return &m, nil
-}

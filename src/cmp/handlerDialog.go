@@ -26,6 +26,7 @@ import (
 	"net/url"
 	"owid"
 	"reflect"
+	"salt"
 	"strconv"
 	"strings"
 	"swan"
@@ -194,7 +195,16 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				http.StatusBadRequest)
 			return
 		}
-		err = o.SetSalt(c, r.Form.Get("salt"))
+		s, err := salt.FromBase64(r.Form.Get("salt"))
+		if err != nil {
+			common.ReturnStatusCodeError(
+				d.Config,
+				w,
+				err,
+				http.StatusBadRequest)
+			return
+		}
+		err = o.SetSalt(c, s)
 		if err != nil {
 			common.ReturnStatusCodeError(
 				d.Config,
@@ -223,8 +233,8 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Send the email if the SMTP server is setup.
-		if o.Email.PayloadAsString() != "" &&
-			strings.Contains(o.Email.PayloadAsString(), "@") {
+		if o.Email().PayloadAsString() != "" &&
+			strings.Contains(o.Email().PayloadAsString(), "@") {
 			err = sendReminderEmail(d, o)
 			if err != nil {
 				log.Println(err)
@@ -254,7 +264,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 
 	// Get the salt to display the grid in the email.
-	m, err := NewModelEmail(o.Salt.PayloadAsString())
+	s, err := salt.FromByteArray(o.Salt().Payload)
 	if err != nil {
 		return err
 	}
@@ -269,14 +279,13 @@ func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 		return err
 	}
 	u.RawQuery = q.Encode()
-	m.PreferencesUrl = u.String()
 
 	// Set the email with the model populated.
 	err = common.NewSMTP().Send(
-		o.Email.PayloadAsString(),
+		o.Email().PayloadAsString(),
 		"SWAN Demo: Email Reminder",
 		d.LookupHTML("email-template.html"),
-		m)
+		ModelEmail{Salt: s, PreferencesUrl: u.String()})
 	if err != nil {
 		return err
 	}
@@ -337,7 +346,7 @@ func getUpdate(
 	if err != nil {
 		return nil, err
 	}
-	u := d.SWAN().NewUpdate(r, returnUrl)
+	u := d.SWAN().NewUpdate(r, returnUrl.String())
 
 	// Use the form to get any information from the initial storage operation
 	// to configure the update storage operation.
@@ -416,7 +425,7 @@ func decryptAndDecode(
 func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Create the fetch function returning to this URL.
-	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r), nil)
+	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r).String(), nil)
 
 	// User Interface Provider fetch operations only need to consider
 	// one node if the caller will have already recently accessed SWAN.

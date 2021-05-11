@@ -195,14 +195,17 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				http.StatusBadRequest)
 			return
 		}
-		s, err := salt.FromBase64(r.Form.Get("salt"))
-		if err != nil {
-			common.ReturnStatusCodeError(
-				d.Config,
-				w,
-				err,
-				http.StatusBadRequest)
-			return
+		var s *salt.Salt
+		if sf := r.Form.Get("salt"); sf != "" {
+			s, err = salt.FromBase64(sf)
+			if err != nil {
+				common.ReturnStatusCodeError(
+					d.Config,
+					w,
+					err,
+					http.StatusBadRequest)
+				return
+			}
 		}
 		err = o.SetSalt(c, s)
 		if err != nil {

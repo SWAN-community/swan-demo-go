@@ -39,7 +39,7 @@ func handlerCreateOWID(
 		ReturnServerError(d.Config, w, err)
 	}
 
-	ot, err := DecodeOthers(r.Form["others"])
+	ot, err := decodeOthers(r.Form["others"])
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 	}
@@ -64,7 +64,9 @@ func handlerCreateOWID(
 	}
 }
 
-func DecodeOthers(v []string) ([]*owid.OWID, error) {
+// decodeOthers decodes an array of other OWID Base 64 strings and returns an
+// array of OWID instances.
+func decodeOthers(v []string) ([]*owid.OWID, error) {
 	var os []*owid.OWID
 
 	for _, o := range v {

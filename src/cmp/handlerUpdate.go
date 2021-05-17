@@ -64,6 +64,15 @@ func handlerUpdate(
 			http.StatusBadRequest)
 		return
 	}
+	err = o.SetTcStringFromOWID(r.Form.Get("tcString"))
+	if err != nil {
+		common.ReturnStatusCodeError(
+			d.Config,
+			w,
+			err,
+			http.StatusBadRequest)
+		return
+	}
 
 	// Set the redirection URL for the operation to store the data. Web
 	// browser will then be redirected to that URL, the data saved and the

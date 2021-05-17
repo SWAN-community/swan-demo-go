@@ -247,12 +247,15 @@ func addSWANParams(r *http.Request, q *url.Values, p []*swan.Pair) {
 	}
 }
 
-// isSet returns true if all three of the values are present in the results and
+// isSet returns true if all four of the values are present in the results and
 // are valid OWIDs.
 func isSet(d []*swan.Pair) bool {
 	c := 0
 	for _, e := range d {
-		if e.Key == "pref" || e.Key == "swid" || e.Key == "sid" {
+		if e.Key == "pref" ||
+			e.Key == "swid" ||
+			e.Key == "sid" ||
+			e.Key == "tcString" {
 			_, err := e.AsOWID()
 			if err != nil {
 				return false
@@ -260,7 +263,7 @@ func isSet(d []*swan.Pair) bool {
 			c++
 		}
 	}
-	return c == 3
+	return c == 4
 }
 
 // Get the revalidation time from the swan validation cookie if present. Then

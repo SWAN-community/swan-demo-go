@@ -126,6 +126,10 @@ func (m *MarketerModel) IDUnpacked() (template.HTML, error) {
 	html.WriteString(fmt.Sprintf(
 		"<tr><td>Stopped Ads.</td><td style=\"word-break:break-all\">%s<td></tr>",
 		strings.Join(s.StoppedAsArray(), ",")))
+	html.WriteString(fmt.Sprintf(
+		"<tr><td>tcString</td><td>%s<br/>%s<td></tr>",
+		s.TcStringAsString(),
+		owidTitle(s.TcString)))
 	htmlAddFooter(&html)
 	return template.HTML(html.String()), nil
 }

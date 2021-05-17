@@ -54,6 +54,9 @@ func (m *dialogModel) Salt() string { return m.Get("salt") }
 // Pref as a string.
 func (m *dialogModel) Pref() string { return m.Get("pref") }
 
+// TcString as a string
+func (m *dialogModel) TcString() string { return m.Get("tcString") }
+
 // BackgroundColor for the SWAN storage operation.
 func (m *dialogModel) BackgroundColor() string {
 	return m.Get("backgroundColor")
@@ -73,7 +76,11 @@ func (m *dialogModel) PublisherHost() string {
 func (m *dialogModel) HiddenFields() template.HTML {
 	b := strings.Builder{}
 	for k, v := range m.Values {
-		if k != "salt" && k != "swid" && k != "email" && k != "pref" {
+		if k != "salt" &&
+			k != "swid" &&
+			k != "email" &&
+			k != "pref" &&
+			k != "tcString" {
 			b.WriteString(fmt.Sprintf(
 				"<input type=\"hidden\" id=\"%s\" name=\"%s\" value=\"%s\"/>",
 				k, k, v[0]))
@@ -213,6 +220,15 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				http.StatusBadRequest)
 			return
 		}
+		err = o.SetTcString(c, r.Form.Get("tcString"))
+		if err != nil {
+			common.ReturnStatusCodeError(
+				d.Config,
+				w,
+				err,
+				http.StatusBadRequest)
+			return
+		}
 
 		// Set the redirection URL for the operation to store the data. Web
 		// browser will then be redirected to that URL, the data saved and the
@@ -309,6 +325,7 @@ func dialogReset(d *common.Domain, m *url.Values) *swan.Error {
 		m.Set("email", "")
 		m.Set("salt", "")
 		m.Set("pref", "")
+		m.Set("tcString", "")
 		m.Del("reset-all")
 		return setNewSWID(d, m)
 	}

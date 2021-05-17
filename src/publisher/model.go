@@ -80,6 +80,9 @@ func (m Model) SIDAsString() string { return common.AsPrintable(m.sid()) }
 // PrefAsString true if personalized marketing allowed, otherwise false
 func (m Model) PrefAsString() string { return common.AsString(m.pref()) }
 
+// TcString contains TCF preferences
+func (m Model) TcStringAsString() string { return common.AsString(m.tcString()) }
+
 // SWIDDomain returns the domain that created the SWID OWID
 func (m Model) SWIDDomain() string { return common.OWIDDomain(m.swid()) }
 
@@ -89,6 +92,9 @@ func (m Model) SIDDomain() string { return common.OWIDDomain(m.sid()) }
 // PrefDomain returns the domain that created the Allow OWID
 func (m Model) PrefDomain() string { return common.OWIDDomain(m.pref()) }
 
+// TcStringDomain returns the domain that created the TcString
+func (m Model) TcStringDomain() string { return common.OWIDDomain(m.tcString()) }
+
 // SWIDDate returns the date SWID OWID was created
 func (m Model) SWIDDate() string { return common.OWIDDate(m.swid()) }
 
@@ -97,6 +103,9 @@ func (m Model) SIDDate() string { return common.OWIDDate(m.sid()) }
 
 // PrefDate returns the date Allow OWID was created
 func (m Model) PrefDate() string { return common.OWIDDate(m.pref()) }
+
+// TcStringDate returns the date TcString OWID was created
+func (m Model) TcStringDate() string { return common.OWIDDate(m.tcString()) }
 
 // Stopped returns a list of the domains that have been stopped for advertising.
 func (m Model) Stopped() []string {
@@ -215,6 +224,9 @@ func (m Model) pref() *swan.Pair { return m.findResult("pref") }
 // Stop the list of domains that should not have adverts displayed form.
 func (m Model) stop() *swan.Pair { return m.findResult("stop") }
 
+// tcString containing TCF data.
+func (m Model) tcString() *swan.Pair { return m.findResult("tcString") }
+
 func (m Model) findResult(k string) *swan.Pair {
 	for _, n := range m.swanData {
 		if strings.EqualFold(k, n.Key) {
@@ -294,6 +306,12 @@ func (m *Model) newSWANID() (*swan.ID, error) {
 
 	// Get the stopped adverts string.
 	o.Stopped = getStopped(m.Request, m.stop())
+
+	// Get the tcString as an OWID.
+	o.TcString, err = getOWID(m.Config(), m.Request, m.tcString())
+	if err != nil {
+		return nil, err
+	}
 
 	return o, nil
 }

@@ -66,7 +66,7 @@ func handleStaticFolder(
 	// Get all the file system items in the folder provided.
 	files, err := ioutil.ReadDir(folder)
 	if err != nil {
-		return false, &swan.Error{err, nil}
+		return false, &swan.Error{Err: err}
 	}
 
 	// Loop through the file system items to find any that match the request.

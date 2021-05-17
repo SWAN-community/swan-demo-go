@@ -1,0 +1,19 @@
+{
+   "category": "Publisher",
+   "name": "Cisne Publisher 1",
+   "swanMessage": "Versión de dominio único del cisne",
+   "swanBackgroundColor": "#CCCCCC",
+   "swanMessageColor": "#AA151B",
+   "swanProgressColor": "#0039F0", 
+   "swanTitle": "Cisne Demo", 
+   "swanDisplayUserInterface" : false,
+   "swanPostMessage": true,
+   "swanUseHomeNode": false,
+   "cmp": "cmp.cisne-demo.es",
+   "SWANAccessNode": "an.cisne-demo.es",
+   "SWANAccessKey": "PubKeyCisne",
+   "suppliers": [
+      "magnite.swan-demo.uk",
+      "pubmatic.swan-demo.uk"
+   ]
+}

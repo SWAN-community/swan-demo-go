@@ -13,14 +13,19 @@
             "cwd": "${workspaceFolder}",
             "env": {
                 "PORT":"80",
+                //"HTTPS_PLATFORM_PORT": 443,
                 "GOPATH":"${workspaceFolder}",
-                "51D_RESOURCE_KEY":"Used for bot detection. Visit https://configure.51degrees.com/vXyRZz8B to get a free resource key",
-                "AZURE_STORAGE_ACCESS_KEY":"",
-                "AZURE_STORAGE_ACCOUNT":"",
-                "SMTP_SENDER":"",
-                "SMTP_HOST":"",
-                "SMTP_PORT":"",
-                "SMTP_PASSWORD":""
+                //"51D_RESOURCE_KEY":"Used for bot detection. Visit https://configure.51degrees.com/vXyRZz8B to get a free resource key",
+                //"AZURE_STORAGE_ACCESS_KEY":"",
+                //"AZURE_STORAGE_ACCOUNT":"",
+                //"GCP_PROJECT": "",
+                "OWID_FILE": ".swan/creators.json",
+                "SWIFT_SECRETS_FILE":".swan/swiftsecrets.json",
+                "SWIFT_NODES_FILE":".swan/swiftnodes.json",
+                //"SMTP_SENDER":"",
+                //"SMTP_HOST":"",
+                //"SMTP_PORT":"",
+                //"SMTP_PASSWORD":""
             },
             "args": ["${workspaceFolder}/appsettings.dev.json"]
         }

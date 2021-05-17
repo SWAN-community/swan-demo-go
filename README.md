@@ -1,7 +1,80 @@
 # ![Secured Web Addressability Network](https://raw.githubusercontent.com/SWAN-community/swan/main/images/swan.128.pxls.100.dpi.png)
+# Secured Web Addressability Network (SWAN) Demo
 
-# Secured Web Addressability Network (SWAN) 
-Demo in go of SWAN, SWIFT and OWID
+Demo of SWAN, SWIFT and OWID implemented in Go.
+
+## Quick Start 
+
+To get you up an running quickly on a local machine using JSON for storage.
+
+### Prerequisites 
+
+* Local Go version 1.15 or greater installation sufficient to run the Go command
+line.
+
+### Steps
+
+1. Clone the repository and navigate to the demo root directory:
+   ```sh
+   git clone --recurse-submodules https://github.com/SWAN-community/swan-demo-go
+   cd swan-demo-go
+   ```
+
+2. Get dependencies:
+    * **Linux**: Run `./dep.sh` in a terminal.
+    * **Windows**: Run `.\dep.ps1` in Powershell.
+
+3. Build the swan-demo server - if using VSCode then skip this step:
+    * **Linux**: Run `./build.sh` in a terminal.
+    * **Windows**: Run `go build -o .\application.exe .\src\server.go`
+
+4. Configure hosts file, when running locally the demo requires that a lot of 
+   host names be redirected to localhost - the following scripts will append 
+   the contents of `hosts-sample` to your hosts file. Please review these 
+   scripts before executing or update your hosts file manually.
+   * **Linux**: Run `sudo ./setup-hosts.sh` in a 
+     terminal. 
+   * **Windows**: Run `.\setup-hosts.ps1` in an elevated Powershell terminal.
+
+6. Set environment variables:
+   * If using Visual Studio Code, then a launch file is provided for convenience. 
+     Rename `.vscode\launch.json.rename` to `.vscode\launch.json` 
+   * OR, set the following environment variables:
+
+    **Linux**
+    ```sh
+    export PORT=80
+    export OWID_FILE="swan/creators.json"
+    export SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
+    export SWIFT_NODES_FILE="swan/swiftnodes.json"
+    ```
+
+    **Windows - CMD**
+    ```bat
+    setx PORT=80
+    setx OWID_FILE="swan/creators.json"
+    setx SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
+    setx SWIFT_NODES_FILE="swan/swiftnodes.json"
+    ```
+
+    **Windows - Powershell**
+    ```powershell
+    $Env:PORT=80
+    $Env:OWID_FILE="swan/creators.json"
+    $Env:SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
+    $Env:SWIFT_NODES_FILE="swan/swiftnodes.json"
+    ```
+
+7. Run the Demo Server:
+   * **VSCode** If using Visual Studio Code, then the `.vscode\launch.json.rename` 
+     file contains all the necessary settings to run and debug the demo.
+   * **Linux**: Run `./application appsettings.dev.json` in a terminal.
+   * **Windows**: Run `.\application.exe .\appsettings.dev.json` in a Powershell 
+     window.
+
+8. Navigate to http://new-pork-limes.uk in your preferred browser.
+
+# SWAN Concepts
 
 The SWAN demo implements the concepts explained in 
 [SWAN](https://github.com/SWAN-community/swan)
@@ -41,17 +114,65 @@ Marketer     | cool-cars.uk |  | cool-bikes.uk |  | cool-creams.uk | ... etc
              |              |  |               |  |                |
              +--------------+  +---------------+  +----------------+
 ```
+
+# Files
+
+`Procfile` : needed by AWS Elastic Beanstalk to indicate the application 
+executable for web services.
+
+`build.ps1` : builds AWS or Azure packages on Windows ready for manual deployment.
+
+`build.sh` : builds AWS or Azure packages on Linux ready for manual deployment.
+
+`cert.ps1` : Creates self signed certificates to run the demo using the https 
+scheme. You will need `openssl` available in your path environment variable.
+
+`dep.ps1` : gets SWAN demo dependencies on Windows.
+
+`Dockerfile.rename` : A sample dockerfile which can be used to build a Docker
+container suitable for use with Azure App Services.
+
+`appsettings.json` : application settings for production.
+
+`appsettings.dev.json` : application settings for development.
+
+`.ebextensions/.config.rename` : AWS Elastic Beanstalk .config template ready for
+additional SSL certificates.
+
+`hosts-sample` : A sample hosts file containing all the domains used in the demo
+
+`setup-hosts.sh` : Appends the contents of `hosts-sample` to the system hosts 
+file (Linux).
+
+`setup-hosts.ps1` : Appends the contents of `hosts-sample` to the system hosts 
+file (Windows).
+
+`setup-nodes.ps1` : Registers creators and set's up Swift access and storage 
+nodes (Windows).
+
+`setup-nodes.sh` : Registers creators and set's up Swift access and storage 
+nodes (Linux).
+
+`.vscode/launch.json.rename` : template Visual Studio Code launch settings 
+including place holders for the storage environment variable values.
+
+Note: `.gitignore` will ignore `launch.json`, and `.ebextensions/.config` to 
+limit the risk of commits containing access keys.
+
 # Deployment
 
 The demo currently supports the following environments:
 
 * AWS Elastic Beanstalk
+* Azure App Service
 * Local Go SDK
 
 And the following storage solutions:
 
 * AWS Dynamo DB
 * Azure Storage Tables
+* Google Firebase
+* Local JSON files.
 
 ### Get the code
 
@@ -69,29 +190,53 @@ git clone --recurse-submodules https://github.com/SWAN-community/swan-demo-go
 * Local Go version 1.15 or greater installation sufficient to run the Go command
 line.
 
-* Specified a storage option, the demo supports:
-  * Azure Storage Tables
-  * AWS DynamoDB
-
-* For AWS, specify region and credentials in either environment variables or in 
-`~/.aws/credentials` and `~/.aws/config` files. See 
-[Configuring AWS SDK for Go](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html) to set up your environment. Make sure to set the 
-`AWS_REGION`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as a minimum.
-
-* OR, for Azure Storage:
-  
-  Linux:
-  ```bash
-  export AZURE_STORAGE_ACCOUNT="<youraccountname>"
-  export AZURE_STORAGE_ACCESS_KEY="<youraccountkey>"
-  ```
-  Windows:
-  ```bat
-  setx AZURE_STORAGE_ACCOUNT "<youraccountname>"
-  setx AZURE_STORAGE_ACCESS_KEY "<youraccountkey>"
-  ```
+* Specify a storage solution, see [Deployment](#deployment) for supported 
+  storage solutions.
 
 ### Steps
+
+* Set up a storage option.
+
+  * For local storage, files containing configured creators and swift nodes are 
+    available in the `.swan` directory. Set the following environment variables to
+    use local storage:
+
+    ```                
+    OWID_FILE: ".swan/creators.json"
+    SWIFT_SECRETS_FILE: ".swan/swiftsecrets.json"
+    SWIFT_NODES_FILE: ".swan/swiftnodes.json"
+    ```
+
+    The vscode `launch.json` file can also be used to set environment variables, 
+    see `the .vscode\launch.json.rename` sample file.
+
+  * OR, for AWS, specify region and credentials in either environment variables 
+    or in `~/.aws/credentials` and `~/.aws/config` files. See 
+    [Configuring AWS SDK for Go](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html) to set up your environment. Make sure 
+    to set the `AWS_REGION`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as 
+    a minimum.
+
+  * OR, for Azure Storage:
+    
+    **Linux**:
+    ```bash
+    export AZURE_STORAGE_ACCOUNT="<youraccountname>"
+    export AZURE_STORAGE_ACCESS_KEY="<youraccountkey>"
+    ```
+    **Windows**:
+
+    Cmd:
+    ```bat
+    setx AZURE_STORAGE_ACCOUNT "<youraccountname>"
+    setx AZURE_STORAGE_ACCESS_KEY "<youraccountkey>"
+    ```
+    Powershell:
+    ```powershell
+    $Env:AZURE_STORAGE_ACCOUNT = "<youraccountname>"
+    $Env:AZURE_STORAGE_ACCESS_KEY = "<youraccountkey>"
+    ```
+
+  * OR, for Firebase see [Google FireBase](#google-firebase)
 
 * Having cloned the repository, configure the Go environment. If using Visual
 Studio Code see `.vscode/launch.json.rename` for a template environment. Rename 
@@ -99,12 +244,13 @@ to remove the `rename` extension suffix. As this file will contain sensitive
 information it is exclude in .gitignore.
 
 * Configure your hosts file to point URLs to localhost, see 
-[Environments](#environments) section in this readme for platform specifics. 
+[Environments > Local](#local) section in this readme for platform specifics. 
 The following host resolutions are used in the sample configuration:
 
   ```
   # domains from the www folder
   127.0.0.1	new-pork-limes.uk
+  127.0.0.1 biscuit-news.uk
   127.0.0.1	current-bun.uk
   127.0.0.1	cool-bikes.uk
   127.0.0.1	cool-cars.uk
@@ -121,12 +267,12 @@ The following host resolutions are used in the sample configuration:
   127.0.0.1	mediamath.swan-demo.uk
   127.0.0.1	oath.swan-demo.uk
   127.0.0.1	pubmatic.swan-demo.uk
+  127.0.0.1 sirdata.swan-demo.uk
   127.0.0.1	smaato.swan-demo.uk
   127.0.0.1	thetradedesk.swan-demo.uk
   127.0.0.1	zeta.swan-demo.uk
   127.0.0.1	liveramp.swan-demo.uk
   127.0.0.1	quantcast.swan-demo.uk
-  127.0.0.1	sirdata.swan-demo.uk
   # swift access nodes
   127.0.0.1	51da.uk
   127.0.0.1	51db.uk
@@ -141,128 +287,101 @@ The following host resolutions are used in the sample configuration:
   127.0.0.1	5.51da.uk
   # Add more if your wish...
   ```
+  More storage nodes can be found in the `hosts-sample` file.
 
 * To build on:
-  * Linux: Run the `./build.sh` file if you are on Linux/MacOS or on 
-  * Windows: First run `./dep.ps1` and then run the `./build.ps1` files.
+  * **Linux**: Run the `./build.sh` file. 
+  * **Windows**: First run `./dep.ps1` and then run the `./build.ps1` files.
 
 * Run the server:
 
   ```
-  ./src/server appsettings.dev.json
+  ./application appsettings.dev.json
   ```
 
-* The SWAN access nodes will be used to sign all the outgoing Open Web IDs and
-also to capture people's preferences. Register this domain with the following
-URL entering any of the details requested. This will create a record in the 
-``owidcreators`` table for the domain which will contain randomly generated 
-public and private signing keys.
+* Set up the access nodes, participants and storage nodes. Either run the setup 
+  scripts or follow the steps to set up the nodes and participants manually.
 
-  ```
-  http://51da.uk/owid/register
-  http://51db.uk/owid/register
-  http://51dc.uk/owid/register
-  http://51dd.uk/owid/register
-  http://51de.uk/owid/register
-  ```
+  _NB: If you are using local storage then you can skip this step as the local 
+  storage files in the `.swan` directory already contains a sample configuration._
 
-* The other SWAN participant nodes will also need to be registered as Open Web
-ID processors.
+  **Linux**: While the demo server is running, run the `./setup-nodes.sh` script 
+  in the Terminal.
 
-  http://new-pork-limes.uk/owid/register
-  http://current-bun.uk/owid/register
-  http://cool-bikes.uk/owid/register
-  http://cool-cars.uk/owid/register
-  http://cool-creams.uk/owid/register
-  http://cmp.swan-demo.uk/owid/register
-  http://swan-demo.uk/owid/register
-  http://pop-up.swan-demo.uk/owid/register
-  http://badssp.swan-demo.uk/owid/register
-  http://bidswitch.swan-demo.uk/owid/register
-  http://centro.swan-demo.uk/owid/register
-  http://dataxu.swan-demo.uk/owid/register
-  http://liveintent.swan-demo.uk/owid/register
-  http://magnite.swan-demo.uk/owid/register
-  http://mediamath.swan-demo.uk/owid/register
-  http://oath.swan-demo.uk/owid/register
-  http://pubmatic.swan-demo.uk/owid/register
-  http://smaato.swan-demo.uk/owid/register
-  http://thetradedesk.swan-demo.uk/owid/register
-  http://zeta.swan-demo.uk/owid/register
-  http://liveramp.swan-demo.uk/owid/register
-  http://quantcast.swan-demo.uk/owid/register
+  **Windows**: While the demo server is running, run the `.\setup-nodes.ps1` 
+  script in a Powershell Terminal.
 
-* For each of the access and storage nodes that will be used for the SWIFT 
-component of the demo register these using the following URL. Enter the network 
-as "swan" (no quotes). The records from these steps will be visible in the 
-``swiftnodes`` and ``swiftsecrets`` tables.
+  **Manually**:
 
-Access nodes
+  * The SWAN access nodes will be used to sign all the outgoing Open Web IDs and
+  also to capture people's preferences. Register this domain with the following
+  URL entering any of the details requested. This will create a record in the 
+  ``owidcreators`` table for the domain which will contain randomly generated 
+  public and private signing keys.
 
-  ```
-  http://51da.uk/swift/register
-  http://51db.uk/swift/register
-  http://51dc.uk/swift/register
-  http://51dd.uk/swift/register
-  http://51de.uk/swift/register
-  ```
+    http://51da.uk/owid/register \
+    http://51db.uk/owid/register \
+    http://51dc.uk/owid/register \
+    http://51dd.uk/owid/register \
+    http://51de.uk/owid/register 
 
-Storage nodes
 
-  ```
-  http://1.51da.uk/swift/register
-  http://2.51da.uk/swift/register
-  http://3.51da.uk/swift/register
-  http://4.51da.uk/swift/register
-  http://5.51da.uk/swift/register
-  ```
+  * The other SWAN participant nodes will also need to be registered as Open Web
+  ID processors.
+
+    http://new-pork-limes.uk/owid/register \
+    http://biscuit-news.uk/owid/register \
+    http://current-bun.uk/owid/register \
+    http://cool-bikes.uk/owid/register \
+    http://cool-cars.uk/owid/register \
+    http://cool-creams.uk/owid/register \
+    http://cmp.swan-demo.uk/owid/register \
+    http://swan-demo.uk/owid/register \
+    http://pop-up.swan-demo.uk/owid/register \
+    http://badssp.swan-demo.uk/owid/register \
+    http://bidswitch.swan-demo.uk/owid/register \
+    http://centro.swan-demo.uk/owid/register \
+    http://dataxu.swan-demo.uk/owid/register \
+    http://liveintent.swan-demo.uk/owid/register \
+    http://magnite.swan-demo.uk/owid/register \
+    http://mediamath.swan-demo.uk/owid/register \
+    http://oath.swan-demo.uk/owid/register \
+    http://pubmatic.swan-demo.uk/owid/register \
+    http://sirdata.swan-demo.uk/owid/register \
+    http://smaato.swan-demo.uk/owid/register \
+    http://thetradedesk.swan-demo.uk/owid/register \
+    http://zeta.swan-demo.uk/owid/register \
+    http://liveramp.swan-demo.uk/owid/register \
+    http://quantcast.swan-demo.uk/owid/register
+
+  * For each of the access and storage nodes that will be used for the SWIFT 
+  component of the demo register these using the following URL. Enter the network 
+  as "swan" (no quotes). The records from these steps will be visible in the 
+  ``swiftnodes`` and ``swiftsecrets`` tables.
+
+    **Access nodes**
+
+    http://51da.uk/swift/register \
+    http://51db.uk/swift/register \
+    http://51dc.uk/swift/register \
+    http://51dd.uk/swift/register \
+    http://51de.uk/swift/register
+
+    **Storage nodes**
+
+    http://1.51da.uk/swift/register \
+    http://2.51da.uk/swift/register \
+    http://3.51da.uk/swift/register \
+    http://4.51da.uk/swift/register \
+    http://5.51da.uk/swift/register \
+    etc... 
+
 * Now browse to one of the publisher URLs, you will be prompted to set your 
 preferences:
 
-  ```
   http://new-pork-limes.uk
-  ```
-
-# Files
-
-`Procfile` : needed by AWS Elastic Beanstalk to indicate the application 
-executable for web services.
-
-`build.ps1` : builds AWS or Azure packages on Windows ready for manual deployment.
-
-`build.sh` : builds AWS or Azure packages on Linux ready for manual deployment.
-
-`dep.ps1` : gets SWAN demo dependencies on Windows.
-
-`appsettings.json` : application settings for production.
-
-`appsettings.dev.json` : application settings for development.
-
-`.ebextensions/.config.rename` : AWS Elastic Beanstalk .config template ready for
-additional SSL certificates.
-
-`.vscode/launch.json.rename` : template Visual Studio Code launch settings 
-including place holders for the storage environment variable values.
-
-Note: `.gitignore` will ignore `launch.json`, and `.ebextensions/.config` to 
-limit the risk of commits containing access keys.
 
 # Environments
-
-This demo makes extensive use of multiple domains. For development purposes 
-setup local domains to resolve to 127.0.0.1.
-
-## Windows 
-
-```
-notepad C:\Windows\System32\drivers\etc\hosts
-```
-
-## Linux
-
-```
-vi /etc/hosts
-```
 
 ## AWS Elastic Beanstalk - without docker
 
@@ -577,9 +696,114 @@ is displayed.
 
 ## Google Cloud Platform 
 
-TODO - prerequisites and steps to set up the demo on GCP environment
+WIP - prerequisites and steps to set up the demo on GCP environment
 
-### Azure CosmosDB / Table Storage
+### Pre-requisites
+
+* Local Go version 1.15 or greater installation sufficient to run the Go command
+line.
+
+* Familiar with the concepts associated with 
+[SWAN](https://github.com/SWAN-community/swan),
+[SWIFT](https://github.com/SWAN-community/swift), and 
+[OWID](https://github.com/SWAN-community/owid).
+
+* Firebase project with the ability to manage Cloud Firestore.
+
+### Google Firebase
+
+See the Cloud FireStore [Quick Start](https://firebase.google.com/docs/firestore/quickstart)
+
+If you are running the SWAN demo locally, then follow the steps to initialize on
+your own server, otherwise, follow the steps to initialize on google cloud 
+platform.
+
+#### Steps
+
+- Set the `GCP_PROJECT` environment variable value as your Firebase Project ID
+- If running the SWAN demo locally then follow the steps to generate a [new service account](https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances):
+  - Create a new service account.
+  - Give the new service account the `Firebase Admin SDK Administrator Service Agent` role.
+  - On the service account, generate a new key.
+  - Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to point to your key path.
+
+## Local
+
+### Hosts
+
+This demo makes extensive use of multiple domains. For development purposes, 
+setup the demo domains to resolve to localhost (127.0.0.1).
+
+A sample hosts file is provided in the root of the project which contains all
+domains used by the demo mapped to localhost: `hosts-sample`.
+
+Paths to system hosts files are below.
+
+**Windows**
+
+In an elevated command prompt:
+
+```cmd
+notepad C:\Windows\System32\drivers\etc\hosts
+```
+
+**Linux**
+
+As root:
+
+```sh
+nano /etc/hosts
+```
+
+### HTTPS
+
+Some of the demo elements require HTTPS to function correctly. To enable HTTPS 
+support on your local machine then you will need to add the swan demo 
+certificate to your local store.
+
+#### Windows 
+
+`.\cert.ps1` script has been provided for convenience on windows, to run it you 
+will need `openssl` available on your system path. 
+
+On windows, git usually comes packaged with a windows `openssl` binary. This can 
+be found at `%ProgramFiles%\Git\usr\bin\openssl.exe`, otherwise
+`openssl` for windows can be obtained from https://wiki.openssl.org/index.php/Binaries 
+
+#### Linux
+
+```sh
+openssl req -out uk.csr -newkey rsa:2048 -nodes -keyout uk.key -extensions req_ext -config openssl-csr.conf
+
+openssl x509 -req -days 3650 -in uk.csr -signkey uk.key -out uk.crt -extensions req_ext -extfile openssl-csr.conf
+```
+
+### Storage
+
+The demo features a local storage option. Creators, Swift Nodes and Swift Secrets 
+are stored locally in json files.
+
+This is the default configuration of the demo. See `.vscode\launch.json.rename`
+The files are stored in a folder called `.swan`, the files are named consistently
+with the tables names when using cloud storage solutions.
+
+* Creators - `.swan\creators.json`
+* Swift Nodes - `.swan\swiftnodes.json`
+* Sift Secrets - `.swan\swiftsecrets.json`
+
+These files are available in source control and contain pre-populated data. A 
+script has been provided for convenience if you want to regenerate the data i.e. 
+to use a different set of secrets.
+
+#### Steps:
+
+1. delete the local storage JSON files.
+2. Restart or start the SWAN demo.
+3. run `.\setup-nodes.ps1`
+
+# Notes
+
+## Azure CosmosDB / Table Storage
 
 If you are using Azure Storage Tables, this demo requires your storage account 
 name and key to be securely stored in environment variables local to the machine 

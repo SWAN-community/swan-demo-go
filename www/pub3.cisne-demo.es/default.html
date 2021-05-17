@@ -5,18 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
-  <title>Pop Up | SWAN Demo</title>
+  <title>Publisher 3 | Cisne Demo</title>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link href="blog.css" rel="stylesheet">
   <link href="advert.css" rel="stylesheet">
-  <script src="owid-js/v1.js" type="text/javascript"></script>
-  <script src="/demo.js" type="text/javascript"></script>
-  <style>
-    .modal { display: block; }
-  </style>
 </head>
 
-<body style="background-color:{{ .Domain.SwanBackgroundColor }};">
+<body>
 
   {{ if .SupportsHTTPS}}
   <script>
@@ -30,10 +25,10 @@
     <header class="blog-header py-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
-          <a class="text-muted" href="//swan-demo.uk">SWAN Demo</a>
+          <a class="text-muted" href="//swan-demo.uk">Cisne Demo</a>
         </div>
         <div class="col-4 text-center">
-          <a class="blog-header-logo text-dark" href="//swan-demo.uk">Pop Up</a>
+          <a class="blog-header-logo text-dark" href="//swan-demo.uk">Publisher 3 | Cisne Demo</a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
           <a class="text-muted" href="//swan-demo.uk">
@@ -65,127 +60,29 @@
       </nav>
     </div>
 
-    <div class="jumbotron p-3 p-md-5 text-white rounded bg-light">
+    <div class="jumbotron p-3 p-md-5 rounded bg-light">
       <div class="col-md-12 px-0 text-center">
-        <figure class="figure">
-          {{ if eq .IsCrawler false }}
-          <script>
-            var swanWindow = null;
-            var swanOpenTime = null;
-            var p = document.currentScript.parentNode;
-            function getCookie(n) {
-              var c = new RegExp(n + "=([^;]+)").exec(document.cookie);
-              return c? c[1] : "";
-            }
-            function getCookieAsString(n)
-            {
-              var s = "";
-              Uint8Array.from(getCookie(n), c => s += c);
-              return s;
-            }
-            function getOWIDCookieAsString(n)
-            {
-              var v = getCookie(n);
-              return (v != null) ? unescape(new owid().parse(v).payloadAsString()) : null;
-            }
-            function getOWIDCookieAsPrintable(n)
-            {
-              var v = getCookie(n);
-              return (v != null) ? unescape(new owid().parse(v).payloadAsPrintable()) : null;
-            }
-            function openSWANPopup(u) {
-              {{ if eq .SWIDAsString "" }}
-              document.getElementById("personalize").style.display = "none";
-              {{ end }}
-              if(swanWindow === null || swanWindow.window === null) {
-                var w = 500;
-                var h = 625;
-                var x = screen.width/2 - w/2;
-                var y = screen.height/2 - h/2;
-                swanWindow = window.open(
-                  u,
-                  "swan",
-                  "width=" + w + ",height=" +  h + ",left=" + x + ",top=" + y + 
-                  ",directories=0,titlebar=0,toolbar=0,location=0,status=0," +
-                  "menubar=0,scrollbars=no,resizable=no");
-                swanOpenTime = new Date();
-              }
-              else {
-                swanWindow.location.href = u;
-                swanWindow.focus();
-              };
-            }
-            function fetchAdvert(data) {
-              var u = "/advert?placement=heading";
-              if (data) {
-                u += "&encrypted=" + data;
-              }
-              fetch(u)
-                .then(r => r.text())
+          <figure class="figure">
+            {{ if eq .IsCrawler false }}
+            <script>
+              var p = document.currentScript.parentNode;
+              fetch("/advert?placement=heading")
+                .then(r => r.text() )
                 .then(m => {
-                  if (getCookie("swan-pref") == "") {
-                    openSWANPopup("{{ .CMPURL }}");
-                  } else {
-                    var a = document.createElement("div");
-                    a.innerHTML = m;
-                    p.insertBefore(a, p.firstChild);
-                    document.getElementById("swid").innerText = getOWIDCookieAsPrintable("swan-swid");
-                    document.getElementById("sid").innerText = getOWIDCookieAsPrintable("swan-sid");
-                    document.getElementById("pref").innerText = getOWIDCookieAsString("swan-pref");
-                    document.getElementById("stop").innerText = getCookieAsString("swan-stop");
-                    if (swanWindow != null) { 
-                      var t = 3000 - (new Date().getTime() - swanOpenTime.getTime());
-                      if (t < 0) {
-                        swanWindow.close();
-                        swanWindow = null;
-                      } else {
-                        setTimeout(() => {
-                          swanWindow.close();
-                          swanWindow = null;
-                        }, t); 
-                      } 
-                    }
-                    
-                  }
-                })
+                  var a = document.createElement("div");
+                  a.innerHTML = m;
+                  p.insertBefore(a, p.firstChild);})
                 .catch(x => {
                   console.log(x);
                 });
-            }
-            window.addEventListener("message", (event) => {
-              if (event.origin !== "{{ .HomeNode }}") {
-                fetchAdvert(event.data);
-              }
-            }, false);
-          </script>
-          {{ else }}
-          <p>Adverts not displayed to crawlers.</p>
-          {{ end }}
-          <figcaption class="figure-caption">advert</figcaption>
-        </figure>
+            </script>
+            {{ else }}
+            <p>Adverts not displayed to crawlers.</p>
+            {{ end }}
+            <figcaption class="figure-caption">advert</figcaption>
+          </figure>
       </div>
     </div>
-
-    {{ if eq .SWIDAsString "" }}
-    <div class="modal" id="personalize" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-body">
-            <span>We rely on advertising to fund your access to our property.</span>
-              <a href="#">Learn more<i class="fa fa-angle-right ml-2"></i></a>
-          </div>
-          <div class="modal-footer">
-            <span class="mr-3 decline">Decline</span>
-            <button class="btn btn-light btn-sm" type="button" onclick='openSWANPopup("{{ .SWANURL }}")'>Consent</button>
-          </div>
-        </div>
-      </div>
-    </div>    
-    {{ else }}
-    <script>
-      fetchAdvert();
-    </script>
-    {{ end }}
 
     <div class="row mb-2">
       <div class="col-md-6">
@@ -264,28 +161,28 @@
               <tbody>
                 <tr>
                   <th>SWID</th>
-                  <td id="swid" style="word-break: break-all;" tabindex="0"></td>
+                  <td style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .SWIDDomain }} {{ .SWIDDate }}">{{ .SWIDAsString }}</td>
                 </tr>
                 <tr>
                   <th>SID</th>
-                  <td id="sid" style="word-break: break-all;" tabindex="0"></td>
+                  <td style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .SIDDomain }} {{ .SIDDate }}">{{ .SIDAsString }}</td>
                 </tr>
                 <tr>
                   <th>Personalize</th>
-                  <td id="pref" style="word-break: break-all;" tabindex="0"></td>
+                  <td style="word-break: break-all;" tabindex="0" data-toggle="tooltip" title="{{ .PrefDomain }} {{ .PrefDate }}">{{ .PrefAsString }}</td>
                 </tr>
                 <tr>
                   <th>Stopped Ads.</th>
-                  <td id="stop"></td>
-                </tr>
-                <tr>
-                  <th>Home Node</th>
-                  <td>{{ .HomeNode }}</td>
+                  <td>
+                    {{range .Stopped}}
+                    <span>{{.}}</span>
+                    {{end}}
+                  </td>
                 </tr>
               </tbody>
             </table>
             <p>
-              <button class="btn btn-link" onclick='openSWANPopup("{{ .CMPURL }}")'>Update Privacy Preferences</button>
+              <a href="{{ .CMPURL }}">Update Privacy Preferences</a>
             </p>
         </div>
       </div>
@@ -326,7 +223,7 @@
 
   <footer class="blog-footer">
     <p>
-      <button class="btn btn-link" onclick='openSWANPopup("{{ .CMPURL }}")'>Update Privacy Preferences</button>
+      <a href="{{ .CMPURL }}">Update Privacy Preferences</a>
     </p>
     <p>
       <a href="//swan-demo.uk">Back to top</a>
@@ -341,16 +238,16 @@
   <script src="bootstrap.min.js"></script>
   <script src="holder.min.js"></script>
   <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
-  </script>
-  <script>
     Holder.addTheme('thumb', {
       bg: '#55595c',
       fg: '#eceeef',
       text: 'Thumbnail'
     });
+  </script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   </script>
 
 

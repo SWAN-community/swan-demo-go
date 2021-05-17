@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
+    <title>SWAN Example</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="grid.css" rel="stylesheet">
+    <script src="/owid-js/v1.js" type="text/javascript"></script>
+    <script src="/salt-js/v1.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        
+        <!-- Buttons to trigger the display of SWAN data or editing the data -->
+        <h4>Actions:</h4>
+        <p>
+            <button class="btn btn-secondary" onclick="swanBeginDisplay()">Display</button>
+            <button class="btn btn-secondary" onclick="swanBeginEdit()">Edit</button>
+        </p>
+
+        <!-- Form that is displayed to edit the data -->
+        <form id="form" onsubmit="swanUpdate(); return false;" style="display: none;">
+            <h5>User Interface Provider</h5>
+            <input type="hidden" id="swid" name="swid">
+            <label for="pref">Personalize Marketing</label>
+            <input type="checkbox" id="pref" name="pref">
+            <br />
+            <label for="email">Optional Email</label>
+            <input type="email" id="email" name="email">
+            <br />
+            <label for="reset-salt">Email Salt</label>
+            <button id="reset-salt" type="button" class="btn reset">Reset Icons</button>
+            <div id="salt-container" class="salt-collapsed"></div>
+            <label for="salt">Salt value</label>
+            <input type="salt" id="salt" name="salt" disabled>
+            <br />
+            <button id="update" name="update" class="btn btn-primary" type="submit">Update</button>
+        </form>
+
+        <!-- Table to display the data -->
+        <table id="table" class="table" style="display: none;">
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+
+        // The base path for the SWAN requests. These are processed via the 
+        // /common/handlerProxy.go to add the secret access key to the request
+        // before it is passed to SWAN. This avoids the access key being known
+        // to the web browser.
+        const proxyPath = "/swan-proxy/api/v1/";
+
+        // Calls the demo only end point /create-owid to create an OWID for the
+        // data provided. In production all OWID creation must occur server side
+        // after other validation has been applied. As OWID creation requires 
+        // a private key it can never be conducted client side.
+        function createOWID(v) {
+            console.log(v);
+            var p = new URLSearchParams({ "payload": v });
+            return fetch("/create-owid", { method: "POST", body: p })
+                .then(r => {
+                    if (r.status === 200) {
+                        return r.text();
+                    }
+                    throw new Error(r.statusText);
+                });
+        }
+
+        // Strips the query string from the URL.
+        function swanGetReturnUrl() {
+            return window.location.href.replace(window.location.search, "");
+        }
+
+        // Adds a row to the table.
+        function displayKeyValue(k, v) {
+            var et = document.getElementById("table");
+            var er = document.createElement("tr");
+            var ek = document.createElement("td");
+            var ev = document.createElement("td");
+            ev.style.wordBreak = "break-all";
+            ek.innerText = k;
+            ev.innerText = v;
+            er.appendChild(ek);
+            er.appendChild(ev);
+            et.appendChild(er);
+            et.style.display = "block";
+        }
+
+        // Called by the update button on the edit form to update raw SWAN data
+        // with the values held in the form.
+        function swanUpdate() {
+            var f = document.getElementById("form");
+
+            // Turn the preferences and the email address into OWIDs signed
+            // server side by the OWID handler for this domain. See 
+            // common/handlerCreateOWID.go.
+            Promise.all([
+                createOWID(f["pref"].checked ? "on" : "off"),
+                createOWID(f["email"].value),
+                createOWID(f["salt"].value)])
+
+                // Add the minimum parameters needed to perform a storage
+                // operation with the new data captured. Use the OWIDs rather 
+                // than the raw preferences and email address. The action in the
+                // return URL will display the SWAN data after the update has
+                // completed.
+                .then(v => {
+                    var p = new URLSearchParams({
+                        "returnUrl": swanGetReturnUrl() +
+                            "?action=display&encrypted=",
+                        "displayUserInterface": "false",
+                        "message": "Updating your SWAN data. Nearly there.",
+                        "swid": f["swid"].value,
+                        "pref": v[0],
+                        "email": v[1],
+                        "salt": v[2]
+                    });
+                    return fetch(proxyPath + "update", {
+                        method: "POST", body: p
+                    });
+                })
+
+                // The response from the fetch request is a URL to direct the
+                // browsers primary navigation to. Redirect to this URL.
+                // When the SWAN update completes the return URL will be 
+                // requested and the display action used.
+                .then(r => {
+                    if (r.status === 200) {
+                        return r.text();
+                    }
+                    throw new Error(r.statusText);
+                })
+                .then(u => window.location.href = u)
+                .catch(x => console.log(x));
+        }
+
+        // Fetches SWAN data and signals the action that should be performed
+        // when this page is returned to.
+        // Note: the state parameter can be used to place state information that
+        // can be used by the return URL. See the table after the edit action 
+        // completes.
+        function swanFetch(a) {
+            var p = new URLSearchParams({
+                "returnUrl": swanGetReturnUrl() +
+                    "?action=" + a + "&encrypted=",
+                "displayUserInterface": "false",
+                "state": "Example state"});
+            fetch(proxyPath + "fetch", { method: "POST", body: p })
+                .then(r => r.text())
+                .then(u => window.location.href = u)
+                .catch(x => console.log(x));
+        }
+
+        // Fetches the SWAN data and on completion enables the edit feature.
+        function swanBeginEdit() {
+            swanFetch("edit");
+        }
+
+        // The fetch process has completed with the edit action. Take the 
+        // encrypted SWAN data and decrypts the raw data for display in the user
+        // interface. This "decrypt-raw" method is only ever used by User 
+        // Interface Providers (UIPs) to enable the user to edit the raw data 
+        // like the email address.
+        function swanEndEdit(e) {
+            return fetch(proxyPath + "decrypt-raw", {
+                method: "POST",
+                body: new URLSearchParams({
+                    "encrypted": e
+                })
+            })
+                .then(r => {
+                    if (r.status === 200) {
+                        return r.json();
+                    }
+                    throw new Error(r.statusText);
+                })
+
+                // Iterate over the key value pairs returned. If there is a form
+                // element with the same name as the key then update the value.
+                // Add the key value pair to the table for display. This shows 
+                // the operational data that is available.
+                .then(j => {
+                    console.log(j);
+                    document.getElementById("form").style.display = "block";
+                    for (var p in j) {
+                        var f = document.getElementById(p);
+                        if (f) {
+                            switch (p) {
+                                case "pref":
+                                    f.checked = j[p] == "on";
+                                    break;
+                                default:
+                                    f.value = j[p];
+                            }
+                        }
+                        displayKeyValue(p, j[p]);
+                    }
+                    return j;
+                })
+                // Display the salt ui
+                .then(j => {
+                    // Get the expected elements based on common names.
+                    var saltElement = document.getElementById('salt-container');
+                    var saltEmailField = document.getElementById('email');
+                    var saltUpdateButton = document.getElementById('update');
+                    var saltResetButton = document.getElementById('reset-salt');
+                    var saltField = document.getElementById('salt');
+
+                    // Record the original message in the update button.
+                    var saltInnerHTML = saltUpdateButton.innerHTML;
+
+                    // Initialize the salt element and user interface.
+                    var saltUI = new SWANSalt(saltElement, saltField.value);
+
+                    // Change the update button to explain 4 icons need to be selected and disable 
+                    // it.
+                    function saltReset() {
+                        saltUpdateButton.innerHTML = 'Choose 4 Icons';
+                        saltUpdateButton.setAttribute('disabled', '');
+                    }
+
+                    // Show the salt form group.
+                    function saltShow() {
+                        saltElement.classList.remove('salt-collapsed');
+                        saltElement.classList.add('salt-expanded');
+                    }
+
+                    // Clear the salt 
+                    function saltClear() {
+                        saltElement.classList.remove('salt-expanded');
+                        saltElement.classList.add('salt-collapsed');
+                        saltUI.reset()
+                        saltComplete();
+                    }
+
+                    // Called when the salt grid has been completed.
+                    function saltComplete() {
+                        saltField.value = saltUI.stringValue;
+                        saltUpdateButton.innerHTML = saltInnerHTML;
+                        saltUpdateButton.removeAttribute('disabled'); 
+                    }
+
+                    function saltEmailChange(e) {
+                        var email = e.value;
+                        if(email == '') {
+                            // If there is no email address then clear the salt.
+                            saltClear();
+                        } else if (/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
+                            // If there is a valid email then enable the 
+                            saltShow();
+                            saltReset();
+                        }
+                    }
+
+                    // If the email changes then trigger the display or removal of the salt element.
+                    saltEmailField.addEventListener('input', (event) => {
+                        saltEmailChange(event.target);
+                    });
+
+                    // If the reset button is clicked then reset the salt and the update button.
+                    saltResetButton.addEventListener('click', (event) => {
+                        saltUI.reset();
+                        saltReset();
+                    });
+
+                    // When the salt UI completes call this function.
+                    saltUI.onComplete(saltComplete);
+
+                    // Trigger the display of the salt grid if the email address is present.
+                    saltEmailChange(saltEmailField);
+
+                    // Set the salt to complete if the salt is already provided.
+                    if (saltField.value != "") {
+                        saltComplete();
+                    }
+                });
+        }
+
+        function swanBeginDisplay() {
+            swanFetch("display");
+        }
+
+        // Decrypt the encrypted data and add the results to the table.
+        function swanEndDisplay(e) {
+            return fetch(proxyPath + "decrypt", {
+                method: "POST",
+                body: new URLSearchParams({
+                    "encrypted": e
+                })
+            })
+                .then(r => {
+                    if (r.status === 200) {
+                        return r.json();
+                    }
+                    throw new Error(r.statusText);
+                })
+                // Sort the keys ready for display.
+                .then(j => {
+                    console.log(j);
+                    j.sort((a, b) => a.Key.localeCompare(b.Key)).forEach(i => {
+                        displayKeyValue(i.Key, i.Value);
+                        try {
+                            var o = new owid(i.Value);
+                            switch (i.Key) {
+                                case "swid":
+                                    displayKeyValue(
+                                        i.Key + " (unpacked)",
+                                        o.payloadAsPrintable());
+                                    break;
+                                case "sid":
+                                    displayKeyValue(
+                                        i.Key + " (unpacked)",
+                                        o.payloadAsPrintable());
+                                    break;
+                                default:
+                                    displayKeyValue(
+                                        i.Key + " (unpacked)",
+                                        o.payloadAsString());
+                                    break;
+                            }
+
+                            // Get the creation date of the OWID to the nearest
+                            // minute.
+                            displayKeyValue(
+                                i.Key + " (date)", 
+                                o.dateAsJavaScriptDate());
+
+                            // Get the domain that created the OWID.
+                            displayKeyValue(i.Key + " (domain)", o.domain);
+
+                            // Verify that the OWID is valid.
+                            o.verify()
+                                .then(v => displayKeyValue(
+                                    i.Key + " (verify)", v))
+                                .catch(x => console.log(x));
+                        }
+                        catch (e) {
+                            // Do nothing.
+                        }
+                    });
+                });
+        }
+
+        // Use the query string parameter action to determine what elements to
+        // display in the example.
+        if (window.location.search) {
+
+            // Get the encrypted query string and action from the end of the
+            // URL.
+            let urlParams = new URLSearchParams(window.location.search);
+            let encrypted = urlParams.get("encrypted");
+            let action = urlParams.get("action");
+
+            // Get a promise that is processing the action.
+            var p = null;
+            switch (action) {
+                case "display": p = swanEndDisplay(encrypted); break;
+                case "edit": p = swanEndEdit(encrypted); break;
+            }
+            if (p != null) {
+                p.catch(x => console.log(x));
+            }
+        }
+    </script>
+</body>
+</html>

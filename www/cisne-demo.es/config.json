@@ -1,0 +1,8 @@
+{
+   "Category": "Demo",
+   "Name": "Cisne Demo",
+   "Title": "Cisne Single Demo",
+   "SWANAccessNode": "an.cisne-demo.es",
+   "SWANAccessKey": "PubKeyCisne",
+   "swanDisplayUserInterface" : false
+}

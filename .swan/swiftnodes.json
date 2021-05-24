@@ -1239,20 +1239,20 @@
 		"Role": 1,
 		"ScrambleKey": "ctSxY6j_1Lt2nRxLwWcA9CGIuGBumfrpOXaJglNsqeo"
 	},
-	"an.cisne-demo.es": {
-		"Network": "cisne",
-		"Domain": "an.cisne-demo.es",
-		"Created": "2021-05-13T18:10:17.574637Z",
-		"Expires": "2099-08-13T00:00:00Z",
-		"Role": 0,
-		"ScrambleKey": "XHJn06V1rqheIdI6i9XIo8W43R6yqfhMiw_WhKspi1w"
+	"s.51da.uk": {
+		"Network": "swan",
+		"Domain": "s.51da.uk",
+		"Created": "2021-05-17T16:00:29.7152121Z",
+		"Expires": "2021-08-17T00:00:00Z",
+		"Role": 2,
+		"ScrambleKey": "KHtrw7Cp1uaQD5c9kccjIMrVAN2CedlQ7xRSnRYvssA"
 	},
-	"sn.cisne-demo.es": {
+	"s.51db.uk:8080": {
 		"Network": "cisne",
-		"Domain": "sn.cisne-demo.es",
-		"Created": "2021-05-13T18:09:52.9754613Z",
-		"Expires": "2099-08-13T00:00:00Z",
-		"Role": 1,
-		"ScrambleKey": "enptetzdBLU-TgOfbzhh1HsVrbB1_HaVg5rThB6E3J0"
+		"Domain": "s.51db.uk:8080",
+		"Created": "2021-05-19T10:19:55.0790877Z",
+		"Expires": "2021-08-19T00:00:00Z",
+		"Role": 2,
+		"ScrambleKey": "h-W3r2N36ZQrAU1irUKjnHsc7b3lzafu3JMtZ-CDIuo"
 	}
 }

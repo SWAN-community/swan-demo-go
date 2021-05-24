@@ -19,6 +19,7 @@
                 //"AZURE_STORAGE_ACCESS_KEY":"",
                 //"AZURE_STORAGE_ACCOUNT":"",
                 //"GCP_PROJECT": "",
+                //"AWS_SDK_LOAD_CONFIG":"true" // Set to true if using aws (~/.aws/config) and (~/.aws/credentials)
                 "OWID_FILE": ".swan/creators.json",
                 "SWIFT_SECRETS_FILE":".swan/swiftsecrets.json",
                 "SWIFT_NODES_FILE":".swan/swiftnodes.json",

@@ -71,7 +71,7 @@ func main() {
 	// Start the HTTPS proxy if there is a provided port.
 	if portHttps != "" {
 		go func() {
-			log.Printf("Listenning on HTTPS port: %s\n", portHttps)
+			log.Printf("Listening on HTTPS port: %s\n", portHttps)
 			err := http.ListenAndServeTLS(
 				fmt.Sprintf(":%s", portHttps),
 				"uk.crt",
@@ -84,7 +84,7 @@ func main() {
 	}
 
 	// Start the HTTP web server on the port provided.
-	log.Printf("Listenning on HTTP port: %s\n", portHttp)
+	log.Printf("Listening on HTTP port: %s\n", portHttp)
 	err = http.ListenAndServe(fmt.Sprintf(":%s", portHttp), nil)
 	if err != nil {
 		log.Println(err)

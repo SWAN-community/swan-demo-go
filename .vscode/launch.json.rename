@@ -19,9 +19,9 @@
                 //"AZURE_STORAGE_ACCESS_KEY":"",
                 //"AZURE_STORAGE_ACCOUNT":"",
                 //"GCP_PROJECT": "",
-                //"AWS_SDK_LOAD_CONFIG":"true" // Set to true if using aws (~/.aws/config) and (~/.aws/credentials)
+                //"AWS_ENABLED":"true", // Set to true if using aws (~/.aws/config) and (~/.aws/credentials)
+                //"OWID_STORE":"local", // Set this value if multiple stores have been configured ('azure', 'gcp', 'local' or 'aws').
                 "OWID_FILE": ".swan/creators.json",
-                "SWIFT_SECRETS_FILE":".swan/swiftsecrets.json",
                 "SWIFT_NODES_FILE":".swan/swiftnodes.json",
                 //"SMTP_SENDER":"",
                 //"SMTP_HOST":"",

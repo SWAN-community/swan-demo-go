@@ -5,7 +5,7 @@ Demo of SWAN, SWIFT and OWID implemented in Go.
 
 ## Quick Start 
 
-To get you up an running quickly on a local machine using JSON for storage.
+To get you up and running quickly on a local machine using JSON for storage.
 
 ### Prerequisites 
 
@@ -36,7 +36,7 @@ line.
      terminal. 
    * **Windows**: Run `.\setup-hosts.ps1` in an elevated Powershell terminal.
 
-6. Set environment variables:
+5. Set environment variables:
    * If using Visual Studio Code, then a launch file is provided for convenience. 
      Rename `.vscode\launch.json.rename` to `.vscode\launch.json` 
    * OR, set the following environment variables:
@@ -45,7 +45,6 @@ line.
     ```sh
     export PORT=80
     export OWID_FILE="swan/creators.json"
-    export SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
     export SWIFT_NODES_FILE="swan/swiftnodes.json"
     ```
 
@@ -53,7 +52,6 @@ line.
     ```bat
     setx PORT=80
     setx OWID_FILE="swan/creators.json"
-    setx SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
     setx SWIFT_NODES_FILE="swan/swiftnodes.json"
     ```
 
@@ -61,18 +59,17 @@ line.
     ```powershell
     $Env:PORT=80
     $Env:OWID_FILE="swan/creators.json"
-    $Env:SWIFT_SECRETS_FILE=".swan/swiftsecrets.json"
     $Env:SWIFT_NODES_FILE="swan/swiftnodes.json"
     ```
 
-7. Run the Demo Server:
+6. Run the Demo Server:
    * **VSCode** If using Visual Studio Code, then the `.vscode\launch.json.rename` 
      file contains all the necessary settings to run and debug the demo.
    * **Linux**: Run `./application appsettings.dev.json` in a terminal.
    * **Windows**: Run `.\application.exe .\appsettings.dev.json` in a Powershell 
      window.
 
-8. Navigate to http://new-pork-limes.uk in your preferred browser.
+7. Navigate to http://new-pork-limes.uk in your preferred browser.
 
 # SWAN Concepts
 
@@ -203,14 +200,15 @@ line.
 
     ```                
     OWID_FILE: ".swan/creators.json"
-    SWIFT_SECRETS_FILE: ".swan/swiftsecrets.json"
     SWIFT_NODES_FILE: ".swan/swiftnodes.json"
     ```
 
     The vscode `launch.json` file can also be used to set environment variables, 
     see `the .vscode\launch.json.rename` sample file.
 
-  * OR, for AWS, specify region and credentials in either environment variables 
+  * OR, for AWS:
+    * Set the ``AWS_ENABLED`` environment variable to true.
+    * Specify region and credentials in either environment variables 
     or in `~/.aws/credentials` and `~/.aws/config` files. See 
     [Configuring AWS SDK for Go](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html) to set up your environment. Make sure 
     to set the `AWS_REGION`, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as 
@@ -357,7 +355,8 @@ The following host resolutions are used in the sample configuration:
   * For each of the access and storage nodes that will be used for the SWIFT 
   component of the demo register these using the following URL. Enter the network 
   as "swan" (no quotes). The records from these steps will be visible in the 
-  ``swiftnodes`` and ``swiftsecrets`` tables.
+  ``swiftnodes`` and ``swiftsecrets`` tables or if using local storage the 
+  ``swiftnodes.json`` file.
 
     **Access nodes**
 
@@ -484,7 +483,11 @@ folder with directories for all the domains the demo will respond to. Note the
 SWIFT domains used for storage do not need to be present in the www folder.
 
 * Create a new Elastic Beanstalk Application and Environment using the 
-[AWS document](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_go.html).
+[AWS documentation](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_go.html).
+
+* On your new Elastic Beanstalk instance set the following environment variables:
+  * ``AWS_ENABLED`` - ``true``
+  * ``PORT`` - ``5000``
 
 * Give the Elastic Beanstalk Environment permissions to create and read DynamoDB
 tables:
@@ -780,8 +783,8 @@ openssl x509 -req -days 3650 -in uk.csr -signkey uk.key -out uk.crt -extensions 
 
 ### Storage
 
-The demo features a local storage option. Creators, Swift Nodes and Swift Secrets 
-are stored locally in json files.
+The demo features a local storage option. Creators and Swift Nodes are stored
+locally in json files.
 
 This is the default configuration of the demo. See `.vscode\launch.json.rename`
 The files are stored in a folder called `.swan`, the files are named consistently
@@ -789,11 +792,28 @@ with the tables names when using cloud storage solutions.
 
 * Creators - `.swan\creators.json`
 * Swift Nodes - `.swan\swiftnodes.json`
-* Sift Secrets - `.swan\swiftsecrets.json`
 
 These files are available in source control and contain pre-populated data. A 
 script has been provided for convenience if you want to regenerate the data i.e. 
 to use a different set of secrets.
+
+### OWID Storage
+
+If using multiple stores to simulate multiple stores for SWIFT, the store for 
+OWID must be specified as OWID only supports one instance of store.
+
+To specify the storage implementation to use, set the environment variable 
+`OWID_STORE` to one of the following:
+
+* Azure Table Storage - `azure`
+* Google Firebase - `gcp`
+* Local Storage - `local`
+* AWS DynamoDB - `aws`
+
+If the `OWID_STORE` environment is not set then the first configured store in 
+the above order will be used instead.
+
+See `.vscode/launch.json.rename` for a sample.
 
 #### Steps:
 

@@ -194,6 +194,8 @@
 127.0.0.1	28.51de.uk
 127.0.0.1	29.51de.uk
 127.0.0.1	30.51de.uk
+# swift sharing nodes
+127.0.0.1   s.51da.uk
 
 ##########################
 # End of SWAN demo entries

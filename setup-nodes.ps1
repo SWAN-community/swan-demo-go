@@ -8,9 +8,11 @@ $nodes = @(
     "51de.uk"
 )
 
-$expiryDate = ((Get-date).AddDays(90)).ToString("yyyy-MM-dd")
+$startDate = (Get-date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm")
+$expiryDate = ((Get-date).ToUniversalTime().AddDays(90)).ToString("yyyy-MM-dd")
 
 Write-Output "Network: $($network)"
+Write-Output "Starts: $($startDate)" 
 Write-Output "Expiry: $($expiryDate)"
 $ok = Read-Host "Ok? [y/N]"
 
@@ -18,7 +20,7 @@ if ($ok -ne "y" -and $ok -ne "Y") {
     Break
 }
 
-## Set-up SWIFT access nodes as OWID creators
+# Set-up SWIFT access nodes as OWID creators
 $nodes | ForEach-Object {
     Write-Output "51Degrees : $($_)" 
     $Response = Invoke-WebRequest -URI "http://$($_)/owid/register?name=51Degrees"
@@ -41,7 +43,7 @@ foreach ($d in $dir){
 ## Set-up SWIFT access nodes
 $nodes | ForEach-Object {
     Write-Output "51degrees : $($_)" 
-    $Response = Invoke-WebRequest -URI "http://$($_)/swift/register?network=$($network)&expires=$($expiryDate)&role=0"
+    $Response = Invoke-WebRequest -URI "http://$($_)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=0"
     Write-Output $Response.StatusCode
 }
 
@@ -49,7 +51,12 @@ $nodes | ForEach-Object {
 $nodes | ForEach-Object {
     For ($i = 1; $i -le 30; $i++) {
         Write-Output "51degrees : $($i).$($_)" 
-        $Response = Invoke-WebRequest -URI "http://$($i).$($_)/swift/register?network=$($network)&expires=$($expiryDate)&role=1"
+        $Response = Invoke-WebRequest -URI "http://$($i).$($_)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=1"
         Write-Output $Response.StatusCode
     }
 }
+
+## Set-up SWIFT sharing node
+Write-Output "51degrees : s.51da.uk" 
+$Response = Invoke-WebRequest -URI "http://s.51da.uk/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=2"
+Write-Output $Response.StatusCode

@@ -103,6 +103,18 @@ func (m Model) Stopped() []string {
 	return strings.Split(common.AsString(m.stop()), "\r\n")
 }
 
+func (m Model) NewSWANIDAsString() string {
+
+	var err error
+
+	r, err := m.newSWANIDOWID()
+	if err != nil {
+		return ""
+	}
+
+	return r.AsString()
+}
+
 // DomainsByCategory returns all the domains that match the category.
 func (m Model) DomainsByCategory(category string) []*common.Domain {
 	var domains []*common.Domain

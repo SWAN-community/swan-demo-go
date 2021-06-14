@@ -149,6 +149,12 @@
 		"PublicKey": "-----BEGIN RSA PUBLIC KEY-----\nMEgCQQDL47itO7jVodSGpIRTiW/3OCvI0TkehUbByScndyVAyd9m0OC67WnTMe6q\nsJTBzHOnZ3TEFLLCXONDikt1/mCpAgMBAAE=\n-----END RSA PUBLIC KEY-----\n",
 		"Name": "New Pork Limes"
 	},
+	"new-prebid-limes.uk": {
+		"Domain": "new-prebid-limes.uk",
+		"PrivateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIBPAIBAAJBAMP7jb8p7vd3QHTdWTvXgk6Xt5X7lHz2Sqe0Bvwl7Zl5/82ToM1J\nSASPnEh2DKWslINjvqQR30yDf8FWsQ+vZaMCAwEAAQJBALM+B7cVwBQewhngM/Oy\nN+BvjB2lWXosu7zDvzuv6K3bNvkueqOHFIhD0B4wcxxRO2hukrsvVJTt4J/L7l6H\neZECIQDRQbHohBmJekMfFjKD7K+xJ2oXjgiEx7viuTvEk0FZ+wIhAO/CybI6xM54\nOO9KxLfOpQjeY/qPSTOvgCyU57fK6zp5AiEAgjVqytBIQ698TL+3Nzf0KzvnXDjZ\nPCY811uDwVIP/DkCIQDnruG6gYGmRpQ135lCSMQ/Uq9n8sf40vFXozha6RHveQIg\nOZ5JOUmh74dzzpKVndyeEavPAwqTIjKdpIf4wxBwUAM=\n-----END RSA PRIVATE KEY-----\n",
+		"PublicKey": "-----BEGIN RSA PUBLIC KEY-----\nMEgCQQDD+42/Ke73d0B03Vk714JOl7eV+5R89kqntAb8Je2Zef/Nk6DNSUgEj5xI\ndgylrJSDY76kEd9Mg3/BVrEPr2WjAgMBAAE=\n-----END RSA PUBLIC KEY-----\n",
+		"Name": "Prebid"
+	},
 	"oath.swan-demo.uk": {
 		"Domain": "oath.swan-demo.uk",
 		"PrivateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBAL807Wjj+/ND6+QcpA/icxLNFgaZ45NDfyyAhHwrE8n9DtDl1q+E\n5ynoccSvCsSF8bFf+09MwqqkC7Ocb1cOBVsCAwEAAQJAOlMTxDYfCaKDVy7hYLML\ntQV4HYVdpPMm3NVLFHEzdR5DqJ7p4JWvb0VSoTq5/EJGCav6hcsg3cd3jqfQkCbm\nYQIhAMsNdPOjou6CQWttAFWAGNxyOA4WsPpn2mFtu5M7+ysRAiEA8RC3ZuAXtDv4\nzbvlUmgwdOtUSId1RFMFbOFs2X5qMasCIQCu9RBhYgzgv+FIg+o2waIqSExeb1Tc\n3iE/s8Jc8eDQUQIgPDik2Hpa8ZeZzCuIWlHU6SBw6b2NOghTbqPSAXNnLAkCICI5\nYxJ9o1c9hbEU57ye2ZLK2+WmODPYixPNLAP3yBXU\n-----END RSA PRIVATE KEY-----\n",

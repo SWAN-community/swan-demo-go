@@ -1,0 +1,16 @@
+{
+   "category": "Publisher",
+   "name": "New Prebid Limes",
+   "swanMessage": "Getting things ready. New Prebid Limes rocks!",
+   "swanBackgroundColor": "#fff",
+   "swanMessageColor": "#343a40",
+   "swanProgressColor": "#6c757d", 
+   "swanDisplayUserInterface" : true,
+   "cmp": "cmp.swan-demo.uk",
+   "SWANAccessNode": "51da.uk",
+   "SWANAccessKey": "PubKeyNewPrebidLimes",
+   "suppliers": [
+      "magnite.swan-demo.uk",
+      "pubmatic.swan-demo.uk"
+   ]
+}

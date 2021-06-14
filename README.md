@@ -248,6 +248,7 @@ The following host resolutions are used in the sample configuration:
   ```
   # domains from the www folder
   127.0.0.1	new-pork-limes.uk
+  127.0.0.1	new-prebid-limes.uk
   127.0.0.1 biscuit-news.uk
   127.0.0.1	current-bun.uk
   127.0.0.1	cool-bikes.uk
@@ -836,3 +837,108 @@ If configuring an Azure App Service then see:
 
 Use the Command Palette (Ctrl + Shift + P) to running the 
 `Go: Install/Update Tools` to install `gopkgs`, `dlv` and `gopls`.
+
+## Prebid
+
+The publisher new-prebid-limes shows a demo of how SWAN data might transact in Prebid.js. To run the demo you will have to build Prebid.js:
+
+```
+cd www/prebid
+npm install
+gulp serve-fast
+```
+
+This demo uses a demo library `new-prebid-limes.uk/swan.js` which exists simply to collect any SWAN signatures returned to the page and format them when needed for a request to the CMP info page.
+
+The included branch of Prebid.js includes a [swanIdSystem](https://github.com/openx/Prebid.js/blob/swan-demo/modules/swanIdSystem.js) module which reads the swanId of the page from `window.swanId` and exposes it to bidders (the publisher can control which bidders receive the swanId). In the demo it is exposed as an eid:
+
+```
+{
+  "user": {
+    "ext": {
+      "eids": [
+        {
+          "source": "swan.io",
+          "uids": [
+            {
+              "id": "Am5ldy1wcmViaWQtbGltZXMudWsAVnILAEYBAAABAW5ldy1wcmViaWQtbGltZXMudWsAEAAAAO+5CvBYC06tlwUMC7LNAqACNTFkYS51awAb/wkAEAAAAKLBNyHy5UE5kcN3KQkAvpdtkGrfd/KBl3Mk1r0f7MrQKmuCpmXZqjNHFJe9pJG0a7QPHShEvYHUorxiS7RKB2w9rzP0fnC0fzeox4zE69NFAmNtcC5zd2FuLWRlbW8udWsAkkULAAIAAABvbhXF8zuDcui52ZUJqx8i5/ZvkVtqRv1H2qyq/2ixzhJ5SPEvn6RVxVJo1dX0c04ds5i6ojRAH3YbIqCUDp5a4+kCNTFkYS51awBJcgsAAAAAACJblIVvjFskyW1leVSAyTvHOQalKCCrktEPjHp9/KQHaRjbAf8/foYvRtzvI8KQhnXZqI88fGZnFyxHEOe+jCNjb29sLWNhcnMudWsNAGbf7GSQpz/Y8M/abqvDEoH3XIIxbU3qoQnVtZcbOPwcpwYZBbxyBThZsrfj76OJXe1BxtXgxdTvPb8pYFxaNbQ",
+              "atype": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+SWAN readers are required to return OWID signatures when they use SWAN data. The included [`swanBidAdapter`](https://github.com/openx/Prebid.js/blob/swan-demo/modules/swanBidAdapter.js) shows how this might be done. In the example the bidder returns a tree of OWIDs using the `BidResponse.ext.swan_owids` field in OpenRTB. The BidResponse extension is used instead of Bid extension because SWAN data can be used without the submission of a bid. These OWIDs are then passed to `swan.js` in the page.
+```
+BidResponse
+{
+  "id": "swan-bid",
+  "ext": {
+    "swan_owids": [
+      {
+        "impid": "22600961cdf2dc",
+        "owid": {
+          "OWID": "Am5ldy1wcmViaWQtbGltZXMudWsAVnILAEYBAAABAW5ldy1wcmViaWQtbGltZXMudWsAEAAAAO+5CvBYC06tlwUMC7LNAqACNTFkYS51awAb/wkAEAAAAKLBNyHy5UE5kcN3KQkAvpdtkGrfd/KBl3Mk1r0f7MrQKmuCpmXZqjNHFJe9pJG0a7QPHShEvYHUorxiS7RKB2w9rzP0fnC0fzeox4zE69NFAmNtcC5zd2FuLWRlbW8udWsAkkULAAIAAABvbhXF8zuDcui52ZUJqx8i5/ZvkVtqRv1H2qyq/2ixzhJ5SPEvn6RVxVJo1dX0c04ds5i6ojRAH3YbIqCUDp5a4+kCNTFkYS51awBJcgsAAAAAACJblIVvjFskyW1leVSAyTvHOQalKCCrktEPjHp9/KQHaRjbAf8/foYvRtzvI8KQhnXZqI88fGZnFyxHEOe+jCNjb29sLWNhcnMudWsNAGbf7GSQpz/Y8M/abqvDEoH3XIIxbU3qoQnVtZcbOPwcpwYZBbxyBThZsrfj76OJXe1BxtXgxdTvPb8pYFxaNbQ=",
+          "Children": [
+            {
+              "OWID": "AnB1Ym1hdGljLnN3YW4tZGVtby51awBWcgsAAgAAAAEDLMTHhj4R3CuSKdKJb09EHlhF1zqksgAgfX3MY5PTw7u+FfC4V8PJVtBF5N1T6WWH8+LATVitImD+2COXGp6tjw==",
+              "Children": [
+                {
+                  "OWID": "AmJpZHN3aXRjaC5zd2FuLWRlbW8udWsAVnILAAIAAAABAxX5d7Y8Pli/92GduwPACGuLrx5l+BtlHPNJKzW+7INyDyfkfbr5gMy2g5yn76HknKw5TRSZiDLU5KhO3Cx//n0=",
+                  "Children": [
+                    {
+                      "OWID": "AmNlbnRyby5zd2FuLWRlbW8udWsAVnILAEIAAAABAGNvb2wtYmlrZXMudWsvcm9iZXJ0LWJ5ZS10RzM2cnZDZXFuZy11bnNwbGFzaC5qcGcAY29vbC1iaWtlcy51awBz6XFdFsuqNUYj4FDcMbGBUDCSrQAzw68Axx9CWnL/Hbv794nwsfqHJugwOA/y0wmuS1Uwk/9KX/NQGa+GJHj+",
+                      "Children": null,
+                      "Value": null
+                    },
+                    {
+                      "OWID": "AmRhdGF4dS5zd2FuLWRlbW8udWsAVnILAEIAAAABAGNvb2wtYmlrZXMudWsvcm9iZXJ0LWJ5ZS10RzM2cnZDZXFuZy11bnNwbGFzaC5qcGcAY29vbC1iaWtlcy51awCX/oTwFpXMKFMyOQfe6mHtTuXEUkR80RQ7gjGSa4jHx/WOTRKUT4NqOuCub91+NUBvkAwpdaPy7SmS9ud2eZ0p",
+                      "Children": null,
+                      "Value": null
+                    },
+                    {
+                      "OWID": "Am1lZGlhbWF0aC5zd2FuLWRlbW8udWsAVnILAEIAAAABAGNvb2wtYmlrZXMudWsvcm9iZXJ0LWJ5ZS10RzM2cnZDZXFuZy11bnNwbGFzaC5qcGcAY29vbC1iaWtlcy51awBHAac8aYTE1X+Ptg+2M5VZ2Xwcj30GYNJDfGODpsg6gnLv1cW4/QqoBhWfKOW/Im84pGi8N1E7tj/kMTtw59Dp",
+                      "Children": null,
+                      "Value": null
+                    },
+                    {
+                      "OWID": "Am9hdGguc3dhbi1kZW1vLnVrAFZyCwBIAAAAAQBjb29sLWNyZWFtcy51ay9iZWUtbmF0dXJhbGxlcy11X0hqSGZrekF5TS11bnNwbGFzaC5qcGcAY29vbC1jcmVhbXMudWsAn8xrJETFajRbDn2iDMaC8/Qx/IxQRnAS8AfRO6j48dQHeCzCR4kVCc1ZC9tyEEDKbVYz0mlSsG5A/JhsJ6wnWw==",
+                      "Children": null,
+                      "Value": null
+                    },
+                    {
+                      "OWID": "AnRoZXRyYWRlZGVzay5zd2FuLWRlbW8udWsAVnILAEIAAAABAGNvb2wtYmlrZXMudWsvcm9iZXJ0LWJ5ZS10RzM2cnZDZXFuZy11bnNwbGFzaC5qcGcAY29vbC1iaWtlcy51awCf58s1fIjpxQrdUHLqdNHB+3vXbxAxxXeooOZ/g2a9R0A132ZeBRcpgr2BadsoHd8JLqrt4BShkFIj0QqopMnm",
+                      "Children": null,
+                      "Value": null
+                    },
+                    {
+                      "OWID": "AnpldGEuc3dhbi1kZW1vLnVrAFZyCwBIAAAAAQBjb29sLWNyZWFtcy51ay9iZWUtbmF0dXJhbGxlcy11X0hqSGZrekF5TS11bnNwbGFzaC5qcGcAY29vbC1jcmVhbXMudWsATuxHQWQ59ch+E4zA59j1eBySgeEWzPVzGd2Wn2vfYWwPcGY/9kZK82A3LWSncxrZrYO20SXD1TPiWiPf9j9A8g==",
+                      "Children": [
+                        {
+                          "OWID": "AmxpdmVpbnRlbnQuc3dhbi1kZW1vLnVrAFZyCwACAAAAAQM55HrmAo6su1AGS8MzTn5XsPkGW32Xuq1nzaZcnXcDAK/8zNP/T5nhZyd98XUZJ13hXcQOSgcUdqRAoBXrGXLU",
+                          "Children": null,
+                          "Value": null
+                        }
+                      ],
+                      "Value": -1
+                    }
+                  ],
+                  "Value": 0
+                }
+              ],
+              "Value": 0
+            }
+          ],
+          "Value": null
+        }
+      }
+    ]
+  }
+}
+```
+
+The swan-demo package includes a prebid route in the OpenRTB controller which is used to return SWAN BidResponses for the demo. It is an OpenRTB interface around the existing demo advertising mechanism.

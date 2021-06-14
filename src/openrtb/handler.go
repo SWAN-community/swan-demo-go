@@ -28,18 +28,189 @@ import (
 	"owid"
 	"swan"
 	"sync"
+	"github.com/bsm/openrtb"
+	"encoding/json"
+	"encoding/base64"
+	"log"
 )
 
 var empty swan.Empty // Used for empty responses
 
 const openRTBPath = "/demo/api/v1/bid" // The path for this handler
 
+const prebidRTBPath = "/demo/api/v1/prebid" // The path for prebid
+
+type ImpExt struct {
+	Offer owid.Node
+	Offername string
+}
+
+type BidResponseExt struct {
+	SwanOWIDs []*SwanExt `json:"swan_owids,omitempty"`
+}
+
+type SwanExt struct {
+	ImpID string `json:"impid,omitempty"`
+	Owid *owid.Node `json:"owid,omitempty"`
+}
+
+type UserExt struct {
+	Eids []*Eid `json:"eids,omitempty"`
+}
+
+type Eid struct {
+	Source string `json:"source,omitempty"`
+	Uids []*Uid `json:"uids,omitempty"`
+}
+
+type Uid struct {
+	Id string `json:"id,omitempty"`
+	Atype int `json:"atype,omitempty"`
+}
+
 // Handler is responsible for a real time transaction for advertising.
 // The body of the request must contain a JSON array of Processor IDs which
 // contain the signature of the last entry in the list of Processors.
 func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
-	if r.URL.Path == openRTBPath && r.Method == "POST" {
+	if r.URL.Path == prebidRTBPath && r.Method == "POST" {
+		var req *openrtb.BidRequest
+		var swanId string
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			log.Fatal(err)
+		}
+
+		if d.Config.Debug {
+			fmt.Println(d.Host)
+			fmt.Println(req)
+		}
+
+		var ext UserExt
+		if (req.User != nil) {
+			if (req.User.Ext != nil) {
+				fmt.Println(req.User.Ext)
+				if err := json.Unmarshal(req.User.Ext, &ext); err != nil {
+						panic(err)
+				}
+				fmt.Println(&ext)
+				for _, eid := range ext.Eids {
+					fmt.Println(eid)
+					if eid.Source == "swan.io" {
+						uid := eid.Uids[0]
+						swanId = uid.Id
+					}
+				}			}
+		}
+
+		if (swanId != "") {
+			b, err := owid.FromBase64(swanId)
+			if err != nil {
+				common.ReturnServerError(d.Config, w, err)
+				return
+			}
+			a, err := b.AsByteArray()
+			if err != nil {
+				common.ReturnServerError(d.Config, w, err)
+				return
+			}
+		
+			var swanexts = make([]*SwanExt, len(req.Impressions))
+			var bids = make([]openrtb.Bid, len(req.Impressions))
+			for i, e := range req.Impressions {
+
+				var o = owid.Node{OWID: a}
+				var adm string
+				o.SetParents()
+				
+				// Get some bids
+				_, err := HandleTransaction(d, &o)
+				if err != nil {
+					common.ReturnServerError(d.Config, w, err)
+					return
+				}
+
+				b, err := o.AsJSON()
+				if err != nil {
+					common.ReturnServerError(d.Config, w, err)
+					return
+				}
+
+				// get the winner
+				ad, err := swan.WinningBid(&o)
+				if err != nil {
+					adm = "<p>" + err.Error() + "</p>"
+				}
+
+				// Get the winning bid node.
+				// w, err := swan.WinningNode(&o)
+				// if err != nil {
+				// 	adm = "<p>" + err.Error() + "</p>"
+				// }
+
+				adm = fmt.Sprintf("<form target=\"_blank\" method=\"POST\" action=\"http://%s\">"+
+				"<div class=\"form-group\">"+
+				"<input type=\"hidden\" id=\"transaction\" name=\"transaction\" value=\"%s\">"+
+				"<button type=\"submit\" id=\"view\" name=\"view\" class=\"advert-button\">"+
+				"<img src=\"http://%s\">"+
+				"</button>"+
+				"</div>"+
+				"</form>",
+				ad.AdvertiserURL,
+				base64.RawStdEncoding.EncodeToString(b),
+				ad.MediaURL)
+
+				var adomain = []string {ad.AdvertiserURL}
+				var bid = openrtb.Bid{
+					ID: "bid-id",
+					ImpID: e.ID,
+					AdvDomains: adomain,
+					Ext: b,
+					AdMarkup: adm,
+					Price: rand.Float64()*5,
+					Height: e.Banner.Formats[0].Height,
+					Width: e.Banner.Formats[0].Width,
+					CreativeID: "swan-crid"}
+				bids[i] = bid
+				var swan_ext = SwanExt {ImpID: e.ID, Owid: &o}
+				swanexts[i] = &swan_ext
+			}
+
+			var resp_ext = BidResponseExt {SwanOWIDs: swanexts}
+
+			myIn, err := json.Marshal(resp_ext)
+			if err != nil {
+					// catch err
+			}
+	
+			myInRaw := json.RawMessage(myIn)
+	
+			var seatbids = []openrtb.SeatBid {openrtb.SeatBid{Seat: "swan-seat", Bids: bids}}
+			var response = openrtb.BidResponse{ID: "swan-bid", SeatBids: seatbids, Ext: myInRaw}
+			if d.Config.Debug {
+				fmt.Println(response)
+			}
+			js, err := json.Marshal(response)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+	
+			w.Header().Set("Content-Type", "application/json")
+			w.Header().Set("Cache-Control", "no-cache")
+			w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
+			_, err = w.Write(js)
+			if err != nil {
+				common.ReturnServerError(d.Config, w, err)
+				return
+			}
+		} else {
+			w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
+			w.WriteHeader(http.StatusNoContent)
+		}
+	
+	} else if r.URL.Path == openRTBPath && r.Method == "POST" {
 
 		// Unpack the body of the request to form the bid data structure.
 		o, err := getID(d, r)
@@ -82,6 +253,8 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Encoding", "gzip")
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		_, err = g.Write(b)
 		if err != nil {
 			common.ReturnServerError(d.Config, w, err)

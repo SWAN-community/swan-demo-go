@@ -19,3 +19,6 @@
 [submodule "src/salt"]
 	path = src/salt
 	url = https://github.com/SWAN-community/salt-go.git
+[submodule "www/prebid"]
+	path = www/prebid
+	url = https://github.com/openx/Prebid.js.git

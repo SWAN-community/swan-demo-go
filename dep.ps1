@@ -10,6 +10,7 @@ $cmd = "go get " +
     "github.com/aws/aws-sdk-go/service/dynamodb/expression " +
     "github.com/google/uuid " +
     "github.com/satori/go.uuid " +
+    "github.com/bsm/openrtb" +
     "cloud.google.com/go/firestore " +
     "firebase.google.com/go " +
     "google.golang.org/api/iterator " + 

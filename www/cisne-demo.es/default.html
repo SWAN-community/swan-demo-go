@@ -8,8 +8,8 @@
     <title>SWAN Example</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="grid.css" rel="stylesheet">
-    <script src="/owid-js/v1.js" type="text/javascript"></script>
-    <script src="/salt-js/v1.js" type="text/javascript"></script>
+    <script src="/owid-js/v1.js?{{.Version}}" type="text/javascript"></script>
+    <script src="/salt-js/v1.js?{{.Version}}" type="text/javascript"></script>
 </head>
 
 <body>
@@ -147,11 +147,12 @@
         // can be used by the return URL. See the table after the edit action 
         // completes.
         function swanFetch(a) {
-            var p = new URLSearchParams({
-                "returnUrl": swanGetReturnUrl() +
-                    "?action=" + a + "&encrypted=",
-                "displayUserInterface": "false",
-                "state": "Example state"});
+            var p = new URLSearchParams();
+            p.append(
+                "returnUrl",
+                swanGetReturnUrl() + "?action=" + a + "&encrypted=");
+            p.append("displayUserInterface", "false");
+            p.append("state", "Example state");
             fetch(proxyPath + "fetch", { method: "POST", body: p })
                 .then(r => r.text())
                 .then(u => window.location.href = u)

@@ -65,13 +65,13 @@
           <figure class="figure">
             {{ if eq .IsCrawler false }}
             <script>
-              var p = document.currentScript.parentNode;
+              var parentNode = document.currentScript.parentNode;
               fetch("/advert?placement=heading")
                 .then(r => r.text() )
                 .then(m => {
                   var a = document.createElement("div");
                   a.innerHTML = m;
-                  p.insertBefore(a, p.firstChild);})
+                  parentNode.insertBefore(a, parentNode.firstChild);})
                 .catch(x => {
                   console.log(x);
                 });

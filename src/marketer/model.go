@@ -24,12 +24,18 @@ import (
 	"owid"
 	"strings"
 	"swan"
+	"time"
 )
 
 // MarketerModel used with HTML templates.
 type MarketerModel struct {
 	common.PageModel
 	idNode *owid.Node // The swan.ID as a node and tree associated with the page
+}
+
+// Version is a code for cache busting.
+func (m *MarketerModel) Version() string {
+	return time.Now().UTC().Format("01-02-2006 15")
 }
 
 // Stop returns true if the request includes the key Stop to indicate that the

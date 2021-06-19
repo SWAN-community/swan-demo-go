@@ -31,7 +31,7 @@ import (
 )
 
 // AddHandlers and outputs configuration information.
-func AddHandlers(settingsFile string) {
+func AddHandlers(settingsFile string) error {
 
 	// Get the demo configuration.
 	dc := common.NewConfig(settingsFile)
@@ -42,13 +42,11 @@ func AddHandlers(settingsFile string) {
 	// Get all the domains for the SWAN demo.
 	wd, err := os.Getwd()
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		return err
 	}
 	domains, err := parseDomains(&dc, filepath.Join(wd, "www"))
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		return err
 	}
 	dc.Domains = domains
 
@@ -59,8 +57,7 @@ func AddHandlers(settingsFile string) {
 		swa,
 		common.Handler(domains))
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		return err
 	}
 
 	// Output details for information.
@@ -68,6 +65,7 @@ func AddHandlers(settingsFile string) {
 	for _, d := range domains {
 		log.Printf("%s:%s:%s", d.Category, d.Host, d.Name)
 	}
+	return nil
 }
 
 // parseDomains returns an array of domains (e.g. swan-demo.uk) with all the

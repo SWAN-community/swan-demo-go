@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/svg+xml" href="noun_Swan_3263882.svg">
   <title>Biscuit News | SWAN Demo</title>
-  <script src="owid-js/v1.js" type="text/javascript"></script>
+  <script src="/owid-js/v1.js?{{.Version}}" type="text/javascript"></script>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link href="carousel.css" rel="stylesheet">
   <link href="advert.css" rel="stylesheet">
@@ -117,12 +117,14 @@
                   // can be used to update the preference fields. If no cookies
                   // are present then 3PC is not available and the user must
                   // be asked if they wish to continue.
-                  function swanComplete(data) {
-                    var u = "/advert?placement=heading";
-                    if (data) {
-                      u += "&encrypted=" + data;
-                    }
-                    fetch(u)
+                  function swanComplete(e) {
+                    var data = new URLSearchParams();
+                    data.append("encrypted", e);
+                    fetch("/advert?placement=heading", 
+                      {
+                        method: "POST",
+                        body: data
+                      })
                       .then(r => r.text())
                       .then(m => {
                         if (getCookie("swan-pref") == "" ||

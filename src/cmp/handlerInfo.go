@@ -23,10 +23,11 @@ import (
 	"net/http"
 	"owid"
 	"swan"
+	"time"
 )
 
-// infoModel data needed for the advert information interface.
-type infoModel struct {
+// InfoModel data needed for the advert information interface.
+type InfoModel struct {
 	OWIDs      map[*owid.OWID]interface{}
 	Bid        *swan.Bid
 	ID         *swan.ID
@@ -35,7 +36,12 @@ type infoModel struct {
 	AccessNode string
 }
 
-func (m *infoModel) findID() (*owid.OWID, *swan.ID) {
+// Version is a code for cache busting.
+func (m *InfoModel) Version() string {
+	return time.Now().UTC().Format("01-02-2006 15")
+}
+
+func (m *InfoModel) findID() (*owid.OWID, *swan.ID) {
 	for k, v := range m.OWIDs {
 		if o, ok := v.(*swan.ID); ok {
 			return k, o
@@ -44,7 +50,7 @@ func (m *infoModel) findID() (*owid.OWID, *swan.ID) {
 	return nil, nil
 }
 
-func (m *infoModel) findBid() *swan.Bid {
+func (m *InfoModel) findBid() *swan.Bid {
 	for _, v := range m.OWIDs {
 		if b, ok := v.(*swan.Bid); ok {
 			return b
@@ -61,7 +67,7 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		common.ReturnServerError(d.Config, w, err)
 		return
 	}
-	var m infoModel
+	var m InfoModel
 	m.OWIDs = make(map[*owid.OWID]interface{})
 	for k, vs := range r.Form {
 		if k == "owid" {
@@ -95,7 +101,7 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	g := gzip.NewWriter(w)
 	defer g.Close()
 	w.Header().Set("Content-Encoding", "gzip")
-	err = d.LookupHTML("info.html").Execute(g, m)
+	err = d.LookupHTML("info.html").Execute(g, &m)
 	if err != nil {
 		common.ReturnServerError(d.Config, w, err)
 		return

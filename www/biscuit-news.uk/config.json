@@ -2,6 +2,8 @@
    "category": "Publisher",
    "name": "Biscuit News",
    "swanMessage": "Cookies, cookies, cookies. We love cookies.",
+   "swanDisplayUserInterface" : true,
+   "swanNodeCount": 10,
    "swanBackgroundColor": "aliceblue",
    "swanMessageColor": "#5a5a5a",
    "swanProgressColor": "#5a5a5a",

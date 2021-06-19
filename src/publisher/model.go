@@ -38,6 +38,11 @@ type Model struct {
 	swanData []*swan.Pair // The SWAN data for display
 }
 
+// Version is a code for cache busting.
+func (m *Model) Version() string {
+	return time.Now().UTC().Format("01-02-2006 15")
+}
+
 // CMPURL returns the URL for the CMP dialog.
 func (m Model) CMPURL() string {
 	return getCMPURL(m.Domain, m.Request, m.swanData)
@@ -208,7 +213,7 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 		"</div>"+
 		"</form>",
 		b.AdvertiserURL,
-		base64.RawStdEncoding.EncodeToString(e),
+		base64.StdEncoding.EncodeToString(e),
 		b.MediaURL,
 		i.String(),
 		"noun_Info_1582932.svg"))

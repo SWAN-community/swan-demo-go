@@ -72,7 +72,7 @@ func getID(r *http.Request) (*owid.Node, error) {
 	}
 
 	// Get the transaction from the form data.
-	d, err := base64.RawStdEncoding.DecodeString(
+	d, err := base64.StdEncoding.DecodeString(
 		r.Form.Get("transaction"))
 	if err != nil {
 		return nil, err

@@ -4,11 +4,17 @@ var loaded = false;
 
 stop = function(s, d, r, a) {
     loadOWID().then(() => {
-        fetch("/stop?" +
-            "host=" + encodeURIComponent(d) + "&" +
-            "returnUrl=" + encodeURIComponent(r) + "&" +
-            "accessNode=" + encodeURIComponent(a),
-            { method: "GET", mode: "cors", cache: "no-cache" })
+        var data = new URLSearchParams();
+        data.append("host", d);
+        data.append("returnUrl", r);
+        data.append("accessNode", s);
+        fetch("/stop?",
+            { 
+                method: "POST", 
+                mode: "cors", 
+                cache: "no-cache",
+                body: data 
+            })
             .then(r => r.text() )
             .then(m => {
                 console.log(m);
@@ -22,10 +28,16 @@ stop = function(s, d, r, a) {
 
 appendComplaintEmail = function(e, d, o, s, g) {
     loadOWID().then(() => {
-        fetch((d ? "//" + d : "") + "/complain?" +
-            "swanid=" + encodeURIComponent(o) + "&" +
-            "partyid=" + encodeURIComponent(s),
-            { method: "GET", mode: "cors", cache: "no-cache" })
+        var data = new URLSearchParams();
+        data.append("swanid", o);
+        data.append("partyid", s);
+        fetch((d ? "//" + d : "") + "/complain?",
+            { 
+                method: "POST", 
+                mode: "cors", 
+                cache: "no-cache",
+                body: data 
+            })
             .then(r => r.text() )
             .then(m => {
                 var a = document.createElement("a");
@@ -48,10 +60,15 @@ appendComplaintEmail = function(e, d, o, s, g) {
 appendName = function(e, s) {
     loadOWID().then(() => {
         var supplier = new owid(s);
-
-        fetch("//" + supplier.domain + "/owid/api/v1/creator", 
+        var url = "//" + supplier.domain + "/owid/api/v1/creator";
+        fetch(url, 
             { method: "GET", mode: "cors" })
-            .then(r => r.json())
+            .then(r => {
+                if (r.ok) {
+                    return r.json();
+                }
+                throw "Bad response from '" + url + "'";
+            })
             .then(o => {
                 var t = document.createTextNode(o.name);
                 e.appendChild(t);

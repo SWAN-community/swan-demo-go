@@ -30,6 +30,7 @@ import (
 	"strconv"
 	"strings"
 	"swan"
+	"time"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -37,6 +38,11 @@ import (
 // dialogModel key value pairs with functions to interpret them.
 type dialogModel struct {
 	url.Values
+}
+
+// Version is a code for cache busting.
+func (m *dialogModel) Version() string {
+	return time.Now().UTC().Format("01-02-2006 15")
 }
 
 // Title for the SWAN storage operation.

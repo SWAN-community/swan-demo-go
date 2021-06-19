@@ -66,7 +66,10 @@ func main() {
 	portHttps := getPortHTTPS()
 
 	// Add the SWAN handlers.
-	demo.AddHandlers(settingsFile)
+	err = demo.AddHandlers(settingsFile)
+	if err != nil {
+		panic(err)
+	}
 
 	// Start the HTTPS proxy if there is a provided port.
 	if portHttps != "" {

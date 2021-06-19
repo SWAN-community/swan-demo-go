@@ -20,18 +20,19 @@ import (
 	"bytes"
 	"common"
 	"compress/gzip"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"net/http"
 	"net/url"
 	"owid"
 	"swan"
 	"sync"
+
 	"github.com/bsm/openrtb"
-	"encoding/json"
-	"encoding/base64"
-	"log"
 )
 
 var empty swan.Empty // Used for empty responses
@@ -41,7 +42,7 @@ const openRTBPath = "/demo/api/v1/bid" // The path for this handler
 const prebidRTBPath = "/demo/api/v1/prebid" // The path for prebid
 
 type ImpExt struct {
-	Offer owid.Node
+	Offer     owid.Node
 	Offername string
 }
 
@@ -50,8 +51,8 @@ type BidResponseExt struct {
 }
 
 type SwanExt struct {
-	ImpID string `json:"impid,omitempty"`
-	Owid *owid.Node `json:"owid,omitempty"`
+	ImpID string     `json:"impid,omitempty"`
+	Owid  *owid.Node `json:"owid,omitempty"`
 }
 
 type UserExt struct {
@@ -60,12 +61,12 @@ type UserExt struct {
 
 type Eid struct {
 	Source string `json:"source,omitempty"`
-	Uids []*Uid `json:"uids,omitempty"`
+	Uids   []*Uid `json:"uids,omitempty"`
 }
 
 type Uid struct {
-	Id string `json:"id,omitempty"`
-	Atype int `json:"atype,omitempty"`
+	Id    string `json:"id,omitempty"`
+	Atype int    `json:"atype,omitempty"`
 }
 
 // Handler is responsible for a real time transaction for advertising.
@@ -86,11 +87,11 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 
 		var ext UserExt
-		if (req.User != nil) {
-			if (req.User.Ext != nil) {
+		if req.User != nil {
+			if req.User.Ext != nil {
 				fmt.Println(req.User.Ext)
 				if err := json.Unmarshal(req.User.Ext, &ext); err != nil {
-						panic(err)
+					panic(err)
 				}
 				fmt.Println(&ext)
 				for _, eid := range ext.Eids {
@@ -99,10 +100,11 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 						uid := eid.Uids[0]
 						swanId = uid.Id
 					}
-				}			}
+				}
+			}
 		}
 
-		if (swanId != "") {
+		if swanId != "" {
 			b, err := owid.FromBase64(swanId)
 			if err != nil {
 				common.ReturnServerError(d.Config, w, err)
@@ -113,7 +115,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				common.ReturnServerError(d.Config, w, err)
 				return
 			}
-		
+
 			var swanexts = make([]*SwanExt, len(req.Impressions))
 			var bids = make([]openrtb.Bid, len(req.Impressions))
 			for i, e := range req.Impressions {
@@ -121,7 +123,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				var o = owid.Node{OWID: a}
 				var adm string
 				o.SetParents()
-				
+
 				// Get some bids
 				_, err := HandleTransaction(d, &o)
 				if err != nil {
@@ -148,43 +150,43 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				// }
 
 				adm = fmt.Sprintf("<form target=\"_blank\" method=\"POST\" action=\"http://%s\">"+
-				"<div class=\"form-group\">"+
-				"<input type=\"hidden\" id=\"transaction\" name=\"transaction\" value=\"%s\">"+
-				"<button type=\"submit\" id=\"view\" name=\"view\" class=\"advert-button\">"+
-				"<img src=\"http://%s\">"+
-				"</button>"+
-				"</div>"+
-				"</form>",
-				ad.AdvertiserURL,
-				base64.RawStdEncoding.EncodeToString(b),
-				ad.MediaURL)
+					"<div class=\"form-group\">"+
+					"<input type=\"hidden\" id=\"transaction\" name=\"transaction\" value=\"%s\">"+
+					"<button type=\"submit\" id=\"view\" name=\"view\" class=\"advert-button\">"+
+					"<img src=\"http://%s\">"+
+					"</button>"+
+					"</div>"+
+					"</form>",
+					ad.AdvertiserURL,
+					base64.StdEncoding.EncodeToString(b),
+					ad.MediaURL)
 
-				var adomain = []string {ad.AdvertiserURL}
+				var adomain = []string{ad.AdvertiserURL}
 				var bid = openrtb.Bid{
-					ID: "bid-id",
-					ImpID: e.ID,
+					ID:         "bid-id",
+					ImpID:      e.ID,
 					AdvDomains: adomain,
-					Ext: b,
-					AdMarkup: adm,
-					Price: rand.Float64()*5,
-					Height: e.Banner.Formats[0].Height,
-					Width: e.Banner.Formats[0].Width,
+					Ext:        b,
+					AdMarkup:   adm,
+					Price:      rand.Float64() * 5,
+					Height:     e.Banner.Formats[0].Height,
+					Width:      e.Banner.Formats[0].Width,
 					CreativeID: "swan-crid"}
 				bids[i] = bid
-				var swan_ext = SwanExt {ImpID: e.ID, Owid: &o}
+				var swan_ext = SwanExt{ImpID: e.ID, Owid: &o}
 				swanexts[i] = &swan_ext
 			}
 
-			var resp_ext = BidResponseExt {SwanOWIDs: swanexts}
+			var resp_ext = BidResponseExt{SwanOWIDs: swanexts}
 
 			myIn, err := json.Marshal(resp_ext)
 			if err != nil {
-					// catch err
+				// catch err
 			}
-	
+
 			myInRaw := json.RawMessage(myIn)
-	
-			var seatbids = []openrtb.SeatBid {openrtb.SeatBid{Seat: "swan-seat", Bids: bids}}
+
+			var seatbids = []openrtb.SeatBid{openrtb.SeatBid{Seat: "swan-seat", Bids: bids}}
 			var response = openrtb.BidResponse{ID: "swan-bid", SeatBids: seatbids, Ext: myInRaw}
 			if d.Config.Debug {
 				fmt.Println(response)
@@ -194,7 +196,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-	
+
 			w.Header().Set("Content-Type", "application/json")
 			w.Header().Set("Cache-Control", "no-cache")
 			w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
@@ -209,7 +211,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			w.WriteHeader(http.StatusNoContent)
 		}
-	
+
 	} else if r.URL.Path == openRTBPath && r.Method == "POST" {
 
 		// Unpack the body of the request to form the bid data structure.

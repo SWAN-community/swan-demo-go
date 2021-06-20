@@ -2,5 +2,6 @@
    "Category": "Demo",
    "Name": "SWAN Demo",
    "SWANAccessNode": "51db.uk",
-   "SWANAccessKey": "CMPKeySWAN"
+   "SWANAccessKey": "CMPKeySWAN",
+   "Default": true
 }

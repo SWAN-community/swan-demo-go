@@ -46,6 +46,7 @@ type Domain struct {
 	SwanJavaScript           bool   // True to use JavaScript responses rather than HTML documents
 	SwanNodeCount            int    // The number of SWAN nodes to use for operations
 	CmpNodeCount             int    // The number of nodes to visit when accessing the CMP
+	Default                  bool   // True to indicate the default domain
 	// The domain of the access node used with SWAN (only set for CMPs)
 	SWANAccessNode string
 	SWANAccessKey  string // The access key to use when communicating with SWAN.

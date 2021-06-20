@@ -32,6 +32,9 @@ func Handler(d []*Domain) http.HandlerFunc {
 		// Set to true if a domain is found and handled.
 		found := false
 
+		// Default domain to use if another domain can't be found.
+		var def *Domain
+
 		// r.Host may include the port number or www prefixes or other
 		// characters dependent on the environment. Using strings.Contains
 		// rather than testing for equality eliminates these issues for a demo
@@ -39,26 +42,26 @@ func Handler(d []*Domain) http.HandlerFunc {
 		for _, domain := range d {
 			if strings.EqualFold(r.Host, domain.Host) {
 
-				// Try static resources first.
-				f, err := handlerStatic(domain, w, r)
-				if err != nil {
-					ReturnServerError(domain.Config, w, err)
-					return
-				}
-
-				// If not found then use the domain handler.
-				if f == false {
-					domain.handler(domain, w, r)
-				}
+				handleDomain(domain, w, r)
 
 				// Mark as the domain being found and then break.
 				found = true
 				break
 			}
+
+			// Record the default domain if flagged.
+			if def == nil && domain.Default {
+				def = domain
+			}
 		}
 
-		// All handlers have been tried and nothing has been found. Return not
-		// found.
+		// All handlers have been tried and nothing has been found. Return the
+		// default domain if available.
+		if def != nil {
+			handleDomain(def, w, r)
+		}
+
+		// Return not found.
 		if found == false {
 			http.NotFound(w, r)
 		}
@@ -152,4 +155,19 @@ func GetCurrentPage(c *Configuration, r *http.Request) *url.URL {
 	u.Host = r.Host
 	u.Path = r.URL.Path
 	return &u
+}
+
+func handleDomain(d *Domain, w http.ResponseWriter, r *http.Request) {
+
+	// Try static resources first.
+	f, err := handlerStatic(d, w, r)
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
+		return
+	}
+
+	// If not found then use the domain handler.
+	if f == false {
+		d.handler(d, w, r)
+	}
 }

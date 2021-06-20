@@ -57,7 +57,7 @@ func Handler(d []*Domain) http.HandlerFunc {
 
 		// All handlers have been tried and nothing has been found. Return the
 		// default domain if available.
-		if def != nil {
+		if found == false && def != nil {
 			handleDomain(def, w, r)
 			found = true
 		}

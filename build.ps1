@@ -27,7 +27,7 @@ $www = Get-ChildItem -File -Path ./www -Recurse | Resolve-Path -Relative | % { $
 # Create the zip command with all the files.
 if (Test-Path "application")
 {
-    $command = "bin\build-lambda-zip.exe -o aws-eb-swan-demo.zip application appsettings.json Procfile .ebextensions/.config .ebextensions/healthcheckurl.config " + $www -join ' '
+    $command = "bin\build-lambda-zip.exe -o aws-eb-swan-demo.zip application appsettings.json Procfile .ebextensions/.config .ebextensions/healthcheckurl.config .swan/owidcreators-production.json .swan/swiftnodes-production.json " + $www -join ' '
     $command = $command.Replace(".\", "").Replace("\", "/")
 
     # Create a zip file with the application and the settings file

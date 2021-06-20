@@ -29,6 +29,7 @@ import (
 	"net/http"
 	"net/url"
 	"owid"
+	"strings"
 	"swan"
 	"sync"
 
@@ -181,7 +182,8 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 			myIn, err := json.Marshal(resp_ext)
 			if err != nil {
-				// catch err
+				common.ReturnServerError(d.Config, w, err)
+				return
 			}
 
 			myInRaw := json.RawMessage(myIn)
@@ -323,7 +325,7 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 		return nil, err
 	}
 	if t == nil {
-		return nil, fmt.Errorf("Could not create new OWID")
+		return nil, fmt.Errorf("could not create new OWID")
 	}
 
 	// If this domain has adverts then choose one at random. Get a random
@@ -331,7 +333,8 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 	if len(d.Adverts) > 0 {
 
 		// The root node must be the SWAN ID.
-		id, err := swan.IDFromNode(n.GetRoot())
+		var id *swan.ID
+		id, err = swan.IDFromNode(n.GetRoot())
 		if err != nil {
 			return nil, err
 		}
@@ -473,10 +476,6 @@ func getID(d *common.Domain, r *http.Request) (*owid.Node, error) {
 	if err != nil {
 		return nil, err
 	}
-	if d.Config.Debug {
-		fmt.Println(d.Host)
-		fmt.Println(string(b))
-	}
 	return owid.NodeFromJSON(b)
 }
 
@@ -503,12 +502,18 @@ func sendToSupplier(
 	if err != nil {
 		return nil, err
 	}
-	if res.StatusCode != http.StatusOK {
+
+	// Valid responses must be OK and JSON.
+	if res.StatusCode != http.StatusOK ||
+		strings.EqualFold(
+			res.Header.Get("Content-Type"),
+			"application/json") == false {
 		return createFailed(d, n, &up, res)
 	}
 
 	// Read the response as a byte array.
 	b, err := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
 	if err != nil {
 		return nil, err
 	}

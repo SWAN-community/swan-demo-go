@@ -13,4 +13,6 @@ application
 *.zip
 .config
 .vscode/launch.json
+.swan/owidcreators-production.json
+.swan/swiftnodes-production.json
 Dockerfile

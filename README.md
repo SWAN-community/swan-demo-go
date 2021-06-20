@@ -45,21 +45,21 @@ line.
     ```sh
     export PORT=80
     export OWID_FILE="swan/creators.json"
-    export SWIFT_NODES_FILE="swan/swiftnodes.json"
+    export SWIFT_FILE="swan/swiftnodes.json"
     ```
 
     **Windows - CMD**
     ```bat
     setx PORT=80
     setx OWID_FILE="swan/creators.json"
-    setx SWIFT_NODES_FILE="swan/swiftnodes.json"
+    setx SWIFT_FILE="swan/swiftnodes.json"
     ```
 
     **Windows - Powershell**
     ```powershell
     $Env:PORT=80
     $Env:OWID_FILE="swan/creators.json"
-    $Env:SWIFT_NODES_FILE="swan/swiftnodes.json"
+    $Env:SWIFT_FILE="swan/swiftnodes.json"
     ```
 
 6. Run the Demo Server:
@@ -200,7 +200,7 @@ line.
 
     ```                
     OWID_FILE: ".swan/creators.json"
-    SWIFT_NODES_FILE: ".swan/swiftnodes.json"
+    SWIFT_FILE: ".swan/swiftnodes.json"
     ```
 
     The vscode `launch.json` file can also be used to set environment variables, 

@@ -59,6 +59,7 @@ func Handler(d []*Domain) http.HandlerFunc {
 		// default domain if available.
 		if def != nil {
 			handleDomain(def, w, r)
+			found = true
 		}
 
 		// Return not found.

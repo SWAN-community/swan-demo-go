@@ -1,0 +1,37 @@
+$ORIGIN 51db.uk.
+51db.uk.	900	IN	SOA	ns-1332.awsdns-38.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+51db.uk.	172800	IN	NS	ns-1332.awsdns-38.org.
+51db.uk.	172800	IN	NS	ns-527.awsdns-01.net.
+51db.uk.	172800	IN	NS	ns-468.awsdns-58.com.
+51db.uk.	172800	IN	NS	ns-1772.awsdns-29.co.uk.
+1.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+2.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+3.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+4.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+5.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+6.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+7.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+8.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+9.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+10.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+11.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+12.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+13.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+14.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+15.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+16.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+17.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+18.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+19.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+20.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+21.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+22.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+23.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+24.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+25.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+26.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+27.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+28.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+29.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false
+30.51db.uk.	86400	AWS	ALIAS	A server.eba-bqqwk3vg.us-east-2.elasticbeanstalk.com. Z14LCN19Q5QHIC false

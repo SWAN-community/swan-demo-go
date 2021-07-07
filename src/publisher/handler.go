@@ -233,6 +233,10 @@ func getCMPURL(d *common.Domain, r *http.Request, p []*swan.Pair) string {
 	}
 	addSWANParams(r, &q, p)
 	setFlags(d, &q)
+
+	// The CMP URL will never use JavaScript.
+	q.Set("javaScript", "false")
+
 	u.RawQuery = q.Encode()
 	return u.String()
 }

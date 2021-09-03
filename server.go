@@ -17,7 +17,7 @@
 package main
 
 import (
-	"demo"
+	"./demo"
 	"fmt"
 	"log"
 	"net/http"

@@ -1,0 +1,4 @@
+github.com/SWAN-community/swan-op-go v0.0.0-20210901130512-7100d5654ff6 h1:ia3Yba/kX9oV5XUKh0hYL/+Tw+Cn5AWdTp8Z6R9+96E=
+github.com/SWAN-community/swan-op-go v0.0.0-20210901130512-7100d5654ff6/go.mod h1:IP6WG8MiUxEEKTu0wk32nU6u9CtwjUbZUR2jonkftXw=
+github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
+github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=

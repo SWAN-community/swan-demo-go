@@ -17,16 +17,16 @@
 package demo
 
 import (
-	"github.com/SWAN-community/swan-demo-go/demo/cmp"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/tree/feature/refact/cmp"
+	"github.com/SWAN-community/swan-demo-go/tree/feature/refact/common"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"github.com/SWAN-community/swan-demo-go/demo/marketer"
-	"github.com/SWAN-community/swan-demo-go/demo/openrtb"
+	"github.com/SWAN-community/swan-demo-go/tree/feature/refact/marketer"
+	"github.com/SWAN-community/swan-demo-go/tree/feature/refact/openrtb"
 	"os"
 	"path/filepath"
-	"github.com/SWAN-community/swan-demo-go/demo/publisher"
+	"github.com/SWAN-community/swan-demo-go/tree/feature/refact/publisher"
 	"github.com/SWAN-community/swan-op-go"
 )
 

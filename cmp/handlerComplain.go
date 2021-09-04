@@ -18,14 +18,14 @@ package cmp
 
 import (
 	"bytes"
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"net/http"
 	"net/url"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 	"text/template"
 )
 

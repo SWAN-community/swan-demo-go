@@ -22,7 +22,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 )
 
 // Handler for all HTTP requests to domains controlled by the demo.

@@ -21,7 +21,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 )
 
 // Map of allowed static files and whether request for file should support CORS

@@ -19,7 +19,7 @@ package common
 import (
 	"compress/gzip"
 	"net/http"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 )
 
 // handlerCreateOWID takes an input payload and returns a new OWID.

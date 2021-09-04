@@ -23,10 +23,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 	"path/filepath"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 )
 
 // Domain represents the information held in the domain configuration file

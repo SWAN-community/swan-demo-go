@@ -20,7 +20,7 @@ import (
 	"compress/gzip"
 	"net/http"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 )
 
 // HandlerHTML returns HTML that does not require a model for the template.

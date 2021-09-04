@@ -17,19 +17,19 @@
 package cmp
 
 import (
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"net/url"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 	"reflect"
-	"salt"
+	"github.com/SWAN-community/salt-go"
 	"strconv"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 	"time"
 
 	uuid "github.com/satori/go.uuid"

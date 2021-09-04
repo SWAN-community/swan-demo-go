@@ -17,11 +17,11 @@
 package publisher
 
 import (
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"net/http"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 )
 
 // HandlerAdvert for the request for adverts for the publisher web pages.

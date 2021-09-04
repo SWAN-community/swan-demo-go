@@ -18,7 +18,7 @@ package openrtb
 
 import (
 	"bytes"
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"encoding/base64"
 	"encoding/json"
@@ -28,9 +28,9 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 	"sync"
 
 	"github.com/bsm/openrtb"

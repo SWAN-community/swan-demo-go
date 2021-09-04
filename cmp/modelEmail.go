@@ -17,7 +17,7 @@
 package cmp
 
 import (
-	"salt"
+	"github.com/SWAN-community/salt-go"
 )
 
 // ModelEmail used with the email template.

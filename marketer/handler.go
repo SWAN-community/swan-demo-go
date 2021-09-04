@@ -17,11 +17,11 @@
 package marketer
 
 import (
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"encoding/base64"
 	"net/http"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 )
 
 // Handler for the marketer features.

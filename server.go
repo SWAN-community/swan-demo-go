@@ -17,7 +17,7 @@
 package main
 
 import (
-	"./demo"
+	"github.com/SWAN-community/swan-demo-go/demo"
 	"fmt"
 	"log"
 	"net/http"

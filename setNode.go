@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"swift"
+	"github.com/SWAN-community/swift-go"
 	"time"
 )
 

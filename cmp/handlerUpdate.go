@@ -17,7 +17,7 @@
 package cmp
 
 import (
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"net/http"
 )
 

@@ -17,12 +17,12 @@
 package cmp
 
 import (
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"html/template"
 	"net/http"
-	"owid"
-	"swan"
+	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-go"
 	"time"
 )
 
@@ -70,7 +70,7 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	var m InfoModel
 	m.OWIDs = make(map[*owid.OWID]interface{})
 	for k, vs := range r.Form {
-		if k == "owid" {
+		if k == "github.com/SWAN-community/owid-go" {
 			for _, v := range vs {
 				o, err := owid.FromBase64(v)
 				if err != nil {

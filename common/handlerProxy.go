@@ -22,7 +22,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"swift"
+	"github.com/SWAN-community/swift-go"
 )
 
 // handlerProxy takes an incoming request, adds the access key to the parameters

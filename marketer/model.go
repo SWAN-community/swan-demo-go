@@ -18,12 +18,12 @@ package marketer
 
 import (
 	"bytes"
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"fmt"
 	"html/template"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 	"time"
 )
 

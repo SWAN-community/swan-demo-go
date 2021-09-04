@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"owid"
+	"github.com/SWAN-community/owid-go"
 )
 
 // Configuration maps to the appsettings.json settings file.

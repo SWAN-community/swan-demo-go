@@ -18,17 +18,17 @@ package publisher
 
 import (
 	"bytes"
-	"common"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"encoding/base64"
 	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
 	"net/url"
-	"openrtb"
-	"owid"
+	"github.com/SWAN-community/swan-demo-go/openrtb"
+	"github.com/SWAN-community/owid-go"
 	"strings"
-	"swan"
+	"github.com/SWAN-community/swan-go"
 	"time"
 )
 
@@ -187,7 +187,7 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 	q := i.Query()
 	n := w
 	for n != nil {
-		q.Add("owid", n.GetOWIDAsString())
+		q.Add("github.com/SWAN-community/owid-go", n.GetOWIDAsString())
 		n = n.GetParent()
 	}
 	q.Set("returnUrl", t.String())

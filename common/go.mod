@@ -1,4 +1,4 @@
-module common
+module github.com/SWAN-community/swan-demo-go/common
 
 go 1.17
 

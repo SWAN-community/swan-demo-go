@@ -1,4 +1,4 @@
-module demo
+module github.com/SWAN-community/swan-demo-go/demo
 
 go 1.17
 

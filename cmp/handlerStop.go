@@ -17,11 +17,12 @@
 package cmp
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 )
 
 // handlerStop matches the path /stop and redirects the response to the

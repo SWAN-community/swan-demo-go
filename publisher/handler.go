@@ -17,16 +17,17 @@
 package publisher
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
-	"github.com/SWAN-community/swan-demo-go/fod"
 	"log"
 	"net/http"
 	"net/url"
+	"time"
+
+	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-demo-go/fod"
 	"github.com/SWAN-community/swan-go"
 	"github.com/SWAN-community/swan-op-go"
-	"time"
 )
 
 // Handler for publisher web pages.

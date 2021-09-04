@@ -3,7 +3,7 @@ module github.com/SWAN-community/swan-demo-go/cmp
 go 1.17
 
 require (
-	github.com/SWAN-community/swan-demo-go/common v0.0.0-00010101000000-000000000000
+	github.com/SWAN-community/swan-demo-go/common v0.1.1
 	github.com/satori/go.uuid v1.2.0
 )
 

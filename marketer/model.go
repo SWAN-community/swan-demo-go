@@ -18,13 +18,14 @@ package marketer
 
 import (
 	"bytes"
-	"github.com/SWAN-community/swan-demo-go/common"
 	"fmt"
 	"html/template"
-	"github.com/SWAN-community/owid-go"
 	"strings"
-	"github.com/SWAN-community/swan-go"
 	"time"
+
+	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-go"
 )
 
 // MarketerModel used with HTML templates.

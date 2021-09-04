@@ -17,10 +17,11 @@
 package publisher
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"net/http"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/swan-go"
 )
 

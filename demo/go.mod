@@ -4,7 +4,7 @@ go 1.17
 
 replace github.com/SWAN-community/swan-demo-go/cmp => ../cmp
 replace github.com/SWAN-community/swan-demo-go/common => ../common
-replace github.com/SWAN-community/swan-demo-go/openrtb => ../openrtb
+replace github.com/SWAN-community/swan-demo-go/swanopenrtb => ../swanopenrtb
 replace github.com/SWAN-community/swan-demo-go/publisher => ../publisher
 replace github.com/SWAN-community/swan-demo-go/marketer => ../marketer
 replace github.com/SWAN-community/swan-demo-go/fod => ../fod

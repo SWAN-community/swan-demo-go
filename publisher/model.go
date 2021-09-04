@@ -18,18 +18,19 @@ package publisher
 
 import (
 	"bytes"
-	"github.com/SWAN-community/swan-demo-go/common"
 	"encoding/base64"
 	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
 	"net/url"
-	"github.com/SWAN-community/swan-demo-go/openrtb"
-	"github.com/SWAN-community/owid-go"
 	"strings"
-	"github.com/SWAN-community/swan-go"
 	"time"
+
+	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-demo-go/swanopenrtb"
+	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-go"
 )
 
 // Model used with HTML templates.

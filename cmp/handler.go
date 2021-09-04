@@ -17,9 +17,10 @@
 package cmp
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"net/http"
 	"strings"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 )
 
 // Handler for the CMP features.

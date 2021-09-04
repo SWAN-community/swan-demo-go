@@ -17,13 +17,14 @@
 package main
 
 import (
-	"github.com/SWAN-community/swan-demo-go/demo"
 	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"os"
+
+	"github.com/SWAN-community/swan-demo-go/demo"
 )
 
 type HTTPSHandler struct {

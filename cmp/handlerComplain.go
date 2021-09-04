@@ -18,15 +18,16 @@ package cmp
 
 import (
 	"bytes"
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"fmt"
 	"net/http"
 	"net/url"
-	"github.com/SWAN-community/owid-go"
 	"strings"
-	"github.com/SWAN-community/swan-go"
 	"text/template"
+
+	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-go"
 )
 
 var complaintSubjectTemplate = newComplaintTemplate(

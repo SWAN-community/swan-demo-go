@@ -17,10 +17,11 @@
 package marketer
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"encoding/base64"
 	"net/http"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/owid-go"
 )
 

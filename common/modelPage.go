@@ -18,10 +18,11 @@ package common
 
 import (
 	"fmt"
-	"github.com/SWAN-community/swan-demo-go/fod"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/SWAN-community/swan-demo-go/fod"
 	"github.com/SWAN-community/swan-go"
 
 	"github.com/google/uuid"

@@ -17,8 +17,9 @@
 package cmp
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"net/http"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 )
 
 func handlerUpdate(

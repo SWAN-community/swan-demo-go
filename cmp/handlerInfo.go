@@ -17,13 +17,14 @@
 package cmp
 
 import (
-	"github.com/SWAN-community/swan-demo-go/common"
 	"compress/gzip"
 	"html/template"
 	"net/http"
+	"time"
+
+	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/swan-go"
-	"time"
 )
 
 // InfoModel data needed for the advert information interface.

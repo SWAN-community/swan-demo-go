@@ -23,9 +23,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"github.com/SWAN-community/owid-go"
 	"path/filepath"
 	"strings"
+
+	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/swan-go"
 )
 

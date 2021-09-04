@@ -17,17 +17,19 @@
 package demo
 
 import (
-	"github.com/SWAN-community/swan-demo-go/cmp"
-	"github.com/SWAN-community/swan-demo-go/common"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"github.com/SWAN-community/swan-demo-go/marketer"
-	"github.com/SWAN-community/swan-demo-go/openrtb"
 	"os"
 	"path/filepath"
-	"github.com/SWAN-community/swan-demo-go/publisher"
+
 	"github.com/SWAN-community/swan-op-go"
+
+	"github.com/SWAN-community/swan-demo-go/cmp"
+	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-demo-go/marketer"
+	"github.com/SWAN-community/swan-demo-go/openrtb"
+	"github.com/SWAN-community/swan-demo-go/publisher"
 )
 
 // AddHandlers and outputs configuration information.

@@ -1,4 +1,4 @@
-module cmp
+module github.com/SWAN-community/swan-demo-go/cmp
 
 go 1.17
 

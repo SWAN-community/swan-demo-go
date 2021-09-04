@@ -76,12 +76,14 @@ func GetCrawlerFrom51Degrees(r *http.Request) (bool, error) {
 	// There are limited subscriptions that are throttled or have fixed
 	// entitlements. There will return a 429 error if usage is exceed. In these
 	// situations treat the request as non crawler rather than display an error.
+	// Different paid for subscriptions without this restriction can be trialled
+	// at http://51degrees.com/pricing
 	if resp.StatusCode == http.StatusTooManyRequests {
 		return false, nil
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return false, fmt.Errorf("Status code '%d' returned", resp.StatusCode)
+		return false, fmt.Errorf("status code '%d' returned", resp.StatusCode)
 	}
 
 	defer resp.Body.Close()

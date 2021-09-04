@@ -14,14 +14,13 @@
             "env": {
                 "PORT":"80",
                 //"HTTPS_PLATFORM_PORT": 443,
-                "GOPATH":"${workspaceFolder}",
                 //"51D_RESOURCE_KEY":"Used for bot detection. Visit https://configure.51degrees.com/vXyRZz8B to get a free resource key",
                 //"AZURE_STORAGE_ACCESS_KEY":"",
                 //"AZURE_STORAGE_ACCOUNT":"",
                 //"GCP_PROJECT": "",
                 //"AWS_ENABLED":"true", // Set to true if using aws (~/.aws/config) and (~/.aws/credentials)
-                "OWID_FILE": ".swan/owidcreators.json",
-                "SWIFT_FILE":".swan/swiftnodes.json",
+                "OWID_FILE": ".swan/owidcreators-production.json",
+                "SWIFT_FILE":".swan/swiftnodes-production.json",
                 //"SMTP_SENDER":"",
                 //"SMTP_HOST":"",
                 //"SMTP_PORT":"",

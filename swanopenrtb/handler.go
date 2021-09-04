@@ -30,8 +30,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/swan-go"
 
 	"github.com/bsm/openrtb"
@@ -118,9 +118,9 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			var swanexts = make([]*SwanExt, len(req.Impressions))
-			var bids = make([]openrtb.Bid, len(req.Impressions))
-			for i, e := range req.Impressions {
+			var swanexts = make([]*SwanExt, len(req.Imp))
+			var bids = make([]openrtb.Bid, len(req.Imp))
+			for i, e := range req.Imp {
 
 				var o = owid.Node{OWID: a}
 				var adm string
@@ -167,12 +167,12 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				var bid = openrtb.Bid{
 					ID:         "bid-id",
 					ImpID:      e.ID,
-					AdvDomains: adomain,
+					AdvDomain:  adomain,
 					Ext:        b,
 					AdMarkup:   adm,
 					Price:      rand.Float64() * 5,
-					Height:     e.Banner.Formats[0].Height,
-					Width:      e.Banner.Formats[0].Width,
+					H:          e.Banner.Format[0].H,
+					W:          e.Banner.Format[0].W,
 					CreativeID: "swan-crid"}
 				bids[i] = bid
 				var swan_ext = SwanExt{ImpID: e.ID, Owid: &o}
@@ -187,10 +187,13 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			myInRaw := json.RawMessage(myIn)
-
-			var seatbids = []openrtb.SeatBid{openrtb.SeatBid{Seat: "swan-seat", Bids: bids}}
-			var response = openrtb.BidResponse{ID: "swan-bid", SeatBids: seatbids, Ext: myInRaw}
+			var seatbids = []openrtb.SeatBid{openrtb.SeatBid{
+				Seat: "swan-seat",
+				Bid:  bids}}
+			var response = openrtb.BidResponse{
+				ID:      "swan-bid",
+				SeatBid: seatbids,
+				Ext:     myIn}
 			if d.Config.Debug {
 				fmt.Println(response)
 			}

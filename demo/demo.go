@@ -26,11 +26,10 @@ import (
 	"github.com/SWAN-community/swan-demo-go/cmp"
 	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/swan-demo-go/marketer"
-	"github.com/SWAN-community/swan-demo-go/swanopenrtb"
 	"github.com/SWAN-community/swan-demo-go/publisher"
-	"github.com/SWAN-community/swan-demo-go/fod"
+	"github.com/SWAN-community/swan-demo-go/swanopenrtb"
 
-	"github.com/SWAN-community/swan-op-go"
+	swanop "github.com/SWAN-community/swan-op-go"
 )
 
 // AddHandlers and outputs configuration information.
@@ -118,16 +117,16 @@ func addHandler(d *common.Domain) error {
 		d.SetHandler(marketer.Handler)
 		break
 	case "DSP":
-		d.SetHandler(openrtb.Handler)
+		d.SetHandler(swanopenrtb.Handler)
 		break
 	case "SSP":
-		d.SetHandler(openrtb.Handler)
+		d.SetHandler(swanopenrtb.Handler)
 		break
 	case "DMP":
-		d.SetHandler(openrtb.Handler)
+		d.SetHandler(swanopenrtb.Handler)
 		break
 	case "Exchange":
-		d.SetHandler(openrtb.Handler)
+		d.SetHandler(swanopenrtb.Handler)
 		break
 	case "Demo":
 		d.SetHandler(common.HandlerHTML)

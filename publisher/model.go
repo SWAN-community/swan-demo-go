@@ -27,9 +27,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/swan-demo-go/swanopenrtb"
-	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -151,7 +151,7 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 	}
 
 	// Add the publishers signature and then process the supply chain.
-	_, err = openrtb.SendToSuppliers(m.Domain, r)
+	_, err = swanopenrtb.SendToSuppliers(m.Domain, r)
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}

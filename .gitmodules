@@ -1,24 +1,9 @@
-[submodule "src/swan"]
-	path = src/swan
-	url = https://github.com/SWAN-community/swan-go
-[submodule "src/owid"]
-	path = src/owid
-	url = https://github.com/SWAN-community/owid-go
-[submodule "src/swift"]
-	path = src/swift
-	url = https://github.com/SWAN-community/swift-go
 [submodule "www/owid-js"]
 	path = www/owid-js
 	url = https://github.com/SWAN-community/owid-js
 [submodule "www/salt-js"]
 	path = www/salt-js
 	url = https://github.com/SWAN-community/salt-js.git
-[submodule "src/swanop"]
-	path = src/swanop
-	url = https://github.com/SWAN-community/swan-op-go.git
-[submodule "src/salt"]
-	path = src/salt
-	url = https://github.com/SWAN-community/salt-go.git
 [submodule "www/prebid"]
 	path = www/prebid
 	url = https://github.com/openx/Prebid.js.git

@@ -19,8 +19,10 @@ package common
 import (
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
+
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -37,7 +39,6 @@ func handlerStatic(
 	w http.ResponseWriter,
 	r *http.Request) (bool, error) {
 	var err error
-	folder := d.folder
 	found := false
 
 	// If the request is for the favicon.ico then rename the path.
@@ -45,6 +46,20 @@ func handlerStatic(
 		r.URL.Path = "/noun_Swan_3263882.svg"
 	}
 
+	// Try to find the precise path for the file.
+	folder := d.folder
+	for found == false && strings.Contains(folder, "www") {
+		file := folder + r.URL.Path
+		if _, err := os.Stat(file); err == nil {
+			found = handlerFile(w, r, file)
+		}
+		if found == false {
+			folder = filepath.Dir(folder)
+		}
+	}
+
+	// Try the domain folder and parents folders for the file name.
+	folder = d.folder
 	for found == false && strings.Contains(folder, "www") {
 		found, err = handleStaticFolder(d, w, r, folder)
 		if err != nil {
@@ -54,6 +69,7 @@ func handlerStatic(
 			folder = filepath.Dir(folder)
 		}
 	}
+
 	return found, nil
 }
 

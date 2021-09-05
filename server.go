@@ -67,7 +67,7 @@ func main() {
 	if len(os.Args) >= 2 {
 		settingsFile = os.Args[1]
 	} else {
-		settingsFile = "appsettings"
+		settingsFile = "appsettings.json"
 	}
 
 	// Get the demo server configuration.
@@ -87,9 +87,9 @@ func main() {
 	// Start the HTTPS proxy if there is a provided port.
 	if portHttps != 0 {
 		go func() {
-			log.Printf("Listening on HTTPS port: %s\n", portHttps)
+			log.Printf("Listening on HTTPS port: %d\n", portHttps)
 			err := http.ListenAndServeTLS(
-				fmt.Sprintf(":%s", portHttps),
+				fmt.Sprintf(":%d", portHttps),
 				"uk.crt",
 				"uk.key",
 				&HTTPSHandler{})
@@ -100,8 +100,8 @@ func main() {
 	}
 
 	// Start the HTTP web server on the port provided.
-	log.Printf("Listening on HTTP port: %s\n", portHttp)
-	err = http.ListenAndServe(fmt.Sprintf(":%s", portHttp), nil)
+	log.Printf("Listening on HTTP port: %d\n", portHttp)
+	err = http.ListenAndServe(fmt.Sprintf(":%d", portHttp), nil)
 	if err != nil {
 		log.Println(err)
 	}

@@ -23,11 +23,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"demo/cmp"
-	"demo/common"
-	"demo/marketer"
-	"demo/publisher"
-	"demo/swanopenrtb"
+	"github.com/SWAN-community/swan-demo-go/demo/cmp"
+	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/marketer"
+	"github.com/SWAN-community/swan-demo-go/demo/publisher"
+	"github.com/SWAN-community/swan-demo-go/demo/swanopenrtb"
 
 	swanop "github.com/SWAN-community/swan-op-go"
 )

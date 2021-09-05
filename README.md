@@ -9,7 +9,7 @@ To get you up and running quickly on a local machine using JSON for storage.
 
 ### Prerequisites 
 
-* Local Go version 1.15 or greater installation sufficient to run the Go command
+* Local Go version 1.17 or greater installation sufficient to run the Go command
 line.
 
 ### Steps
@@ -20,15 +20,11 @@ line.
    cd swan-demo-go
    ```
 
-2. Get dependencies:
-    * **Linux**: Run `./dep.sh` in a terminal.
-    * **Windows**: Run `.\dep.ps1` in Powershell.
-
-3. Build the swan-demo server - if using VSCode then skip this step:
+2. Build the swan-demo server - if using VSCode then skip this step:
     * **Linux**: Run `./build.sh` in a terminal.
     * **Windows**: Run `go build -o .\application.exe .\src\server.go`
 
-4. Configure hosts file, when running locally the demo requires that a lot of 
+3. Configure hosts file, when running locally the demo requires that a lot of 
    host names be redirected to localhost - the following scripts will append 
    the contents of `hosts-sample` to your hosts file. Please review these 
    scripts before executing or update your hosts file manually.
@@ -36,7 +32,7 @@ line.
      terminal. 
    * **Windows**: Run `.\setup-hosts.ps1` in an elevated Powershell terminal.
 
-5. Set environment variables:
+4. Set environment variables:
    * If using Visual Studio Code, then a launch file is provided for convenience. 
      Rename `.vscode\launch.json.rename` to `.vscode\launch.json` 
    * OR, set the following environment variables:

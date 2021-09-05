@@ -27,9 +27,9 @@ import (
 	"strings"
 	"time"
 
-	"../swanopenrtb"
 	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/swanopenrtb"
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -355,7 +355,14 @@ func getOWID(
 		}
 		e, err := o.Verify(c.Scheme)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf(
+				"'%d' '%s' '%s' failed verification with '%s'. "+
+					"The public key probably does not match the private key "+
+					"used to generate the OWID.",
+				o.Version,
+				o.Domain,
+				o.Date,
+				err.Error())
 		}
 		if e == false {
 			return nil, fmt.Errorf("'%s' not a valid OWID", p.Key)

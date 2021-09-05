@@ -16,3 +16,4 @@ application
 .swan/owidcreators-production.json
 .swan/swiftnodes-production.json
 Dockerfile
+appsettings.json

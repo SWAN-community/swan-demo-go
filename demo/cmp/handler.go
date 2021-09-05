@@ -20,7 +20,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-demo-go/demo/common"
 )
 
 // Handler for the CMP features.

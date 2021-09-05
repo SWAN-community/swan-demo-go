@@ -17,17 +17,15 @@
 package common
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
-	"github.com/SWAN-community/owid-go"
+	config "github.com/SWAN-community/config-go"
+	owid "github.com/SWAN-community/owid-go"
 )
 
 // Configuration maps to the appsettings.json settings file.
 type Configuration struct {
-	AccessKeys []string   `json:"accessKeys"` // Array of valid keys for SWAN access
-	Scheme     string     `json:"scheme"`     // The scheme to use for requests
-	Debug      bool       `json:"debug"`      // True if debug HTML output should be provided
+	AccessKeys []string   `mapstructure:"accessKeys"` // Array of valid keys for SWAN access
+	Scheme     string     `mapstructure:"scheme"`     // The scheme to use for requests
+	Debug      bool       `mapstructure:"debug"`      // True if debug HTML output should be provided
 	Domains    []*Domain  // All the domains that form the demo
 	owid       owid.Store // The OWID store for use with domains
 }
@@ -35,13 +33,7 @@ type Configuration struct {
 // NewConfig creates a new instance of configuration from the file provided.
 func NewConfig(settingsFile string) Configuration {
 	var c Configuration
-	configFile, err := os.Open(settingsFile)
-	defer configFile.Close()
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	jsonParser := json.NewDecoder(configFile)
-	jsonParser.Decode(&c)
+	config.LoadConfig([]string{"."}, settingsFile, &c)
 	c.owid = getOWIDStore(settingsFile)
 	return c
 }

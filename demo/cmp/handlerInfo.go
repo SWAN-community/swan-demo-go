@@ -22,8 +22,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/owid-go"
+	"github.com/SWAN-community/swan-demo-go/demo/common"
 	"github.com/SWAN-community/swan-go"
 )
 

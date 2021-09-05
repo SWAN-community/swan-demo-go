@@ -28,12 +28,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/SWAN-community/swan-demo-go/common"
 	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/salt-go"
+	"github.com/SWAN-community/swan-demo-go/demo/common"
 	"github.com/SWAN-community/swan-go"
 
-	uuid "github.com/satori/go.uuid"
+	uuid "gopkg.in/satori/go.uuid.v1"
 )
 
 // dialogModel key value pairs with functions to interpret them.

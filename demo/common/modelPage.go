@@ -22,7 +22,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/SWAN-community/swan-demo-go/fod"
+	"github.com/SWAN-community/swan-demo-go/demo/fod"
 	"github.com/SWAN-community/swan-go"
 
 	"github.com/google/uuid"

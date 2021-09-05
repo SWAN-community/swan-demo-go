@@ -22,7 +22,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/SWAN-community/swan-demo-go/common"
+	"github.com/SWAN-community/swan-demo-go/demo/common"
 )
 
 // handlerStop matches the path /stop and redirects the response to the

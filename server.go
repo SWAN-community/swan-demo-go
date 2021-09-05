@@ -25,28 +25,36 @@ import (
 	"os"
 
 	"github.com/SWAN-community/swan-demo-go/demo"
+
+	"github.com/SWAN-community/config-go"
 )
+
+type ServerConfig struct {
+	HttpPlatformPort  int `mapstructure:"httpPlatformPort"`
+	HttpsPlatformPort int `mapstructure:"httpsPlatformPort"`
+	Port              int `mapstructure:"port"`
+}
 
 type HTTPSHandler struct {
 }
 
-func getPortHTTP() string {
-	var port string
-	if os.Getenv("HTTP_PLATFORM_PORT") != "" {
+func getPortHTTP(s *ServerConfig) int {
+	var port int
+	if s.HttpPlatformPort != 0 {
 		// Get the port environment variable from Azure App Services.
-		port = os.Getenv("HTTP_PLATFORM_PORT")
-	} else if os.Getenv("PORT") != "" {
+		port = s.HttpPlatformPort
+	} else if s.Port != 0 {
 		// Get the port environment variable from Amazon Web Services.
-		port = os.Getenv("PORT")
+		port = s.Port
 	}
 	return port
 }
 
-func getPortHTTPS() string {
-	var port string
-	if os.Getenv("HTTPS_PLATFORM_PORT") != "" {
+func getPortHTTPS(s *ServerConfig) int {
+	var port int
+	if s.HttpsPlatformPort != 0 {
 		// Get the port environment variable from Azure App Services.
-		port = os.Getenv("HTTPS_PLATFORM_PORT")
+		port = s.HttpsPlatformPort
 	}
 	return port
 }
@@ -59,12 +67,16 @@ func main() {
 	if len(os.Args) >= 2 {
 		settingsFile = os.Args[1]
 	} else {
-		settingsFile = "appsettings.json"
+		settingsFile = "appsettings"
 	}
 
+	// Get the demo server configuration.
+	serverConfig := ServerConfig{}
+	config.LoadConfig([]string{"."}, settingsFile, &serverConfig)
+
 	// Get the ports for HTTP or HTTPS.
-	portHttp := getPortHTTP()
-	portHttps := getPortHTTPS()
+	portHttp := getPortHTTP(&serverConfig)
+	portHttps := getPortHTTPS(&serverConfig)
 
 	// Add the SWAN handlers.
 	err = demo.AddHandlers(settingsFile)
@@ -73,7 +85,7 @@ func main() {
 	}
 
 	// Start the HTTPS proxy if there is a provided port.
-	if portHttps != "" {
+	if portHttps != 0 {
 		go func() {
 			log.Printf("Listening on HTTPS port: %s\n", portHttps)
 			err := http.ListenAndServeTLS(

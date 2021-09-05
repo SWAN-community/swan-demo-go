@@ -26,8 +26,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-go"
+	owid "github.com/SWAN-community/owid-go"
+	swan "github.com/SWAN-community/swan-go"
 )
 
 // Domain represents the information held in the domain configuration file

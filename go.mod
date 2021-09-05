@@ -6,7 +6,7 @@ replace github.com/SWAN-community/swan-demo-go/demo => ./demo
 
 require (
 	github.com/SWAN-community/swan-demo-go/demo v0.1.3
-	github.com/SWAN-community/swift-go v0.1.3
+	github.com/SWAN-community/swift-go v0.1.4
 )
 
 require (

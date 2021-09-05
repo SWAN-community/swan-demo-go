@@ -22,3 +22,6 @@
 [submodule "salt"]
 	path = salt
 	url = https://github.com/SWAN-community/salt-go.git
+[submodule "config"]
+	path = config
+	url = https://github.com/SWAN-community/config-go.git

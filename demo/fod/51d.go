@@ -37,12 +37,12 @@ type FOD struct {
 }
 
 // GetCrawlerFrom51Degrees used the 51Degrees.com device detection service to
-// determine if the request is from a crawler. Needs the 51D_RESOURCE_KEY
+// determine if the request is from a crawler. Needs the FOD_RESOURCE_KEY
 // environment variable configured with a valid resource key from
 // https://configure.51degrees.com/vXyRZz8B.
 func GetCrawlerFrom51Degrees(r *http.Request) (bool, error) {
 
-	key := os.Getenv("51D_RESOURCE_KEY")
+	key := os.Getenv("FOD_RESOURCE_KEY")
 	if key == "" {
 		// 51Degrees device detection is not enabled so return false as the
 		// default.

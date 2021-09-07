@@ -49,26 +49,19 @@ func GetCrawlerFrom51Degrees(r *http.Request) (bool, error) {
 		return false, nil
 	}
 
-	// Get the URL for the call to the 51Degrees cloud service.
-	u, err := url.Parse(
-		"https://cloud.51degrees.com/api/v4/" + key + ".json")
-	if err != nil {
-		return false, err
-	}
-
 	// Add all the HTTP headers from the request as query string parameters.
-	q := u.Query()
+	f := url.Values{}
 	for n, v := range r.Header {
 		if n != "cookie" {
-			q.Add(n, v[0])
+			f.Add(n, v[0])
 		}
 	}
-	q.Add("Host", r.Host)
-	u.RawQuery = q.Encode()
+	f.Add("Host", r.Host)
 
 	// Get the response from the cloud service.
-	url := u.String()
-	resp, err := http.Get(url)
+	resp, err := http.PostForm(
+		"https://cloud.51degrees.com/api/v4/"+key+".json",
+		f)
 	if err != nil {
 		return false, err
 	}
@@ -92,11 +85,11 @@ func GetCrawlerFrom51Degrees(r *http.Request) (bool, error) {
 		return false, err
 	}
 
-	var f FOD
-	err = json.Unmarshal(j, &f)
+	var fod FOD
+	err = json.Unmarshal(j, &fod)
 	if err != nil {
 		return false, err
 	}
 
-	return f.Device.IsCrawler, nil
+	return fod.Device.IsCrawler, nil
 }

@@ -4,10 +4,10 @@ go 1.17
 
 require (
 	github.com/SWAN-community/config-go v0.1.4
-	github.com/SWAN-community/owid-go v0.1.5
+	github.com/SWAN-community/owid-go v0.1.6
 	github.com/SWAN-community/salt-go v0.1.4
-	github.com/SWAN-community/swan-go v0.1.3
-	github.com/SWAN-community/swan-op-go v0.1.3
+	github.com/SWAN-community/swan-go v0.1.4
+	github.com/SWAN-community/swan-op-go v0.1.4
 	github.com/SWAN-community/swift-go v0.1.5
 	github.com/bsm/openrtb v2.1.2+incompatible
 	github.com/google/uuid v1.3.0
@@ -26,9 +26,7 @@ require (
 	github.com/Azure/go-autorest/autorest/date v0.3.0 // indirect
 	github.com/Azure/go-autorest/logger v0.2.0 // indirect
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
-	github.com/aws/aws-lambda-go v1.26.0 // indirect
 	github.com/aws/aws-sdk-go v1.35.28 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/form3tech-oss/jwt-go v3.2.2+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
@@ -43,16 +41,13 @@ require (
 	github.com/onsi/ginkgo v1.16.4 // indirect
 	github.com/onsi/gomega v1.16.0 // indirect
 	github.com/pelletier/go-toml v1.9.3 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
-	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.8.1 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
-	github.com/urfave/cli/v2 v2.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect

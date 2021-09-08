@@ -8,8 +8,11 @@ $nodes = @(
     "51de.uk"
 )
 
+# All nodes will be valid from the current date.
 $startDate = (Get-date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm")
-$expiryDate = ((Get-date).ToUniversalTime().AddDays(90)).ToString("yyyy-MM-dd")
+
+# Set the nodes to expire in 30 years time.
+$expiryDate = ((Get-date).ToUniversalTime().AddYears(30)).ToString("yyyy-MM-dd")
 
 Write-Output "Network: $($network)"
 Write-Output "Starts: $($startDate)" 

@@ -43,7 +43,10 @@ type dialogModel struct {
 
 // Version is a code for cache busting.
 func (m *dialogModel) Version() string {
-	return time.Now().UTC().Format("01-02-2006 15")
+	t := time.Now().UTC()
+	h, _, _ := t.Clock()
+	y, mon, d := t.Date()
+	return fmt.Sprintf("%d%d%d%d", y, mon, d, h)
 }
 
 // Title for the SWAN storage operation.

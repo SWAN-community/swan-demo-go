@@ -1,12 +1,13 @@
-$network = "swan"
-
-$nodes = @( 
-    "51da.uk", 
-    "51db.uk",
-    "51dc.uk",
-    "51dd.uk",
-    "51de.uk"
-)
+$nodes = @{
+    "swan" = @( 
+        "51da.uk", 
+        "51db.uk",
+        "51dc.uk",
+        "51dd.uk",
+        "51de.uk");
+    "cisne" = @(
+        "an.cisne-demo.es")
+}
 
 # All nodes will be valid from the current date.
 $startDate = (Get-date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm")
@@ -24,12 +25,13 @@ if ($ok -ne "y" -and $ok -ne "Y") {
 }
 
 # Set-up SWIFT access nodes as OWID creators
-$nodes | ForEach-Object {
-    Write-Output "51Degrees : $($_)" 
-    $Response = Invoke-WebRequest -URI "http://$($_)/owid/register?name=51Degrees"
-    Write-Output $Response.StatusCode
+$nodes.Values | ForEach-Object {
+    $_ | ForEach-Object {
+        Write-Output "51Degrees : $($_)" 
+        $Response = Invoke-WebRequest -URI "http://$($_)/owid/register?name=51Degrees"
+        Write-Output $Response.StatusCode
+    }
 }
-
 
 ## Set-up SWAN participant as OWID creators
 $dir = dir www | ?{$_.PSISContainer}
@@ -44,20 +46,33 @@ foreach ($d in $dir){
 }
 
 ## Set-up SWIFT access nodes
-$nodes | ForEach-Object {
-    Write-Output "51degrees : $($_)" 
-    $Response = Invoke-WebRequest -URI "http://$($_)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=0"
-    Write-Output $Response.StatusCode
-}
-
-## Set-up SWIFT storage Nodes
-$nodes | ForEach-Object {
-    For ($i = 1; $i -le 30; $i++) {
-        Write-Output "51degrees : $($i).$($_)" 
-        $Response = Invoke-WebRequest -URI "http://$($i).$($_)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=1"
-        Write-Output $Response.StatusCode
+$nodes.Keys | ForEach-Object {
+    $network = $_
+    Write-Output "51degrees : $($network)" 
+    $nodes[$network] | ForEach-Object {
+        $Response = Invoke-WebRequest -URI "http://$($_)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=0"
+        Write-Output "$($_): $($Response.StatusCode)"
     }
 }
+
+## Set-up SWAN SWIFT storage Nodes
+$network = "swan"
+$nodes[$network] | ForEach-Object {
+    For ($i = 1; $i -le 30; $i++) {
+        $domain = "$($i).$($_)"
+        Write-Output "51degrees : $($domain)" 
+        $Response = Invoke-WebRequest -URI "http://$($domain)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=1"
+        Write-Output "$($domain): $($Response.StatusCode)"
+    }
+}
+
+## Set-up Cisne SWIFT storage Node
+$network = "cisne"
+$domain = "sn.cisne-demo.es"
+$Response = Invoke-WebRequest -URI "http://sn.cisne-demo.es/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=1"
+Write-Output "51degrees : $($domain)" 
+$Response = Invoke-WebRequest -URI "http://$($domain)/swift/register?network=$($network)&starts=$($startDate)&expires=$($expiryDate)&role=1"
+Write-Output "$($domain): $($Response.StatusCode)"
 
 ## Set-up SWIFT sharing node
 Write-Output "51degrees : s.51da.uk" 

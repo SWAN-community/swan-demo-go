@@ -44,6 +44,7 @@
 127.0.0.1	51dc.uk
 127.0.0.1	51dd.uk
 127.0.0.1	51de.uk
+127.0.0.1   an.cisne-demo.es
 # swift storage nodes
 127.0.0.1	1.51da.uk
 127.0.0.1	2.51da.uk
@@ -195,6 +196,7 @@
 127.0.0.1	28.51de.uk
 127.0.0.1	29.51de.uk
 127.0.0.1	30.51de.uk
+127.0.0.1   sn.cisne-demo.es
 # swift sharing nodes
 127.0.0.1   s.51da.uk
 

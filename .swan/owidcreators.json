@@ -2,217 +2,223 @@
 	"51da.uk": {
 		"domain": "51da.uk",
 		"name": "51Degrees",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMLhCcrJ58aIOY/SAhKoz4cMxbCC8y9oIsFfkdwz6wIGoAoGCCqGSM49\nAwEHoUQDQgAEF4sjJpDEi8YnPs5Ev49kI/llFiP5A/YQszCx3nQH2bzFSCyoa90b\n2YArx0VUcbfEhlJm+G6iGK5DXJxye8YhFw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEF4sjJpDEi8YnPs5Ev49kI/llFiP5\nA/YQszCx3nQH2bzFSCyoa90b2YArx0VUcbfEhlJm+G6iGK5DXJxye8YhFw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDvXy6WvnJlQgS7V+azxSKs2bwwvjobjpoWtOvQJs5ctoAoGCCqGSM49\nAwEHoUQDQgAEr2bc26Fv4W47tbYwSu5lp11fzWZUelYKe4c0lZpp/lGKTC9LbwpO\nhtxl6IxBLg7MWbBeEsRro4wXeKgs283JKQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEr2bc26Fv4W47tbYwSu5lp11fzWZU\nelYKe4c0lZpp/lGKTC9LbwpOhtxl6IxBLg7MWbBeEsRro4wXeKgs283JKQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"51db.uk": {
 		"domain": "51db.uk",
 		"name": "51Degrees",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIDaIhxRu0A6KPQAdf10+QkMtAz1+ww5gdJLA3Hm5FOyoAoGCCqGSM49\nAwEHoUQDQgAEyw9FzFj4wTRmKrVaZ7LJKg3zOpVIPrrZV811Pdx9Lt74FgYITVLY\nbIHwiTPPuFSuwypGkKp2uy+RjWqXt4DxXA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEyw9FzFj4wTRmKrVaZ7LJKg3zOpVI\nPrrZV811Pdx9Lt74FgYITVLYbIHwiTPPuFSuwypGkKp2uy+RjWqXt4DxXA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIel4duu8qUNT3jMABPuj8IJDJYpGFORgOlndP/f/x+ZoAoGCCqGSM49\nAwEHoUQDQgAEi/1zEZu1c8ofdV3OjaekjDyhW36lPCGtqfEzuV+LVDaKp6+Kgjxr\nj9jkHvP5M1Zy7FxXVXmZaKyDx1Sgvf07bQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEi/1zEZu1c8ofdV3OjaekjDyhW36l\nPCGtqfEzuV+LVDaKp6+Kgjxrj9jkHvP5M1Zy7FxXVXmZaKyDx1Sgvf07bQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"51dc.uk": {
 		"domain": "51dc.uk",
 		"name": "51Degrees",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHCH8EkXqgTVQFDuPgfjEmSmulmUkutnf5Cmt5+nXjq4oAoGCCqGSM49\nAwEHoUQDQgAEsoyDvg34WLK7JCSAaOi9IUoRXXOwjv1gPAtXKcQbExCzxqD/qwld\ncjSyLmBAgHPlK/896RUHdRFE93ar/eev+g==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsoyDvg34WLK7JCSAaOi9IUoRXXOw\njv1gPAtXKcQbExCzxqD/qwldcjSyLmBAgHPlK/896RUHdRFE93ar/eev+g==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOYEe5+idA6rbgJlLyaicptqTr6qyl564O14hBfm9RTRoAoGCCqGSM49\nAwEHoUQDQgAEJH8LmOIumyZ7XgE1nrOQrOSI5nGHLE4fuuQ+J2kz475L6aJZBqOM\nSdfgIZf9Q6hx4Elxrw9YKVRN6YpF+mU6qA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJH8LmOIumyZ7XgE1nrOQrOSI5nGH\nLE4fuuQ+J2kz475L6aJZBqOMSdfgIZf9Q6hx4Elxrw9YKVRN6YpF+mU6qA==\n-----END PUBLIC KEY-----\n"
 	},
 	"51dd.uk": {
 		"domain": "51dd.uk",
 		"name": "51Degrees",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDnYXXN/xLqvpbj7cBqMI+HwUBz5Nv/pM9IdRNobzqaBoAoGCCqGSM49\nAwEHoUQDQgAEgoQBWy0Wt+s8Pl/mOrjzyHoRily/aT96+v0LqRrqc1BYYCYOxctY\nTGoIG9ElhgDLrx679bzBTiv0vphg74Tifw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgoQBWy0Wt+s8Pl/mOrjzyHoRily/\naT96+v0LqRrqc1BYYCYOxctYTGoIG9ElhgDLrx679bzBTiv0vphg74Tifw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINmcEZuNaNe/7VgoFGUB7eOtIEqPN60vORxJbKqNll0IoAoGCCqGSM49\nAwEHoUQDQgAEKV0ZGzm7Ln/QWK7Ny5zBKqnQW4vxAx03/fLKzTcZAdgbbjKPumZL\na3BSB62SYwir+LY7HEWWLdjKwHJw+CT38g==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEKV0ZGzm7Ln/QWK7Ny5zBKqnQW4vx\nAx03/fLKzTcZAdgbbjKPumZLa3BSB62SYwir+LY7HEWWLdjKwHJw+CT38g==\n-----END PUBLIC KEY-----\n"
 	},
 	"51de.uk": {
 		"domain": "51de.uk",
 		"name": "51Degrees",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILBVghyVSnf6C+32cjUIDYY+jqBBYZ7lmzjhLdhjFYGMoAoGCCqGSM49\nAwEHoUQDQgAEMNspDfTMnpFk5fwJHQQU54NsAwT8OwkUN+3Qf36HUBBaqR2c9ocz\nbRkC7P6ZVhdRVmTdSmm/xHjmeauJJZfg/Q==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMNspDfTMnpFk5fwJHQQU54NsAwT8\nOwkUN+3Qf36HUBBaqR2c9oczbRkC7P6ZVhdRVmTdSmm/xHjmeauJJZfg/Q==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAwalsLIO0whg2NOp0EgwOPp6DLlBrQ6y47Nc16lVQ6eoAoGCCqGSM49\nAwEHoUQDQgAERhlP/wjnAh85T9UxrtM/qdn3N71awhqEJ4mB1HM+V+i8ahrgT5BJ\n+YuOcWe3dK3FzwDLM+JE14olq/QRLtg0hg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERhlP/wjnAh85T9UxrtM/qdn3N71a\nwhqEJ4mB1HM+V+i8ahrgT5BJ+YuOcWe3dK3FzwDLM+JE14olq/QRLtg0hg==\n-----END PUBLIC KEY-----\n"
+	},
+	"an.cisne-demo.es": {
+		"domain": "an.cisne-demo.es",
+		"name": "51Degrees",
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIn3SCpiyMiyL9qqeBeDLwTvUbAOyrB1UP9wX4tvo6zzoAoGCCqGSM49\nAwEHoUQDQgAEfuhwjlJDJhHE1rVAzI1t563ocMpt/pXB6a46EBF8/0IIEYwZHXDy\n3yEJnAjokbDs3SBzyneWkDgJdxTGPcBEMA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfuhwjlJDJhHE1rVAzI1t563ocMpt\n/pXB6a46EBF8/0IIEYwZHXDy3yEJnAjokbDs3SBzyneWkDgJdxTGPcBEMA==\n-----END PUBLIC KEY-----\n"
 	},
 	"badssp.swan-demo.uk": {
 		"domain": "badssp.swan-demo.uk",
 		"name": "Bad SSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIO7C5D4n9b+vb92bqWLuQnUwqgJriM3P2/9FISfTa+vboAoGCCqGSM49\nAwEHoUQDQgAEb2L5zIi910RlBi6hyFLIWa/mCA6tMDtWHOSv6X8GHb8mVdfqrLj2\nH5gHee/WQeh7ojciqh6IjmA3uGYubVfA4Q==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEb2L5zIi910RlBi6hyFLIWa/mCA6t\nMDtWHOSv6X8GHb8mVdfqrLj2H5gHee/WQeh7ojciqh6IjmA3uGYubVfA4Q==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIH6JFTZzCCGd1zHtOBMsJqfC9KLnvO/iI0N9US2cvyNIoAoGCCqGSM49\nAwEHoUQDQgAEyasbWZT0LiQSwUfY5zggq9Vmy3RKgWRBfNAI/a623f+VCjPVs0cJ\nV19TZrcdqYYAabF/Fxh22aVHG8O2eSBtoQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEyasbWZT0LiQSwUfY5zggq9Vmy3RK\ngWRBfNAI/a623f+VCjPVs0cJV19TZrcdqYYAabF/Fxh22aVHG8O2eSBtoQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"bidswitch.swan-demo.uk": {
 		"domain": "bidswitch.swan-demo.uk",
 		"name": "Bidswitch Exchange",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIF8KL8I0ZrmrNwOv58g8Vh0+1G2qVTTYRyTRc0KSWQBIoAoGCCqGSM49\nAwEHoUQDQgAECJ/meUI5kDx82wGVx9RSR9QzY1omWnxPvHQVNLTw8DIJOEQwEnHi\nY3G5xx7cKXlZyfcV/An5k85X8M3rP1EZuw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECJ/meUI5kDx82wGVx9RSR9QzY1om\nWnxPvHQVNLTw8DIJOEQwEnHiY3G5xx7cKXlZyfcV/An5k85X8M3rP1EZuw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIG3HGZy3Or5VwY3lsbEyJETCdggaidNv0jROq09zh6pyoAoGCCqGSM49\nAwEHoUQDQgAEOJTOcjDaZF2eot9lq5OX85AdSwGQ6juct6uK/FP4Ga5t5DJT+N86\n03eYIsX5K6W/7GrmjDKMxz8gEVfooxpRBw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOJTOcjDaZF2eot9lq5OX85AdSwGQ\n6juct6uK/FP4Ga5t5DJT+N8603eYIsX5K6W/7GrmjDKMxz8gEVfooxpRBw==\n-----END PUBLIC KEY-----\n"
 	},
 	"biscuit-news.uk": {
 		"domain": "biscuit-news.uk",
 		"name": "Biscuit News",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAQHaBxrpYiN1a9VMzg7/6VKmK/TRE4ZdzgHAQvMlPIdoAoGCCqGSM49\nAwEHoUQDQgAESgS7S4825wGcLATZ4FCR/BLyKvYeztyKkXHXe762KKgloqSuCHDH\n07UYjXpprm3/p85A7wiFnezzpULmDrV2mQ==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESgS7S4825wGcLATZ4FCR/BLyKvYe\nztyKkXHXe762KKgloqSuCHDH07UYjXpprm3/p85A7wiFnezzpULmDrV2mQ==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDtPGKjfl8O5M2oWSlyTvX2LJJSoNFHRV2xSTRh9O6GIoAoGCCqGSM49\nAwEHoUQDQgAEpwgL/fqKRYS2UWSEaCgIB5lDEIInzrBtT+AO8DwXRSuoFbV+om6q\nAOYhkHYax/x47tB11oMQL/TZTgqzAnQPHw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEpwgL/fqKRYS2UWSEaCgIB5lDEIIn\nzrBtT+AO8DwXRSuoFbV+om6qAOYhkHYax/x47tB11oMQL/TZTgqzAnQPHw==\n-----END PUBLIC KEY-----\n"
 	},
 	"centro.swan-demo.uk": {
 		"domain": "centro.swan-demo.uk",
 		"name": "Centro DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIwRpTP+eo+8Mc4DxC/1zoNUHhU63lq80zLGuUBdmeIdoAoGCCqGSM49\nAwEHoUQDQgAEijtMrwLOxD34nxxll6oTsv6i5rI5+5nJx9tpj+F8Zl7hYgGsxtJw\n4U6dY/DKWJ2lv/UMyNYsudgeW1NsMT5PgA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEijtMrwLOxD34nxxll6oTsv6i5rI5\n+5nJx9tpj+F8Zl7hYgGsxtJw4U6dY/DKWJ2lv/UMyNYsudgeW1NsMT5PgA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGBz4tSLw28ftsJeRQOksfhFeMRvUO74uzKI+j5BTP/3oAoGCCqGSM49\nAwEHoUQDQgAELcYe59rX4Bs4IcXjOPJGrhJ3d1I8dVDY+PflVmcAb3FLLlDGCPsW\n1YNaClEA9/sI5obxhZyIeT7DGT0Rtp9LPQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAELcYe59rX4Bs4IcXjOPJGrhJ3d1I8\ndVDY+PflVmcAb3FLLlDGCPsW1YNaClEA9/sI5obxhZyIeT7DGT0Rtp9LPQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"cisne-demo.es": {
 		"domain": "cisne-demo.es",
 		"name": "Cisne Demo",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIWakqvNmgtGMm/F0UHiCUDHWpHoYpAFXcAXuGLfWsuJoAoGCCqGSM49\nAwEHoUQDQgAE7gN274DpKBtyofguoMPE/f6kH5KBGT9KhTtyMadrB/ByCO6PJG5D\n6z/7SXkMQFd/0PoUXsA3BlfwErDBCP3ugw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7gN274DpKBtyofguoMPE/f6kH5KB\nGT9KhTtyMadrB/ByCO6PJG5D6z/7SXkMQFd/0PoUXsA3BlfwErDBCP3ugw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILjd+yqgg5CH2OUItl527XOvrNx5PrDNFLG0GgjBP+B2oAoGCCqGSM49\nAwEHoUQDQgAEmlQjfa0hBBYh9JsPnS+oCYGr4vKJNuqlKLKOWUCFXBqkMjIoL77k\n1K5huvMxgO6ywgA+Krkm1WtVw2pcdR59BA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmlQjfa0hBBYh9JsPnS+oCYGr4vKJ\nNuqlKLKOWUCFXBqkMjIoL77k1K5huvMxgO6ywgA+Krkm1WtVw2pcdR59BA==\n-----END PUBLIC KEY-----\n"
 	},
 	"cmp.cisne-demo.es": {
 		"domain": "cmp.cisne-demo.es",
 		"name": "Cisne CMP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMt/ZQ/LYq54rqfqCH9PYbuLpdh4dB3JUY7rDKqG4jCgoAoGCCqGSM49\nAwEHoUQDQgAEJ75quSwUCDbzscNwsnc6lcoXXTMDEjXK/WqGBu4VYhI+OLX75wtq\nltobpO0DUo8UztqpTQODMxneD9Wh8SK0Aw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJ75quSwUCDbzscNwsnc6lcoXXTMD\nEjXK/WqGBu4VYhI+OLX75wtqltobpO0DUo8UztqpTQODMxneD9Wh8SK0Aw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHof0/UQZT4sGYuQko8dHtxx0m4nUuVYYSVbJATHvuJVoAoGCCqGSM49\nAwEHoUQDQgAE9rwhhyhMjn99W2fSNgVACeK0U7RWEzuX1lYtRrnhggJhih/TBM+C\nunlaWteoj1brgm0m2yfLibD4Cfwp++jHgA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE9rwhhyhMjn99W2fSNgVACeK0U7RW\nEzuX1lYtRrnhggJhih/TBM+CunlaWteoj1brgm0m2yfLibD4Cfwp++jHgA==\n-----END PUBLIC KEY-----\n"
 	},
 	"cmp.swan-demo.uk": {
 		"domain": "cmp.swan-demo.uk",
 		"name": "SWAN CMP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIKjYEkZykY4c2B7IvSY0gswCuhBTQ/SQaRw/C4BDUeDzoAoGCCqGSM49\nAwEHoUQDQgAEzFFHR9xkn4sZ6g+zJnZ89IbZFVr7coWH8NHbdciR0D+jIzz+7SJ0\nSjj0SPKvAzvWBRGUM5JWsA7rttgSeTfj7g==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzFFHR9xkn4sZ6g+zJnZ89IbZFVr7\ncoWH8NHbdciR0D+jIzz+7SJ0Sjj0SPKvAzvWBRGUM5JWsA7rttgSeTfj7g==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINMwKp9lxbeWqg0MmAgGY4ldd/97UjsdV9plZpVd/veGoAoGCCqGSM49\nAwEHoUQDQgAERfza7TqVTwhurSxIEnnFLXOLfTiOBYCRG4nzNgnaXcACupKeUQdo\n10pi09D3jqTksGi9OcJ6QKmI8nPZRxKc9A==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERfza7TqVTwhurSxIEnnFLXOLfTiO\nBYCRG4nzNgnaXcACupKeUQdo10pi09D3jqTksGi9OcJ6QKmI8nPZRxKc9A==\n-----END PUBLIC KEY-----\n"
 	},
 	"cool-bikes.uk": {
 		"domain": "cool-bikes.uk",
 		"name": "Cool Bikes",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIA2b74witfFbMKu3Dp/RwXitSMDrbAeRTQWIoK8C+vjNoAoGCCqGSM49\nAwEHoUQDQgAEzvhJeEan6gwzfMjO2g+GWcABTGAdRd8QrzTNa0os76e8F+APoEmE\nysPBMAOmcbL3LM8JU2Sqjfc4zET4eYT9Hw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzvhJeEan6gwzfMjO2g+GWcABTGAd\nRd8QrzTNa0os76e8F+APoEmEysPBMAOmcbL3LM8JU2Sqjfc4zET4eYT9Hw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMq2dtnB6b+LKIbsZy752/9ZEKpppqQmEoFEnirxVnNaoAoGCCqGSM49\nAwEHoUQDQgAEVon5Jgm1dBT3gEx9mmX2RLiO+aMIuC/5HCDJRxfskk2iw3X8MKRg\nI4KzJ8/Huff178yJtbAlFUaNwRpu5+BPuA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVon5Jgm1dBT3gEx9mmX2RLiO+aMI\nuC/5HCDJRxfskk2iw3X8MKRgI4KzJ8/Huff178yJtbAlFUaNwRpu5+BPuA==\n-----END PUBLIC KEY-----\n"
 	},
 	"cool-cars.uk": {
 		"domain": "cool-cars.uk",
 		"name": "Cool Cars",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIFAJX3aUS+cjrr+YFFdGJ4VD5pzDpXO0fnU6kPg/Gk1EoAoGCCqGSM49\nAwEHoUQDQgAEnSEIruxVYmHzmpn9wm1ygsCQEGkMrfhGZYEG0C+DNaH2oJhRzsYU\nC5uSxJdtnKBvrKPzC1kiIX8t+1YRT7CwNg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEnSEIruxVYmHzmpn9wm1ygsCQEGkM\nrfhGZYEG0C+DNaH2oJhRzsYUC5uSxJdtnKBvrKPzC1kiIX8t+1YRT7CwNg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAe6oqwoAvY78+tQ/t7K03RgyAGAEf4yPOFAm20I6DPdoAoGCCqGSM49\nAwEHoUQDQgAERow30uE6aK9WPzQyZfKPQR32DtQoDf5TQrOSTVl1cmP+uvh4tQoA\nTx1hvZWrOWK9Uk3VmcIHVMy4eQ9ihTv1fg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERow30uE6aK9WPzQyZfKPQR32DtQo\nDf5TQrOSTVl1cmP+uvh4tQoATx1hvZWrOWK9Uk3VmcIHVMy4eQ9ihTv1fg==\n-----END PUBLIC KEY-----\n"
 	},
 	"cool-creams.uk": {
 		"domain": "cool-creams.uk",
 		"name": "Cool Creams",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIRzESyf55QD9Hk0FVR+fpOpXqsFZGeFL3/ryn1FX26GoAoGCCqGSM49\nAwEHoUQDQgAEoHlginR2uTORFM82+F7T6hVqfmAfG7nhuMXfGKm+yBJDF2Cf9JSf\nY/NTkWW7ZqYbBpaCIMGmXOZ4+wDcWibnwA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoHlginR2uTORFM82+F7T6hVqfmAf\nG7nhuMXfGKm+yBJDF2Cf9JSfY/NTkWW7ZqYbBpaCIMGmXOZ4+wDcWibnwA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOarpqXDn9JogRW2v7zQO8+jUX0Lg0yT1IMxangGbiuFoAoGCCqGSM49\nAwEHoUQDQgAE/u1rbX/IohIRdCp7wNWVRRI5axMPQVvg2jkdQLO83e1iVrVifjOX\nmCEc36fYMnCEJuAjsXvHKYQeeisFAG0vzQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE/u1rbX/IohIRdCp7wNWVRRI5axMP\nQVvg2jkdQLO83e1iVrVifjOXmCEc36fYMnCEJuAjsXvHKYQeeisFAG0vzQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"current-bun.uk": {
 		"domain": "current-bun.uk",
 		"name": "Current Bun",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIJC0+nNPRxiGDi3Hgmkniu4sn/dc7h+BWw/B6H4yULkVoAoGCCqGSM49\nAwEHoUQDQgAEJR7qibC+ZCtwmU2B9HGVp+jIME8Bufi5Rfi8wyShKAsVGlG0OTqb\nk5CM51YQxyHFAPQt+QA+nrNxxsvolcfKZA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJR7qibC+ZCtwmU2B9HGVp+jIME8B\nufi5Rfi8wyShKAsVGlG0OTqbk5CM51YQxyHFAPQt+QA+nrNxxsvolcfKZA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILNfcut0313xXrxBB3K+BUOTQdlSqpu1H2S8iVMUkTMWoAoGCCqGSM49\nAwEHoUQDQgAECc8SurSorbTihGyHEsl/+qmZMN/wTWlI+UUM4n2PnsZzLQd18vUg\nECASS6L7tTgE/rnhXxNq1dNeqxixwVAauw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECc8SurSorbTihGyHEsl/+qmZMN/w\nTWlI+UUM4n2PnsZzLQd18vUgECASS6L7tTgE/rnhXxNq1dNeqxixwVAauw==\n-----END PUBLIC KEY-----\n"
 	},
 	"dataxu.swan-demo.uk": {
 		"domain": "dataxu.swan-demo.uk",
 		"name": "DataXu DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOzNxBUVCWhAOaNrdfm0XAIynbMRrsklegcYbaQhSYhMoAoGCCqGSM49\nAwEHoUQDQgAEYDDPN+xeuci4iYhCp8jce5plkA5kXaSj+QO4NyUqtVc0Eie04WhX\nELtpCIuSAHb9I7kq9HcmcuCLvtk9l4vRYg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEYDDPN+xeuci4iYhCp8jce5plkA5k\nXaSj+QO4NyUqtVc0Eie04WhXELtpCIuSAHb9I7kq9HcmcuCLvtk9l4vRYg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIJKVUYcD3ZZJr7c9R1DuSd4wEFiA/PXGCulMjrOfl7hoAoGCCqGSM49\nAwEHoUQDQgAE9h4Uea/AW1+2vCBShiim30nrG+GxWd7B7F6WN79XIAmvihIa09PY\nzxq7ZTyjvxA1RQxegf79MD9i5wESrTd6Ig==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE9h4Uea/AW1+2vCBShiim30nrG+Gx\nWd7B7F6WN79XIAmvihIa09PYzxq7ZTyjvxA1RQxegf79MD9i5wESrTd6Ig==\n-----END PUBLIC KEY-----\n"
 	},
 	"liveintent.swan-demo.uk": {
 		"domain": "liveintent.swan-demo.uk",
 		"name": "LiveIntent DMP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEID1AgW+GM5eVy63N7bwCucbb5Zor/aBacfJLAKW81qhIoAoGCCqGSM49\nAwEHoUQDQgAEzKBjrH1mJs28ud6MjSdipsBw8cn+pyCCXbyBmWakbHwKls/Zu57T\nN0WrLDhAklS65784P40waE4i7XT7hVkWXw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzKBjrH1mJs28ud6MjSdipsBw8cn+\npyCCXbyBmWakbHwKls/Zu57TN0WrLDhAklS65784P40waE4i7XT7hVkWXw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICq3l5iLmm3fWQlvZkr69TIahRtH9B0wHFIKi37iyfrJoAoGCCqGSM49\nAwEHoUQDQgAEwE+ZcL7FvcQ2sAk92T1tG87wKOAyo4sHJ3umHPcxLcGcrWxjLjyi\nIV2AakU9dTPU0uTZgN6vgIBewK2XX6ss+g==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwE+ZcL7FvcQ2sAk92T1tG87wKOAy\no4sHJ3umHPcxLcGcrWxjLjyiIV2AakU9dTPU0uTZgN6vgIBewK2XX6ss+g==\n-----END PUBLIC KEY-----\n"
 	},
 	"liveramp.swan-demo.uk": {
 		"domain": "liveramp.swan-demo.uk",
 		"name": "Liveramp",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOqMlbdnfr3mO4LGZD6025Z+0sh91WY2PTDtLy/ovp/FoAoGCCqGSM49\nAwEHoUQDQgAEMMy0Pe+sZPVrEOP//oOMZDgoeiojmMHVOmFewQIGPfJ55QpLdG/8\nNkz/8fdkOcAyy7mR7g08XZzw63mldxTyOA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMMy0Pe+sZPVrEOP//oOMZDgoeioj\nmMHVOmFewQIGPfJ55QpLdG/8Nkz/8fdkOcAyy7mR7g08XZzw63mldxTyOA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIN/HG7HdgsYUSs/HovdivCNJ7h79cl73i4zrEGn+pbQ3oAoGCCqGSM49\nAwEHoUQDQgAEHaT6w4d10rbBG+L1yF0VZiNmDUlFSo/RS9U/nrVFtxB8tO/1Vy+i\nEVZ+E8hw/iMyVzo6DnbR6yY0JdG20yNLSw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEHaT6w4d10rbBG+L1yF0VZiNmDUlF\nSo/RS9U/nrVFtxB8tO/1Vy+iEVZ+E8hw/iMyVzo6DnbR6yY0JdG20yNLSw==\n-----END PUBLIC KEY-----\n"
 	},
 	"localhost": {
 		"domain": "localhost",
 		"name": "Localhost",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHLEdgHfFQkWJPLKLpjs+tXFpZ2peS+/zVrNdsjICTGAoAoGCCqGSM49\nAwEHoUQDQgAEXQ+iH0jRYdCCLNill3smkTVnYLYBp1iCPHDHbc9949g4MP0vh7K5\nAwiolblwqNK+VR8V/1Rjnr3R2Yd2BTtaLw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEXQ+iH0jRYdCCLNill3smkTVnYLYB\np1iCPHDHbc9949g4MP0vh7K5AwiolblwqNK+VR8V/1Rjnr3R2Yd2BTtaLw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMycu8oVjgwYpaTWPGQwhxsk9SovMjPsBNwmzf329wn0oAoGCCqGSM49\nAwEHoUQDQgAEzjwh5ONGS2/3k0MlVfnj3fYw97WlnGI7fPELmYJcxbkpD9YJIsNY\n94wysWp84NKMrlJ6hg6XgSc3NvuP2OqTkA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzjwh5ONGS2/3k0MlVfnj3fYw97Wl\nnGI7fPELmYJcxbkpD9YJIsNY94wysWp84NKMrlJ6hg6XgSc3NvuP2OqTkA==\n-----END PUBLIC KEY-----\n"
 	},
 	"magnite.swan-demo.uk": {
 		"domain": "magnite.swan-demo.uk",
 		"name": "Magnite SSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHjjgk9uG/IBt8WHVvvn7V3k0fdqWGf7Mzxvze5vhyR+oAoGCCqGSM49\nAwEHoUQDQgAEo4fH40JlP6IEPJs66XYl5DBs0ks6DwxMsA3fyLisEV+DEyYP1qc9\nVBOB4cxmB7zGS9dwhrzRrzN+Jf7ufFod0Q==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEo4fH40JlP6IEPJs66XYl5DBs0ks6\nDwxMsA3fyLisEV+DEyYP1qc9VBOB4cxmB7zGS9dwhrzRrzN+Jf7ufFod0Q==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIE4GG+iAqejkL5+AVvrH/Gvum3dQhXne9Drb1lVSxvZDoAoGCCqGSM49\nAwEHoUQDQgAEuLsRTo5hu4VPecf4rEC1pWzzwCQ7dVzrm0eZW7XOhjto4Y+MjoEl\n+91gs7cfpVocJpVyIpNGxUi7IT92ngScHQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEuLsRTo5hu4VPecf4rEC1pWzzwCQ7\ndVzrm0eZW7XOhjto4Y+MjoEl+91gs7cfpVocJpVyIpNGxUi7IT92ngScHQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"mediamath.swan-demo.uk": {
 		"domain": "mediamath.swan-demo.uk",
 		"name": "MediaMath DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINKbXiZNY67Lid2jYgaDJzeNkVA/pS5j7OqAjiOATriioAoGCCqGSM49\nAwEHoUQDQgAEZRR1MHZdvp19/Wakvi01+r6JJPFayEZF19mnTzl8l01eLeUBUUjt\nV49kx+fMt6xsiD/tZ+sdXQviK5RmzNY9jg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZRR1MHZdvp19/Wakvi01+r6JJPFa\nyEZF19mnTzl8l01eLeUBUUjtV49kx+fMt6xsiD/tZ+sdXQviK5RmzNY9jg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIObcGXkulrso+O5wUpahUTVR6PlHKHdBx+CnsDAH3rbvoAoGCCqGSM49\nAwEHoUQDQgAE9NXa9zWuvYTOmLrsqYcRJVzK7/95rJfcVtx1EpE0cN96CI0m+8aW\npnuoDHzi+wuGzhwbZR/SW8PxdN5Dx66mIQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE9NXa9zWuvYTOmLrsqYcRJVzK7/95\nrJfcVtx1EpE0cN96CI0m+8aWpnuoDHzi+wuGzhwbZR/SW8PxdN5Dx66mIQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"new-pork-limes.uk": {
 		"domain": "new-pork-limes.uk",
 		"name": "New Pork Limes",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIINJIAW7H4Az0jMt8vb21vlpj4hPAnrS3NHyUi+ETJfQoAoGCCqGSM49\nAwEHoUQDQgAEPhXQ7Bwe88QqemLqIMoBKwMuCt8PBNmWUQTvwaccdTXPij6HICtg\nf8OJQnb15W59aeNf2jMYaN5DPzOBIYgivA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEPhXQ7Bwe88QqemLqIMoBKwMuCt8P\nBNmWUQTvwaccdTXPij6HICtgf8OJQnb15W59aeNf2jMYaN5DPzOBIYgivA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILzEv2cltusFPsEK6//fkygkJf+9De4bT/uPL7r1AgOPoAoGCCqGSM49\nAwEHoUQDQgAEmyPbcwjNtA8/U32CvvYLN9PBB6xEoTinqRHWKHv/qJW+7Cpi9UxV\ngLbDmsyD/51I9uNPECF6AqcGV7TOwySDKw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmyPbcwjNtA8/U32CvvYLN9PBB6xE\noTinqRHWKHv/qJW+7Cpi9UxVgLbDmsyD/51I9uNPECF6AqcGV7TOwySDKw==\n-----END PUBLIC KEY-----\n"
 	},
 	"new-prebid-limes.uk": {
 		"domain": "new-prebid-limes.uk",
 		"name": "New Prebid Limes",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDYINDXtPoxm2TDMBso8daD7bHy6ThXCMiYsjqKDq8mEoAoGCCqGSM49\nAwEHoUQDQgAE7BtHMESvxywk3/FlkGl8P6ccJF6Am4mkgQuvSol2WLnSrlMcETPB\nJ2GNbeWIVuT+xQdsXS7wqRHAJAvUrRDWYw==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7BtHMESvxywk3/FlkGl8P6ccJF6A\nm4mkgQuvSol2WLnSrlMcETPBJ2GNbeWIVuT+xQdsXS7wqRHAJAvUrRDWYw==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPjLBGdoYdUx1apgOyyXc+H8CbXbkZE4S4f7O/8Dtp0zoAoGCCqGSM49\nAwEHoUQDQgAEoCJyNXSQZGk18eA4QrDNX5EYDqR7lfiz/9IHdpaHoNrPH06prohF\nApdd4DLjwK+k3GtgpTZY8aUQ2WU+GQxsmQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoCJyNXSQZGk18eA4QrDNX5EYDqR7\nlfiz/9IHdpaHoNrPH06prohFApdd4DLjwK+k3GtgpTZY8aUQ2WU+GQxsmQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"oath.swan-demo.uk": {
 		"domain": "oath.swan-demo.uk",
 		"name": "Oath DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMNSlZSrskisQtaR9YBrGMMUHXs7aSE1kcLsB6SymTf8oAoGCCqGSM49\nAwEHoUQDQgAEgP9wSBniMmIQuLl69POIOD51WzVuYxcO5o5RDmMgnCgroKNoXLBe\npgtmKr904GZMmxESvF9zWQKhlliddH511A==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgP9wSBniMmIQuLl69POIOD51WzVu\nYxcO5o5RDmMgnCgroKNoXLBepgtmKr904GZMmxESvF9zWQKhlliddH511A==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIKGL5quhckVt+HnAQCtH1E8UTef18WxZHplLTZRaUmLwoAoGCCqGSM49\nAwEHoUQDQgAEFd4+cekWPtJzyb+JnItnz722F2K90sLZaG4M381CGaOTY2Mf9JbU\nGI4/GmYl8tHzxwM8WxzCrr5FPhxObTgb0A==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEFd4+cekWPtJzyb+JnItnz722F2K9\n0sLZaG4M381CGaOTY2Mf9JbUGI4/GmYl8tHzxwM8WxzCrr5FPhxObTgb0A==\n-----END PUBLIC KEY-----\n"
 	},
 	"pop-up.swan-demo.uk": {
 		"domain": "pop-up.swan-demo.uk",
 		"name": "Pop Up Site",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPCy/nrX9gwex5x1sav6QYLzzVKl43HFl9Sx3GJLtt+7oAoGCCqGSM49\nAwEHoUQDQgAEl/CWw4u5jXXW+Pwsv3TmrdFrRMvwiNfS93NyShAIhXaxUSY//iiQ\nsHWgjiRBK1982g6yqQWmfMXiu070hR0F6w==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEl/CWw4u5jXXW+Pwsv3TmrdFrRMvw\niNfS93NyShAIhXaxUSY//iiQsHWgjiRBK1982g6yqQWmfMXiu070hR0F6w==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAhg/eiInVNsHPGRVSN1/A5e2m7BQmknJ9y+6VSSDKLNoAoGCCqGSM49\nAwEHoUQDQgAEkAwt6FOrCXakm4O4grLeBdpK4owh+Xi8iBKV745DGmAybDK99etx\nulZTv0KdlMrqvvnyblvL6cH8XQswnujfLQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEkAwt6FOrCXakm4O4grLeBdpK4owh\n+Xi8iBKV745DGmAybDK99etxulZTv0KdlMrqvvnyblvL6cH8XQswnujfLQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"pub1.cisne-demo.es": {
 		"domain": "pub1.cisne-demo.es",
 		"name": "Cisne Publisher 1",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIKA+bUbxzyKK4oEU41+jUqSl5bkXaCYf3doMKY6tvvE5oAoGCCqGSM49\nAwEHoUQDQgAEK3x5TRyt4RhHNTwdwPlKmZ82jnT93toykD3vcz8E3MVaccFH1Lgk\n36LY9Gq6KnQpC/zLRZq+PZKkDvJPYAJs2w==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEK3x5TRyt4RhHNTwdwPlKmZ82jnT9\n3toykD3vcz8E3MVaccFH1Lgk36LY9Gq6KnQpC/zLRZq+PZKkDvJPYAJs2w==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIMA+feE+NUUg6ctN/RceiyddqUdONBCBTIvcr6IT/j9woAoGCCqGSM49\nAwEHoUQDQgAEX//I0vroGKR7q1FtMhxjnRlEiloh4g4dSfB1kXbf1NUitt4rL3Gp\n7Ub3Hv+jHa6ohksWj59sKbca7hcNKjBpTg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEX//I0vroGKR7q1FtMhxjnRlEiloh\n4g4dSfB1kXbf1NUitt4rL3Gp7Ub3Hv+jHa6ohksWj59sKbca7hcNKjBpTg==\n-----END PUBLIC KEY-----\n"
 	},
 	"pub2.cisne-demo.es": {
 		"domain": "pub2.cisne-demo.es",
 		"name": "Cisne Publisher 2",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIKobAb/6jUHRFtMV9+JotUbzuC8QoymgDAdEmcCZF6/7oAoGCCqGSM49\nAwEHoUQDQgAEhjdMX4BbKOpUzbTBehKeyg2bf4d1wlsy7IQL4+3pXv1h1cvYcNVr\njpSrIPLHUBhEhqQXLtLZidwuNJGUH3dKTQ==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEhjdMX4BbKOpUzbTBehKeyg2bf4d1\nwlsy7IQL4+3pXv1h1cvYcNVrjpSrIPLHUBhEhqQXLtLZidwuNJGUH3dKTQ==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPzKCXcw/L7JtTzHWnOaM3Gy6qKf+/CSPFBr5hCbXCMcoAoGCCqGSM49\nAwEHoUQDQgAECyJt2+VRz/sQNFoR51zyR2noOJ1gD6KVoSzeWch8FJFzZfuYt5qW\neyrZUZ0zyAMgHXsSlDxXPMUd3GGc8fNWzg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECyJt2+VRz/sQNFoR51zyR2noOJ1g\nD6KVoSzeWch8FJFzZfuYt5qWeyrZUZ0zyAMgHXsSlDxXPMUd3GGc8fNWzg==\n-----END PUBLIC KEY-----\n"
 	},
 	"pub3.cisne-demo.es": {
 		"domain": "pub3.cisne-demo.es",
 		"name": "Cisne Publisher 3",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIErhOvUmbYLoY4PoREJBfJUP1u0frX6neNhv7IgZEVd+oAoGCCqGSM49\nAwEHoUQDQgAENyxMQv+YPIIXHjaSzHKskISq7pj84FWIx75tjPtLlEi9JyUKg+BV\nAa48U8RDe/B5jNu+EQjxpN25BfGiu1vHpg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENyxMQv+YPIIXHjaSzHKskISq7pj8\n4FWIx75tjPtLlEi9JyUKg+BVAa48U8RDe/B5jNu+EQjxpN25BfGiu1vHpg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOH5N3Z2weU81v6yQDvBiQAzl0Ba43dA/f044QqJwybPoAoGCCqGSM49\nAwEHoUQDQgAEwXxlWzFc4AMvxnj8bdJXiYBFMCpTRSzTH2KLWfT7lHYNGfXx3BM6\nst0IWsElhqsOe7iTTWKWpgRYoqQTgAc1Yg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwXxlWzFc4AMvxnj8bdJXiYBFMCpT\nRSzTH2KLWfT7lHYNGfXx3BM6st0IWsElhqsOe7iTTWKWpgRYoqQTgAc1Yg==\n-----END PUBLIC KEY-----\n"
 	},
 	"pubmatic.swan-demo.uk": {
 		"domain": "pubmatic.swan-demo.uk",
 		"name": "Pubmatic DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDlipnMWVBOxnm22g519RXOtkMNPLZio2xJnaY6ZS1QfoAoGCCqGSM49\nAwEHoUQDQgAE72YApU+XvZ+PFrxR8aemr6MNBBBk8/Ve6RDR/7e6PXLwmRMTXpkg\nTWNZBkZiRozPTWgwGl/3qHMld47XF+5Hgg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE72YApU+XvZ+PFrxR8aemr6MNBBBk\n8/Ve6RDR/7e6PXLwmRMTXpkgTWNZBkZiRozPTWgwGl/3qHMld47XF+5Hgg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICWocvhFUbObqiKvv6e9Q2m3XvZGuhYfeoVx7B0p9tbYoAoGCCqGSM49\nAwEHoUQDQgAEOJ71MtUgDuhavC2lRF+nnqGuOpte+mO7akHszUVWc96wkAopclB/\nZK+2oENLOuZ356zvjWD/ZF2oyKACAy47XA==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOJ71MtUgDuhavC2lRF+nnqGuOpte\n+mO7akHszUVWc96wkAopclB/ZK+2oENLOuZ356zvjWD/ZF2oyKACAy47XA==\n-----END PUBLIC KEY-----\n"
 	},
 	"quantcast.swan-demo.uk": {
 		"domain": "quantcast.swan-demo.uk",
 		"name": "Quantcast",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIKmv7BzghNcTzvM1mPxGtzyTRCrxeNZGGraTuf7aHIbNoAoGCCqGSM49\nAwEHoUQDQgAE0lRQK4xdbeDZLIoVfxEtsLCs3XKICMxH7cTEyjjzfUblpY+3q63M\nMC2gt6ITBF+PuDGpZWXniP2Ne9ySggyhlQ==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0lRQK4xdbeDZLIoVfxEtsLCs3XKI\nCMxH7cTEyjjzfUblpY+3q63MMC2gt6ITBF+PuDGpZWXniP2Ne9ySggyhlQ==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIBcGmb0yfvnljBSGVz6uYu4RZTjj43Jruak58q9rw4xXoAoGCCqGSM49\nAwEHoUQDQgAEF2MJEq6qFZNKP2i0PCad72SZ32dtIXb7xx7wvIpYsmOcyw/lQkxH\noIPNPm/7PMNBc3IEVj/3wGZsfJXWXzI5xQ==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEF2MJEq6qFZNKP2i0PCad72SZ32dt\nIXb7xx7wvIpYsmOcyw/lQkxHoIPNPm/7PMNBc3IEVj/3wGZsfJXWXzI5xQ==\n-----END PUBLIC KEY-----\n"
 	},
 	"sirdata.swan-demo.uk": {
 		"domain": "sirdata.swan-demo.uk",
 		"name": "Sirdata CMP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILOm15OYyS/qBxiQcZlAlR7s/TAF+KrWqd/9AQj3c73poAoGCCqGSM49\nAwEHoUQDQgAEyr4/eyd6yY98fX7ZgHUOKObcBUcGSW1uJpxJo5GQ7ypNpy/FhLlk\n3pRaq7INECNfsTx9XlOkEbwze7iWeilK5A==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEyr4/eyd6yY98fX7ZgHUOKObcBUcG\nSW1uJpxJo5GQ7ypNpy/FhLlk3pRaq7INECNfsTx9XlOkEbwze7iWeilK5A==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOYdyCw7EUhsyf+BmmEcIiubt4bSJFN/U1ZMLzJPjkTCoAoGCCqGSM49\nAwEHoUQDQgAEp3mK7khUsTSRw8eGeo8V4MzCimmic+TyCOvKqOhULx57HZIyjvr8\n2sBI1HxBiLBshR2g0hND58EegL3N6Sxbsw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEp3mK7khUsTSRw8eGeo8V4MzCimmi\nc+TyCOvKqOhULx57HZIyjvr82sBI1HxBiLBshR2g0hND58EegL3N6Sxbsw==\n-----END PUBLIC KEY-----\n"
 	},
 	"smaato.swan-demo.uk": {
 		"domain": "smaato.swan-demo.uk",
 		"name": "Smaato Exchange",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICaoUyy3/3oEKVq2yQ9RbIl09gTfPvAciZ6uDFXHwuB0oAoGCCqGSM49\nAwEHoUQDQgAEvGgsTjDn6tjGOVy0pHE4taG3MZhAez/P1zblLeL552QKK07Yn/Ux\nkmFlmr4OBn9ANFo1mDvdjdwe4Owzcag6KA==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvGgsTjDn6tjGOVy0pHE4taG3MZhA\nez/P1zblLeL552QKK07Yn/UxkmFlmr4OBn9ANFo1mDvdjdwe4Owzcag6KA==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIFuFY6EyaqfsUlvPW0ciLvJencgsHakTdYjqL5xHCN0ZoAoGCCqGSM49\nAwEHoUQDQgAExjdjYB+FxdCuUcvwXAIu7eSLQnMpCwgrVTmW4Jt5R3+3GHQklDVl\nf5u6dwDZhm28BgRothJuaGfk4Y8FEbyLQw==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExjdjYB+FxdCuUcvwXAIu7eSLQnMp\nCwgrVTmW4Jt5R3+3GHQklDVlf5u6dwDZhm28BgRothJuaGfk4Y8FEbyLQw==\n-----END PUBLIC KEY-----\n"
 	},
 	"swan-demo.uk": {
 		"domain": "swan-demo.uk",
 		"name": "SWAN Demo",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIN12MKaUKbscJpqByU4xfCreER3mMOIpHrb0Mk9IxMPkoAoGCCqGSM49\nAwEHoUQDQgAEpQx70feHj0aZkWRw+pmG74BI9e8mReQg48YDpiGoDFPC/hsVwtCz\ncZYICAk0K0akO9xbrfyDprfqzGEqJtNshg==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEpQx70feHj0aZkWRw+pmG74BI9e8m\nReQg48YDpiGoDFPC/hsVwtCzcZYICAk0K0akO9xbrfyDprfqzGEqJtNshg==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIE/BvGoJJVUgSaluvrOvCU0XyW/opXaxx6iFlk0neJpuoAoGCCqGSM49\nAwEHoUQDQgAE1GhLQ8Ux3j1m3LhykhgFzwAQSC+tcJHJYjISo41fVAm+Wwo0I3gV\nHqr9xyjW5B2DNgIASbrHeARKqRyitqtA7A==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE1GhLQ8Ux3j1m3LhykhgFzwAQSC+t\ncJHJYjISo41fVAm+Wwo0I3gVHqr9xyjW5B2DNgIASbrHeARKqRyitqtA7A==\n-----END PUBLIC KEY-----\n"
 	},
 	"thetradedesk.swan-demo.uk": {
 		"domain": "thetradedesk.swan-demo.uk",
 		"name": "theTradeDesk DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICoev0WCzPnE9hAYuA1i9l45FXjADBKwLDXGaE+/8V3JoAoGCCqGSM49\nAwEHoUQDQgAErER5QKvkUwRem/Zgv+zJsgxmmBzVr3csgJDqOkQ1al0puXtJXV1G\nsyO0ov4pJVzlcCUcAorB8n+d4TgnUGPW5Q==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErER5QKvkUwRem/Zgv+zJsgxmmBzV\nr3csgJDqOkQ1al0puXtJXV1GsyO0ov4pJVzlcCUcAorB8n+d4TgnUGPW5Q==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIM07dB6/axq6301s4S1nzC3Gl+2xP9Y7zyslAuiYvJSdoAoGCCqGSM49\nAwEHoUQDQgAEZIizcLWch33RW+pJvihKElD5v/NAkJucheE69RIDzohAgu6ngNDB\nns6ncv6m0Zy8HFYWKoczokVOTKkmQsJMig==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZIizcLWch33RW+pJvihKElD5v/NA\nkJucheE69RIDzohAgu6ngNDBns6ncv6m0Zy8HFYWKoczokVOTKkmQsJMig==\n-----END PUBLIC KEY-----\n"
 	},
 	"zeta.swan-demo.uk": {
 		"domain": "zeta.swan-demo.uk",
 		"name": "Zeta Global DSP",
-		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILBb6KBn2wfUSWm9qLB2HxMBQAujVXAV7oBoj5tf089ZoAoGCCqGSM49\nAwEHoUQDQgAE8KQX5SqMzSEoPXE0tAEtNYbeZwwl089QjDN66inwy5/DkazWK0lO\nBVno942Ao5lU5TUEhOcAJa2elSqthF1z+g==\n-----END EC PRIVATE KEY-----\n",
-		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8KQX5SqMzSEoPXE0tAEtNYbeZwwl\n089QjDN66inwy5/DkazWK0lOBVno942Ao5lU5TUEhOcAJa2elSqthF1z+g==\n-----END PUBLIC KEY-----\n"
+		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAiLw8r0VuN7K+bObS3MedybdI1vzN0FUhowv5N/t2LroAoGCCqGSM49\nAwEHoUQDQgAE60z3GDpDfYFeCGeaMmcFd++gw1oPObkswZYHAXCUcEFDVASkzlYp\nsp6iFJJVCPmoOdDazUvat8Qd49AkD+1sSg==\n-----END EC PRIVATE KEY-----\n",
+		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE60z3GDpDfYFeCGeaMmcFd++gw1oP\nObkswZYHAXCUcEFDVASkzlYpsp6iFJJVCPmoOdDazUvat8Qd49AkD+1sSg==\n-----END PUBLIC KEY-----\n"
 	}
 }

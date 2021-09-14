@@ -1,7 +1,7 @@
 {
    "Category": "CMP",
    "Name": "Sirdata CMP",
-   "SWANAccessNode": "51db.uk",
+   "SWANAccessNode": "single.51dc.uk",
    "SWANAccessKey": "CMPKeySWAN",
    "swanDisplayUserInterface" : true,
    "swanUseHomeNode": true

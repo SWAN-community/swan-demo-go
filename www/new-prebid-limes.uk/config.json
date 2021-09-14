@@ -7,7 +7,7 @@
    "swanProgressColor": "#6c757d", 
    "swanDisplayUserInterface" : true,
    "cmp": "cmp.swan-demo.uk",
-   "SWANAccessNode": "51da.uk",
+   "SWANAccessNode": "single.51da.uk",
    "SWANAccessKey": "PubKeyNewPrebidLimes",
    "suppliers": [
       "magnite.swan-demo.uk",

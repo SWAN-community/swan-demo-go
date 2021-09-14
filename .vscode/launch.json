@@ -18,7 +18,10 @@
             "mode": "debug",
             "program": "${workspaceFolder}/server.go",
             "cwd": "${workspaceFolder}",
-            "args": ["appsettings.dev.json"]
+            "args": ["appsettings.dev.json"],
+            "env": {
+                "FOD_RESOURCE_KEY": "AQQCHrU05kgcJDRy2Ug"
+            }
         }
     ]
 }

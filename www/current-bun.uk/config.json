@@ -9,7 +9,7 @@
    "swanPostMessage": false,
    "swanUseHomeNode": true,
    "cmp": "liveramp.swan-demo.uk",
-   "SWANAccessNode": "51db.uk",
+   "SWANAccessNode": "single.51db.uk",
    "SWANAccessKey": "PubKeyCurrentBun",
    "suppliers": [
       "magnite.swan-demo.uk",

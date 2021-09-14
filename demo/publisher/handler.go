@@ -22,6 +22,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/SWAN-community/swan-demo-go/demo/common"
@@ -98,7 +99,14 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			} else {
 				handlerPublisherPage(d, w, r, p)
 			}
+		} else if isPresent(p, "pref") || isPresent(p, "swid") {
+
+			// Not all the values are present. Try fetching them again.
+			redirectToSWANFetch(d, w, r, p)
+
 		} else {
+
+			// Call the CMP to ask the user to confirm values.
 			http.Redirect(w, r, getCMPURL(d, r, p), 303)
 		}
 	} else {
@@ -250,6 +258,16 @@ func addSWANParams(r *http.Request, q *url.Values, p []*swan.Pair) {
 			q.Set(i.Key, i.Value)
 		}
 	}
+}
+
+// isPresent returns true if the key is present in the array of pairs.
+func isPresent(d []*swan.Pair, k string) bool {
+	for _, e := range d {
+		if strings.EqualFold(e.Key, k) {
+			return true
+		}
+	}
+	return false
 }
 
 // isSet returns true if all three of the values are present in the results and

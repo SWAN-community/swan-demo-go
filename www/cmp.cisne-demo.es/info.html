@@ -74,6 +74,13 @@
                         </script>
                         <noscript>JavaScript needed for complaint email</noscript>
                     </td>
+                    <td class="text-center">
+                        <script>appendContractURL(
+                            document.currentScript.parentNode,
+                            "{{ $key.AsString }}");
+                        </script>
+                        <noscript>JavaScript needed to link to contract URL</noscript>
+                    </td>                    
                 </tr>
                 {{ end }}
             </tbody>

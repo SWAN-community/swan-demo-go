@@ -74,6 +74,32 @@ appendName = function(e, s) {
         });
 }
 
+appendContractURL = function(e, s) {
+    var supplier = new owid(s);
+    var url = "//" + supplier.domain + "/owid/api/v1/creator";
+    fetch(url, 
+        { method: "GET", mode: "cors" })
+        .then(r => {
+            if (r.ok) {
+                return r.json();
+            }
+            throw "Bad response from '" + url + "'";
+        })
+        .then(o => {
+            var a = document.createElement("a");
+            a.href = o.contractURL;
+            a.target = "_blank";
+            var i = document.createElement("img");
+            i.src = "/noun_Legal Document_4203629.svg";
+            a.appendChild(i);
+            e.appendChild(a);
+        }).catch(x => {
+            console.log(x);
+            var t = document.createTextNode(x);
+            e.appendChild(t);
+        });
+}
+
 appendAuditMark = function(e, r, t) {
 
     // Append a failure HTML element.

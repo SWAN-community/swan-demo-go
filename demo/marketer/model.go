@@ -202,6 +202,7 @@ func htmlAddHeader(html *bytes.Buffer) {
 	html.WriteString("<th>Audit Result</th>\r\n")
 	html.WriteString("<th>\r\n</th>\r\n")
 	html.WriteString("<th>\r\n</th>\r\n")
+	html.WriteString("<th>\r\n</th>\r\n")
 	html.WriteString("</tr>\r\n</thead>\r\n<tbody>\r\n")
 }
 
@@ -302,6 +303,12 @@ func appendHTML(
 	} else {
 		html.WriteString("<td>\r\n</td>\r\n")
 	}
+
+	html.WriteString(fmt.Sprintf(
+		"<td style=\"text-align:center;\">\r\n"+
+			"<style>img { width: 32px; }</style><script>appendContractURL(document.currentScript.parentNode,\"%s\")</script></td>\r\n",
+		o.GetOWIDAsString()))
+
 	html.WriteString("</tr>\r\n")
 	return nil
 }

@@ -8,3 +8,4 @@ application
 .swan/swiftnodes-production.json
 Dockerfile
 appsettings.json
+.idea/

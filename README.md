@@ -20,11 +20,21 @@ line.
    cd swan-demo-go
    ```
 
-2. Build the swan-demo server - if using VSCode then skip this step:
+2. Install dependencies
+   ```sh
+   git submodule update --init 
+   ```
+
+3. Copy `Dockerfile.rename`:
+   ```sh
+   cp Dockerfile.rename Dockerfile 
+   ```
+
+4. Build the swan-demo server - if using VSCode then skip this step:
     * **Linux**: Run `./build.sh` in a terminal.
     * **Windows**: Run `go build -o .\application.exe .\src\server.go`
 
-3. Configure hosts file, when running locally the demo requires that a lot of 
+5. Configure hosts file, when running locally the demo requires that a lot of 
    host names be redirected to localhost - the following scripts will append 
    the contents of `hosts-sample` to your hosts file. Please review these 
    scripts before executing or update your hosts file manually.
@@ -32,7 +42,7 @@ line.
      terminal. 
    * **Windows**: Run `.\setup-hosts.ps1` in an elevated Powershell terminal.
 
-4. Set environment variables:
+6. Set environment variables:
    * If using Visual Studio Code, then a launch file is provided for convenience. 
      Rename `.vscode\launch.json.rename` to `.vscode\launch.json` 
    * OR, set the following environment variables:
@@ -58,14 +68,16 @@ line.
     $Env:SWIFT_FILE="swan/swiftnodes.json"
     ```
 
-6. Run the Demo Server:
+7. Run the Demo Server:
    * **VSCode** If using Visual Studio Code, then the `.vscode\launch.json.rename` 
      file contains all the necessary settings to run and debug the demo.
    * **Linux**: Run `./application appsettings.dev.json` in a terminal.
    * **Windows**: Run `.\application.exe .\appsettings.dev.json` in a Powershell 
      window.
+   * **GoLand**: Right click `server.go` and choose "Modify Run Configuration...".
+     Add `appsettings.dev.json` to Program arguments. Run the configuration
 
-7. Navigate to http://new-pork-limes.uk in your preferred browser.
+8. Navigate to http://new-pork-limes.uk in your preferred browser.
 
 # SWAN Concepts
 

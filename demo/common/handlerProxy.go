@@ -47,7 +47,8 @@ func handlerSWANProxy(
 	// Add the access key to the incoming parameters.
 	r.Form.Set("accessKey", d.SWANAccessKey)
 
-	// Add any additional parameters that might be important from HTTP headers.
+	// Add any additional parameters that might be important from the browser's
+	// HTTP headers.
 	swift.SetHomeNodeHeaders(r, &r.Form)
 
 	// Post the data to the SWAN endpoint.
@@ -63,7 +64,7 @@ func handlerSWANProxy(
 		ReturnServerError(d.Config, w, err)
 	}
 
-	// Return the OWID as a base 64 string.
+	// Return the body to the client unaltered.
 	g := gzip.NewWriter(w)
 	defer g.Close()
 	w.Header().Set("Content-Encoding", "gzip")

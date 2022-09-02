@@ -25,3 +25,7 @@
 [submodule "config"]
 	path = config
 	url = https://github.com/SWAN-community/config-go.git
+[submodule "common"]
+	path = common
+	url = https://github.com/SWAN-community/common-go.git
+	

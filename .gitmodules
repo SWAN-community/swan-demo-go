@@ -29,3 +29,6 @@
 	path = common
 	url = https://github.com/SWAN-community/common-go.git
 	
+[submodule "access"]
+	path = access
+	url = https://github.com/SWAN-community/access-go

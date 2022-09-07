@@ -1,17 +1,24 @@
 module github.com/SWAN-community/swan-demo-go
 
-go 1.17
+go 1.19
 
 require (
 	github.com/SWAN-community/config-go v0.1.4
 	github.com/SWAN-community/owid-go v0.1.6
 	github.com/SWAN-community/salt-go v0.1.4
-	github.com/SWAN-community/swan-go v0.1.4
-	github.com/SWAN-community/swan-op-go v0.1.4
+	github.com/SWAN-community/swan-go v0.1.3
+	github.com/SWAN-community/swan-op-go v0.1.0
 	github.com/SWAN-community/swift-go v0.1.5
 	github.com/bsm/openrtb v2.1.2+incompatible
 	github.com/google/uuid v1.3.0
 	gopkg.in/satori/go.uuid.v1 v1.2.0
+)
+
+require (
+	github.com/SWAN-community/access-go v0.0.0-00010101000000-000000000000 // indirect
+	github.com/SWAN-community/common-go v0.1.0 // indirect
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
+	google.golang.org/grpc v1.38.0 // indirect
 )
 
 require (
@@ -59,15 +66,16 @@ require (
 	golang.org/x/tools v0.1.2 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/api v0.44.0 // indirect
-	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/appengine v1.6.7 // indirect; indirect3401602 // indirect
 	google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c // indirect
-	google.golang.org/grpc v1.38.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
 replace (
+	github.com/SWAN-community/access-go => ./access
+	github.com/SWAN-community/common-go => ./common
 	github.com/SWAN-community/config-go => ./config
 	github.com/SWAN-community/owid-go => ./owid
 	github.com/SWAN-community/salt-go => ./salt

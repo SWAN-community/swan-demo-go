@@ -31,4 +31,4 @@
 	
 [submodule "access"]
 	path = access
-	url = https://github.com/SWAN-community/access-go
+	url = https://github.com/SWAN-community/access-go.git

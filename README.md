@@ -9,7 +9,7 @@ To get you up and running quickly on a local machine using JSON for storage.
 
 ### Prerequisites 
 
-* Local Go version 1.17 or greater installation sufficient to run the Go command
+* Local Go version 1.19 or greater installation sufficient to run the Go command
 line.
 
 ### Steps

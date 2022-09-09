@@ -72,14 +72,3 @@ require (
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
-
-replace (
-	github.com/SWAN-community/access-go => ./access
-	github.com/SWAN-community/common-go => ./common
-	github.com/SWAN-community/config-go => ./config
-	github.com/SWAN-community/owid-go => ./owid
-	github.com/SWAN-community/salt-go => ./salt
-	github.com/SWAN-community/swan-go => ./swan
-	github.com/SWAN-community/swan-op-go => ./swanop
-	github.com/SWAN-community/swift-go => ./swift
-)

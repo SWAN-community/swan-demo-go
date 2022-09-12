@@ -7,28 +7,3 @@
 [submodule "www/prebid"]
 	path = www/prebid
 	url = https://github.com/openx/Prebid.js.git
-[submodule "swan"]
-	path = swan
-	url = https://github.com/SWAN-community/swan-go.git
-[submodule "owid"]
-	path = owid
-	url = https://github.com/SWAN-community/owid-go.git
-[submodule "swift"]
-	path = swift
-	url = https://github.com/SWAN-community/swift-go.git
-[submodule "swanop"]
-	path = swanop
-	url = https://github.com/SWAN-community/swan-op-go.git
-[submodule "salt"]
-	path = salt
-	url = https://github.com/SWAN-community/salt-go.git
-[submodule "config"]
-	path = config
-	url = https://github.com/SWAN-community/config-go.git
-[submodule "common"]
-	path = common
-	url = https://github.com/SWAN-community/common-go.git
-	
-[submodule "access"]
-	path = access
-	url = https://github.com/SWAN-community/access-go.git

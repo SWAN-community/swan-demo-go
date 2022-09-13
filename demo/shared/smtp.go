@@ -14,7 +14,7 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"bytes"

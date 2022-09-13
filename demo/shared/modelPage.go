@@ -14,7 +14,7 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"fmt"
@@ -68,7 +68,7 @@ func (m PageModel) IsCrawler() (bool, error) {
 // Config returns the domain configuration.
 func (m PageModel) Config() *Configuration { return m.Domain.Config }
 
-// OWIDDate returns the creator domain of the ID.
+// OWIDDate returns the signer domain of the ID.
 func OWIDDate(p *swan.Pair) string {
 	if p == nil {
 		return ""
@@ -80,7 +80,7 @@ func OWIDDate(p *swan.Pair) string {
 	return o.Date.Format("2006-01-02T15:04")
 }
 
-// OWIDDomain returns the creator domain of the ID.
+// OWIDDomain returns the signer domain of the ID.
 func OWIDDomain(p *swan.Pair) string {
 	if p == nil {
 		return ""

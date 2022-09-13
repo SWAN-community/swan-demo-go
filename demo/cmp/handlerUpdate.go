@@ -19,18 +19,18 @@ package cmp
 import (
 	"net/http"
 
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 )
 
 func handlerUpdate(
-	d *common.Domain,
+	d *shared.Domain,
 	w http.ResponseWriter,
 	r *http.Request) {
 
 	// Get the form values from the input request.
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -40,7 +40,7 @@ func handlerUpdate(
 	// Add the values from the form parameters.
 	err = o.SetPrefFromOWID(r.Form.Get("pref"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			err,
@@ -49,7 +49,7 @@ func handlerUpdate(
 	}
 	err = o.SetEmailFromOWID(r.Form.Get("email"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			err,
@@ -58,7 +58,7 @@ func handlerUpdate(
 	}
 	err = o.SetSaltFromOWID(r.Form.Get("salt"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			err,
@@ -71,7 +71,7 @@ func handlerUpdate(
 	// return URL for the publisher returned to.
 	u, se := o.GetURL()
 	if se != nil {
-		common.ReturnProxyError(d.Config, w, se)
+		shared.ReturnProxyError(d.Config, w, se)
 		return
 	}
 

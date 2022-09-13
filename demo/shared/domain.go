@@ -14,7 +14,7 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"encoding/json"
@@ -58,7 +58,7 @@ type Domain struct {
 	Config    *Configuration     // Configuration for the server
 	folder    string             // Location of the directory
 	templates *template.Template // HTML templates
-	owid      *owid.Creator      // The OWID creator associated with the domain if any
+	owid      *owid.Signer       // The OWID signer associated with the domain if any
 	owidStore owid.Store         // The connection to the OWID store
 	swan      *swan.Connection   // The connection to SWAN
 	// The HTTP handler to use for this domain
@@ -147,18 +147,18 @@ func (d *Domain) SWAN() *swan.Connection {
 	return d.swan
 }
 
-// GetOWIDCreator returns the OWID creator from the OWID store for the the
+// GetOWIDSigner returns the OWID signer from the OWID store for the the
 // domain.
-func (d *Domain) GetOWIDCreator() (*owid.Creator, error) {
+func (d *Domain) GetOWIDSigner() (*owid.Signer, error) {
 	var err error
 	if d.owid == nil {
-		d.owid, err = d.owidStore.GetCreator(d.Host)
+		d.owid, err = d.owidStore.GetSigner(d.Host)
 		if err != nil {
 			return nil, err
 		}
 		if d.owid == nil {
 			return nil, fmt.Errorf(
-				"Domain '%s' is not a registered OWID creator. Register the "+
+				"Domain '%s' is not a registered OWID signer. Register the "+
 					"domain for the SWAN demo using http[s]://%s/owid/register",
 				d.Host,
 				d.Host)
@@ -171,7 +171,6 @@ func infoRole(s interface{}) string {
 	_, fok := s.(*swan.Failed)
 	_, bok := s.(*swan.Bid)
 	_, eok := s.(*swan.Empty)
-	_, iok := s.(*swan.ID)
 	if fok {
 		return "Failed"
 	}
@@ -180,9 +179,6 @@ func infoRole(s interface{}) string {
 	}
 	if eok {
 		return "Empty"
-	}
-	if iok {
-		return "ID"
 	}
 	return ""
 }

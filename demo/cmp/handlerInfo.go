@@ -24,7 +24,7 @@ import (
 	"time"
 
 	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -64,12 +64,12 @@ func (m *InfoModel) findBid() *swan.Bid {
 	return nil
 }
 
-func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func handlerInfo(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Get the SWAN OWIDs from the form parameters.
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 	var m InfoModel
@@ -79,12 +79,12 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			for _, v := range vs {
 				o, err := owid.FromBase64(v)
 				if err != nil {
-					common.ReturnServerError(d.Config, w, err)
+					shared.ReturnServerError(d.Config, w, err)
 					return
 				}
 				m.OWIDs[o], err = swan.FromOWID(o)
 				if err != nil {
-					common.ReturnServerError(d.Config, w, err)
+					shared.ReturnServerError(d.Config, w, err)
 					return
 				}
 			}
@@ -94,9 +94,9 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Set the common fields.
 	m.Bid = m.findBid()
 	m.Root, m.ID = m.findID()
-	f, err := common.GetReturnURL(r)
+	f, err := shared.GetReturnURL(r)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 	m.ReturnURL = template.HTML(f.String())
@@ -108,7 +108,7 @@ func handlerInfo(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Encoding", "gzip")
 	err = d.LookupHTML("info.html").Execute(g, &m)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 }

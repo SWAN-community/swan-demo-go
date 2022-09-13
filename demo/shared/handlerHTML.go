@@ -14,19 +14,20 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"compress/gzip"
 	"net/http"
 	"strings"
+
 	"github.com/SWAN-community/swan-go"
 )
 
 // HandlerHTML returns HTML that does not require a model for the template.
 func HandlerHTML(d *Domain, w http.ResponseWriter, r *http.Request) {
 
-	// If the request is for the OWID creator then direct to that handler.
+	// If the request is for the OWID signer then direct to that handler.
 	if r.URL.Path == "/create-owid" {
 		handlerCreateOWID(d, w, r)
 		return

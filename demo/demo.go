@@ -24,22 +24,23 @@ import (
 	"path/filepath"
 
 	"github.com/SWAN-community/swan-demo-go/demo/cmp"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
 	"github.com/SWAN-community/swan-demo-go/demo/marketer"
 	"github.com/SWAN-community/swan-demo-go/demo/publisher"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-demo-go/demo/swanopenrtb"
 
 	swanop "github.com/SWAN-community/swan-op-go"
+	"github.com/SWAN-community/access-go"
 )
 
 // AddHandlers and outputs configuration information.
 func AddHandlers(settingsFile string) error {
 
 	// Get the demo configuration.
-	dc := common.NewConfig(settingsFile)
+	dc := shared.NewConfig(settingsFile)
 
-	// Get the example simple access control implementations.
-	swa := swanop.NewAccessSimple(dc.AccessKeys)
+	// Used a fixed set of access keys for the demo.
+	swa := access.NewFixed(dc.AccessKeys)
 
 	// Get all the domains for the SWAN demo.
 	wd, err := os.Getwd()
@@ -57,7 +58,7 @@ func AddHandlers(settingsFile string) error {
 	err = swanop.AddHandlers(
 		settingsFile,
 		swa,
-		common.Handler(domains))
+		shared.Handler(domains))
 	if err != nil {
 		return err
 	}
@@ -77,9 +78,9 @@ func AddHandlers(settingsFile string) error {
 // path provides the root folder where the child folders are the names of the
 // domains that the demo responds to.
 func parseDomains(
-	c *common.Configuration,
-	path string) ([]*common.Domain, error) {
-	var domains []*common.Domain
+	c *shared.Configuration,
+	path string) ([]*shared.Domain, error) {
+	var domains []*shared.Domain
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
 		return nil, err
@@ -87,9 +88,9 @@ func parseDomains(
 	for _, f := range files {
 		if f.IsDir() {
 			p := filepath.Join(path, f.Name())
-			g := common.GetConfigFile(p)
+			g := shared.GetConfigFile(p)
 			if g != nil {
-				domain, err := common.NewDomain(c, p, g)
+				domain, err := shared.NewDomain(c, p, g)
 				if err != nil {
 					return nil, err
 				}
@@ -105,7 +106,7 @@ func parseDomains(
 }
 
 // Set the HTTP handler for the domain.
-func addHandler(d *common.Domain) error {
+func addHandler(d *shared.Domain) error {
 	switch d.Category {
 	case "CMP":
 		d.SetHandler(cmp.Handler)
@@ -129,7 +130,7 @@ func addHandler(d *common.Domain) error {
 		d.SetHandler(swanopenrtb.Handler)
 		break
 	case "Demo":
-		d.SetHandler(common.HandlerHTML)
+		d.SetHandler(shared.HandlerHTML)
 		break
 	default:
 		return fmt.Errorf("Category '%s' invalid for domain '%s'",

@@ -22,11 +22,11 @@ import (
 	"net/http"
 
 	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 )
 
 // Handler for the marketer features.
-func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func Handler(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Get the template for the URL path.
 	t := d.LookupHTML(r.URL.Path)
@@ -38,7 +38,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Get the SWAN ID that relates to the advert.
 	o, err := getID(r)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -55,7 +55,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	err = t.Execute(g, &m)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 	}
 }
 

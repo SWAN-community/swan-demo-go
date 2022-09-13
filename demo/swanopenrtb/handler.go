@@ -31,7 +31,7 @@ import (
 	"sync"
 
 	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 
 	"github.com/bsm/openrtb"
@@ -74,7 +74,7 @@ type Uid struct {
 // Handler is responsible for a real time transaction for advertising.
 // The body of the request must contain a JSON array of Processor IDs which
 // contain the signature of the last entry in the list of Processors.
-func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func Handler(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == prebidRTBPath && r.Method == "POST" {
 		var req *openrtb.BidRequest
@@ -109,12 +109,12 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		if swanId != "" {
 			b, err := owid.FromBase64(swanId)
 			if err != nil {
-				common.ReturnServerError(d.Config, w, err)
+				shared.ReturnServerError(d.Config, w, err)
 				return
 			}
 			a, err := b.AsByteArray()
 			if err != nil {
-				common.ReturnServerError(d.Config, w, err)
+				shared.ReturnServerError(d.Config, w, err)
 				return
 			}
 
@@ -129,13 +129,13 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				// Get some bids
 				_, err := HandleTransaction(d, &o)
 				if err != nil {
-					common.ReturnServerError(d.Config, w, err)
+					shared.ReturnServerError(d.Config, w, err)
 					return
 				}
 
 				b, err := o.AsJSON()
 				if err != nil {
-					common.ReturnServerError(d.Config, w, err)
+					shared.ReturnServerError(d.Config, w, err)
 					return
 				}
 
@@ -183,7 +183,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 			myIn, err := json.Marshal(resp_ext)
 			if err != nil {
-				common.ReturnServerError(d.Config, w, err)
+				shared.ReturnServerError(d.Config, w, err)
 				return
 			}
 
@@ -209,7 +209,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			_, err = w.Write(js)
 			if err != nil {
-				common.ReturnServerError(d.Config, w, err)
+				shared.ReturnServerError(d.Config, w, err)
 				return
 			}
 		} else {
@@ -223,7 +223,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		// Unpack the body of the request to form the bid data structure.
 		o, err := getID(d, r)
 		if err != nil {
-			common.ReturnStatusCodeError(d.Config, w, err, http.StatusBadRequest)
+			shared.ReturnStatusCodeError(d.Config, w, err, http.StatusBadRequest)
 			return
 		}
 
@@ -232,7 +232,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		if d.Bad {
 			err = changePubDomain(o, "high-value-pub.com")
 			if err != nil {
-				common.ReturnStatusCodeError(
+				shared.ReturnStatusCodeError(
 					d.Config,
 					w,
 					err,
@@ -244,7 +244,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		// Handle the bid and return if the URL was found.
 		t, err := HandleTransaction(d, o)
 		if err != nil {
-			common.ReturnServerError(d.Config, w, err)
+			shared.ReturnServerError(d.Config, w, err)
 			return
 		}
 
@@ -252,7 +252,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		// Processor OWID and the children.
 		b, err := t.AsJSON()
 		if err != nil {
-			common.ReturnServerError(d.Config, w, err)
+			shared.ReturnServerError(d.Config, w, err)
 			return
 		}
 
@@ -265,7 +265,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		_, err = g.Write(b)
 		if err != nil {
-			common.ReturnServerError(d.Config, w, err)
+			shared.ReturnServerError(d.Config, w, err)
 			return
 		}
 	} else {
@@ -307,11 +307,11 @@ func changePubDomain(r *owid.Node, newPubDomain string) error {
 }
 
 // HandleTransaction processes an OpenRTB transaction.
-func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
+func HandleTransaction(d *shared.Domain, n *owid.Node) (*owid.Node, error) {
 
 	// Verify that this domain can create OWIDs. Failure to register a domain
-	// as an OWID creator is a common setup mistake.
-	oc, err := d.GetOWIDCreator()
+	// as an OWID signer is a common setup mistake.
+	oc, err := d.GetOWIDSigner()
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +391,7 @@ func HandleTransaction(d *common.Domain, n *owid.Node) (*owid.Node, error) {
 	return n, nil
 }
 
-func SendToSuppliers(d *common.Domain, n *owid.Node) (*owid.Node, error) {
+func SendToSuppliers(d *shared.Domain, n *owid.Node) (*owid.Node, error) {
 	var err error
 
 	// Call all the suppliers adding them to this Processor OWID's child
@@ -475,7 +475,7 @@ func isBid(n *owid.Node) (bool, error) {
 	return ok, nil
 }
 
-func getID(d *common.Domain, r *http.Request) (*owid.Node, error) {
+func getID(d *shared.Domain, r *http.Request) (*owid.Node, error) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
@@ -484,7 +484,7 @@ func getID(d *common.Domain, r *http.Request) (*owid.Node, error) {
 }
 
 func sendToSupplier(
-	d *common.Domain,
+	d *shared.Domain,
 	s string,
 	n *owid.Node) (*owid.Node, error) {
 
@@ -533,7 +533,7 @@ func sendToSupplier(
 }
 
 func createFailed(
-	d *common.Domain,
+	d *shared.Domain,
 	n *owid.Node,
 	u *url.URL,
 	res *http.Response) (*owid.Node, error) {
@@ -548,7 +548,7 @@ func createFailed(
 	if err != nil {
 		return nil, err
 	}
-	oc, err := d.GetOWIDCreator()
+	oc, err := d.GetOWIDSigner()
 	if err != nil {
 		return nil, err
 	}

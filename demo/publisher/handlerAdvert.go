@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 )
 
 // HandlerAdvert for the request for adverts for the publisher web pages.
-func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func HandlerAdvert(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Create the model for publishers.
 	var m Model
@@ -36,7 +36,7 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Get the form parameters which will include the encrypted data.
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -46,21 +46,21 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		var e *swan.Error
 		m.swanData, e = newSWANData(d, r.Form.Get("encrypted"))
 		if e != nil {
-			common.ReturnProxyError(d.Config, w, e)
+			shared.ReturnProxyError(d.Config, w, e)
 			return
 		}
 		setCookies(r, w, m.swanData)
 	} else {
 		m.swanData, err = newSWANDataFromCookies(r)
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
 				http.StatusBadRequest)
 		}
 		if m.swanData == nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				fmt.Errorf("SWAN data cookies missing for request"),
@@ -72,7 +72,7 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Use the new advert HTML to request the advert.
 	t, err := m.NewAdvertHTML(r.Form.Get("placement"))
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -84,7 +84,7 @@ func HandlerAdvert(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	_, err = g.Write([]byte(t))
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 }

@@ -14,7 +14,7 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"fmt"
@@ -22,6 +22,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/SWAN-community/common-go"
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -103,7 +105,7 @@ func ReturnProxyError(c *Configuration, w http.ResponseWriter, e *swan.Error) {
 
 // ReturnServerError returns an internal server error.
 func ReturnServerError(c *Configuration, w http.ResponseWriter, err error) {
-	ReturnStatusCodeError(c, w, err, http.StatusInternalServerError)
+	common.ReturnServerError(w, err)
 }
 
 // ReturnStatusCodeError returns the HTTP status code specified.

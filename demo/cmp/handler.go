@@ -20,11 +20,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 )
 
 // Handler for the CMP features.
-func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func Handler(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 	if strings.HasPrefix(r.URL.Path, "/preferences") {
 		handlerDialog(d, w, r)
 		return

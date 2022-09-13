@@ -28,14 +28,14 @@ import (
 	"time"
 
 	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-demo-go/demo/swanopenrtb"
 	"github.com/SWAN-community/swan-go"
 )
 
 // Model used with HTML templates.
 type Model struct {
-	common.PageModel
+	shared.PageModel
 	swanData []*swan.Pair // The SWAN data for display
 }
 
@@ -81,35 +81,35 @@ func (m Model) IsNew() bool {
 func (m Model) Personalized() bool { return m.PrefAsString() == "on" }
 
 // SWIDAsString Secure Web IDentifier
-func (m Model) SWIDAsString() string { return common.AsStringFromUUID(m.swid()) }
+func (m Model) SWIDAsString() string { return shared.AsStringFromUUID(m.swid()) }
 
 // SIDAsString Signed in IDentifier
-func (m Model) SIDAsString() string { return common.AsPrintable(m.sid()) }
+func (m Model) SIDAsString() string { return shared.AsPrintable(m.sid()) }
 
 // PrefAsString true if personalized marketing allowed, otherwise false
-func (m Model) PrefAsString() string { return common.AsString(m.pref()) }
+func (m Model) PrefAsString() string { return shared.AsString(m.pref()) }
 
 // SWIDDomain returns the domain that created the SWID OWID
-func (m Model) SWIDDomain() string { return common.OWIDDomain(m.swid()) }
+func (m Model) SWIDDomain() string { return shared.OWIDDomain(m.swid()) }
 
 // SIDDomain returns the domain that created the SID OWID
-func (m Model) SIDDomain() string { return common.OWIDDomain(m.sid()) }
+func (m Model) SIDDomain() string { return shared.OWIDDomain(m.sid()) }
 
 // PrefDomain returns the domain that created the Allow OWID
-func (m Model) PrefDomain() string { return common.OWIDDomain(m.pref()) }
+func (m Model) PrefDomain() string { return shared.OWIDDomain(m.pref()) }
 
 // SWIDDate returns the date SWID OWID was created
-func (m Model) SWIDDate() string { return common.OWIDDate(m.swid()) }
+func (m Model) SWIDDate() string { return shared.OWIDDate(m.swid()) }
 
 // SIDDate returns the date SID OWID was created
-func (m Model) SIDDate() string { return common.OWIDDate(m.sid()) }
+func (m Model) SIDDate() string { return shared.OWIDDate(m.sid()) }
 
 // PrefDate returns the date Allow OWID was created
-func (m Model) PrefDate() string { return common.OWIDDate(m.pref()) }
+func (m Model) PrefDate() string { return shared.OWIDDate(m.pref()) }
 
 // Stopped returns a list of the domains that have been stopped for advertising.
 func (m Model) Stopped() []string {
-	return strings.Split(common.AsString(m.stop()), "\r\n")
+	return strings.Split(shared.AsString(m.stop()), "\r\n")
 }
 
 func (m Model) NewSWANIDAsString() string {
@@ -125,8 +125,8 @@ func (m Model) NewSWANIDAsString() string {
 }
 
 // DomainsByCategory returns all the domains that match the category.
-func (m Model) DomainsByCategory(category string) []*common.Domain {
-	var domains []*common.Domain
+func (m Model) DomainsByCategory(category string) []*shared.Domain {
+	var domains []*shared.Domain
 	for _, domain := range m.Domain.Config.Domains {
 		if domain.Category == category {
 			domains = append(domains, domain)
@@ -178,7 +178,7 @@ func (m Model) NewAdvertHTML(placement string) (template.HTML, error) {
 	}
 
 	// Get the return URL.
-	t, err := common.GetReturnURL(m.Request)
+	t, err := shared.GetReturnURL(m.Request)
 	if err != nil {
 		return template.HTML("<p>" + err.Error() + "</p>"), nil
 	}
@@ -270,7 +270,7 @@ func (m *Model) newSWANIDOWID() (*owid.OWID, error) {
 	if err != nil {
 		return nil, err
 	}
-	oc, err := m.Domain.GetOWIDCreator()
+	oc, err := m.Domain.GetOWIDSigner()
 	if err != nil {
 		return nil, err
 	}
@@ -348,7 +348,7 @@ func getValue(r *http.Request, k string) (string, error) {
 // Returns a verified OWID associated with the form parameter k. Returns and
 // error if the value is missing or is not a verified OWID.
 func getOWID(
-	c *common.Configuration,
+	c *shared.Configuration,
 	r *http.Request,
 	p *swan.Pair) (*owid.OWID, error) {
 	if p != nil {

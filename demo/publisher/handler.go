@@ -25,14 +25,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/SWAN-community/swan-demo-go/demo/common"
 	"github.com/SWAN-community/swan-demo-go/demo/fod"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 	swanop "github.com/SWAN-community/swan-op-go"
 )
 
 // Handler for publisher web pages.
-func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func Handler(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Check to see if this request is for an advert.
 	if r.URL.Path == "/advert" {
@@ -54,7 +54,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
-		common.ReturnServerError(d.Config, w, ae)
+		shared.ReturnServerError(d.Config, w, ae)
 		return
 	}
 	if p != nil {
@@ -74,7 +74,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// If the request is from a crawler than ignore SWAN.
 	c, err := fod.GetCrawlerFrom51Degrees(r)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 	if c {
@@ -119,7 +119,7 @@ func Handler(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 }
 
 func handlerPublisherPage(
-	d *common.Domain,
+	d *shared.Domain,
 	w http.ResponseWriter,
 	r *http.Request,
 	p []*swan.Pair) {
@@ -139,7 +139,7 @@ func handlerPublisherPage(
 	w.Header().Set("Cache-Control", "no-cache")
 	err := t.Execute(g, &m)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 	}
 }
 
@@ -154,16 +154,16 @@ func newSWANDataFromCookies(r *http.Request) ([]*swan.Pair, error) {
 }
 
 func newSWANData(
-	d *common.Domain,
+	d *shared.Domain,
 	v string) ([]*swan.Pair, *swan.Error) {
 	return d.SWAN().Decrypt(v)
 }
 
 // Get the section of the URL that has the SWAN data.
 func newSWANDataFromPath(
-	d *common.Domain,
+	d *shared.Domain,
 	r *http.Request) ([]*swan.Pair, *swan.Error) {
-	b := common.GetSWANDataFromRequest(r)
+	b := shared.GetSWANDataFromRequest(r)
 	if b == "" {
 		return nil, nil
 	}
@@ -174,11 +174,11 @@ func newSWANDataFromPath(
 // the URL and redirect back to the page. Set cookies in the redirect so that
 // the data is persisted.
 func redirectToCleanURL(
-	c *common.Configuration,
+	c *shared.Configuration,
 	w http.ResponseWriter,
 	r *http.Request,
 	p []*swan.Pair) {
-	u := common.GetCleanURL(c, r).String()
+	u := shared.GetCleanURL(c, r).String()
 	if c.Debug {
 		log.Printf("Redirecting to '%s'\n", u)
 	}
@@ -190,30 +190,30 @@ func redirectToCleanURL(
 // does not exist then use the values contained in the swan pairs provided in
 // parameter p.
 func redirectToSWANFetch(
-	d *common.Domain,
+	d *shared.Domain,
 	w http.ResponseWriter,
 	r *http.Request,
 	p []*swan.Pair) {
 	u, err := getSWANURL(d, r, p)
 	if err != nil {
-		common.ReturnProxyError(d.Config, w, err)
+		shared.ReturnProxyError(d.Config, w, err)
 		return
 	}
 	http.Redirect(w, r, u, 303)
 }
 
 func getSWANURL(
-	d *common.Domain,
+	d *shared.Domain,
 	r *http.Request,
 	p []*swan.Pair) (string, *swan.Error) {
 	return d.SWAN().NewFetch(
 		r,
-		common.GetCleanURL(d.Config, r).String(),
+		shared.GetCleanURL(d.Config, r).String(),
 		p).GetURL()
 }
 
 func getHomeNode(
-	d *common.Domain,
+	d *shared.Domain,
 	r *http.Request) (string, *swan.Error) {
 	return d.SWAN().HomeNode(r)
 }
@@ -229,13 +229,13 @@ func setCookies(r *http.Request, w http.ResponseWriter, p []*swan.Pair) {
 }
 
 // Returns the CMP preferences URL.
-func getCMPURL(d *common.Domain, r *http.Request, p []*swan.Pair) string {
+func getCMPURL(d *shared.Domain, r *http.Request, p []*swan.Pair) string {
 	var u url.URL
 	u.Scheme = d.Config.Scheme
 	u.Host = d.CMP
 	u.Path = "/preferences/"
 	q := u.Query()
-	q.Set("returnUrl", common.GetCleanURL(d.Config, r).String())
+	q.Set("returnUrl", shared.GetCleanURL(d.Config, r).String())
 	q.Set("accessNode", d.SWANAccessNode)
 	if d.CmpNodeCount > 0 {
 		q.Set("nodeCount", fmt.Sprintf("%d", d.CmpNodeCount))
@@ -302,7 +302,7 @@ func revalidateNeeded(d []*swan.Pair) bool {
 	return false
 }
 
-func setFlags(d *common.Domain, q *url.Values) {
+func setFlags(d *shared.Domain, q *url.Values) {
 	if d.SwanPostMessage {
 		q.Set("postMessageOnComplete", "true")
 	} else {

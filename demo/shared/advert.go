@@ -14,39 +14,10 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
-import (
-	"net/http"
-	"regexp"
-	"strings"
-)
-
-// Regular expression to check for none base64 encoded characters.
-var swanDataRegex *regexp.Regexp
-
-func init() {
-	swanDataRegex, _ = regexp.Compile("[^\\w|\\-|\\=]+")
-}
-
-// GetSWANDataFromRequest returns the base 64 SWAN data from the request if
-// present, otherwise an empty string.
-func GetSWANDataFromRequest(r *http.Request) string {
-	s := ""
-
-	// Get the SWAN data from the last segment of the PATH or the query string.
-	i := strings.LastIndex(r.URL.Path, "/")
-	if i >= 0 {
-		s = r.URL.Path[i+1:]
-	} else {
-		s = r.URL.RawQuery
-	}
-
-	// Validate that the string is base 64 characters.
-	if swanDataRegex.Match([]byte(s)) {
-		return ""
-	}
-
-	// Return the string.
-	return s
+// Advert represents an advert to display on a publishers web page.
+type Advert struct {
+	MediaURL      string // The URL of the content of the advert provided in response
+	AdvertiserURL string // The URL to direct the browser to if the advert is selected
 }

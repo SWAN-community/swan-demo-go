@@ -14,7 +14,7 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	config "github.com/SWAN-community/config-go"

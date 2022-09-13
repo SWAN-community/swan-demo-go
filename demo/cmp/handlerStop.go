@@ -22,21 +22,21 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 )
 
 // handlerStop matches the path /stop and redirects the response to the
 // SWAN stop preferences URL where the parameters include the host that should
 // be stopped from displaying adverts on the browser.
-func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func handlerStop(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
 	if r.Form.Get("host") == "" {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("Host to be stopped must be provided"),
@@ -48,7 +48,7 @@ func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// the return URL and host.
 	returnUrl, err := url.Parse(r.Form.Get("returnUrl"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			err,
@@ -72,7 +72,7 @@ func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Get the URL to process the stop data.
 	u, se := s.GetURL()
 	if se != nil {
-		common.ReturnProxyError(d.Config, w, se)
+		shared.ReturnProxyError(d.Config, w, se)
 		return
 	}
 
@@ -84,7 +84,7 @@ func handlerStop(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	_, err = g.Write([]byte(u))
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 }

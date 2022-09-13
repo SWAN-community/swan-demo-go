@@ -3,20 +3,20 @@ module github.com/SWAN-community/swan-demo-go
 go 1.19
 
 require (
-	github.com/SWAN-community/config-go v0.1.4
-	github.com/SWAN-community/owid-go v0.1.6
+	github.com/SWAN-community/access-go v0.1.0
+	github.com/SWAN-community/common-go v0.1.2
+	github.com/SWAN-community/config-go v0.1.5
+	github.com/SWAN-community/owid-go v0.1.9-0.20220913152605-c4124f8bf9e3
 	github.com/SWAN-community/salt-go v0.1.4
-	github.com/SWAN-community/swan-go v0.1.3
-	github.com/SWAN-community/swan-op-go v0.1.0
-	github.com/SWAN-community/swift-go v0.1.5
+	github.com/SWAN-community/swan-go v0.1.10-0.20220913160725-111078eb26ec
+	github.com/SWAN-community/swan-op-go v0.1.6-0.20220913161254-16716f037d14
+	github.com/SWAN-community/swift-go v0.1.7-0.20220913145444-454bd5937fb0
 	github.com/bsm/openrtb v2.1.2+incompatible
 	github.com/google/uuid v1.3.0
 	gopkg.in/satori/go.uuid.v1 v1.2.0
 )
 
 require (
-	github.com/SWAN-community/access-go v0.0.0-00010101000000-000000000000 // indirect
-	github.com/SWAN-community/common-go v0.1.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	google.golang.org/grpc v1.38.0 // indirect
 )

@@ -24,13 +24,13 @@ import (
 	"time"
 
 	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 )
 
 // MarketerModel used with HTML templates.
 type MarketerModel struct {
-	common.PageModel
+	shared.PageModel
 	idNode *owid.Node // The swan.ID as a node and tree associated with the page
 }
 
@@ -210,7 +210,7 @@ func htmlAddFooter(html *bytes.Buffer) {
 	html.WriteString("</tbody>\r\n</table>\r\n")
 }
 
-func appendParents(d *common.Domain, html *bytes.Buffer, w *owid.Node) error {
+func appendParents(d *shared.Domain, html *bytes.Buffer, w *owid.Node) error {
 	var n []*owid.Node
 	p := w
 	for p != nil {
@@ -229,7 +229,7 @@ func appendParents(d *common.Domain, html *bytes.Buffer, w *owid.Node) error {
 }
 
 func appendOWIDAndChildren(
-	d *common.Domain,
+	d *shared.Domain,
 	html *bytes.Buffer,
 	o *owid.Node,
 	w *owid.Node,
@@ -247,7 +247,7 @@ func appendOWIDAndChildren(
 }
 
 func appendHTML(
-	d *common.Domain,
+	d *shared.Domain,
 	html *bytes.Buffer,
 	w *owid.Node,
 	o *owid.Node,

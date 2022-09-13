@@ -14,51 +14,40 @@
  * under the License.
  * ***************************************************************************/
 
-package common
+package shared
 
 import (
 	"compress/gzip"
-	"io/ioutil"
 	"net/http"
-	"net/url"
-	"strings"
-	"github.com/SWAN-community/swift-go"
+
+	"github.com/SWAN-community/owid-go"
+	"github.com/google/uuid"
 )
 
-// handlerProxy takes an incoming request, adds the access key to the parameters
-// and then passes on the result to the SWAN access node.
-func handlerSWANProxy(
+// handlerCreateOWID takes an input payload and returns a new OWID.
+func handlerCreateOWID(
 	d *Domain,
 	w http.ResponseWriter,
 	r *http.Request) {
-
 	err := r.ParseForm()
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 		return
 	}
 
-	// Get the converted URL for the access node.
-	var u url.URL
-	u.Scheme = d.Config.Scheme
-	u.Host = d.SWANAccessNode
-	u.Path = strings.Replace(r.URL.Path, "swan-proxy", "swan", 1)
-
-	// Add the access key to the incoming parameters.
-	r.Form.Set("accessKey", d.SWANAccessKey)
-
-	// Add any additional parameters that might be important from HTTP headers.
-	swift.SetHomeNodeHeaders(r, &r.Form)
-
-	// Post the data to the SWAN endpoint.
-	res, err := http.PostForm(u.String(), r.Form)
+	// Get the OWID signer for this domain.
+	oc, err := d.GetOWIDSigner()
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 	}
 
-	// Get the body.
-	defer res.Body.Close()
-	b, err := ioutil.ReadAll(res.Body)
+	ot, err := decodeOthers(r.Form["others"])
+	if err != nil {
+		ReturnServerError(d.Config, w, err)
+	}
+
+	// Create and sign the OWID for this domain.
+	o, err := oc.CreateOWIDandSign([]byte(r.Form.Get("payload")), ot...)
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 	}
@@ -68,11 +57,28 @@ func handlerSWANProxy(
 	defer g.Close()
 	w.Header().Set("Content-Encoding", "gzip")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", res.Header.Get("Content-Type"))
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache")
-	_, err = g.Write(b)
+	_, err = g.Write([]byte(o.AsString()))
 	if err != nil {
 		ReturnServerError(d.Config, w, err)
 		return
 	}
+}
+
+// decodeOthers decodes an array of other OWID Base 64 strings and returns an
+// array of OWID instances.
+func decodeOthers(v []string) ([]*owid.OWID, error) {
+	var os []*owid.OWID
+
+	for _, o := range v {
+		o, err := owid.FromBase64(o)
+		if err != nil {
+			return nil, err
+		}
+
+		os = append(os, o)
+	}
+
+	return os, nil
 }

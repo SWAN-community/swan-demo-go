@@ -19,14 +19,14 @@ package cmp
 import (
 	"bytes"
 	"compress/gzip"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
 	"text/template"
 
-	"github.com/SWAN-community/owid-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 )
 
@@ -64,41 +64,47 @@ var complaintBodyTemplate = newComplaintTemplate("body", `
 
 // Complaint used to format an email template.
 type Complaint struct {
-	ID           *swan.ID // The swan.ID that the complaint relates to
+	Seed         *swan.Seed     // The swan.ID that the complaint relates to
+	Response     *swan.Response // The response from the party being complained about
 	DPRURL       string
 	Organization string
 	Country      string
-	idOWID       *owid.OWID // The ID as an OWID
 }
 
 // Date to use in the email template.
 func (c *Complaint) Date() string {
-	return c.idOWID.Date.Format("2006-01-02 15:01")
+	return c.Seed.OWID.TimeStamp.Format("2006-01-02 15:01")
 }
 
 // SWID to use in the email template.
 func (c *Complaint) SWID() string {
-	return c.ID.SWID.AsString()
+	return c.Seed.RID.Value.String()
 }
 
 // SID to use in the email template.
 func (c *Complaint) SID() string {
-	return c.ID.SID.AsString()
+	return string(c.Seed.SID.Data)
 }
 
 // Preferences string to use in the email template.
 func (c *Complaint) Preferences() string {
-	return c.ID.PreferencesAsString()
+	return fmt.Sprintf(
+		"personalize: %t",
+		c.Seed.Preferences.Data.UseBrowsingForPersonalization)
 }
 
 // ID as a string
 func (c *Complaint) IDAsString() (string, error) {
-	return c.ID.AsString()
+	j, err := json.Marshal(c.Seed)
+	if err != nil {
+		return "", err
+	}
+	return string(j), nil
 }
 
 // SWANOWID as a string
 func (c *Complaint) SWANOWID() string {
-	return c.idOWID.AsString()
+	return c.Seed.OWID.AsString()
 }
 
 func newComplaintTemplate(n string, b string) *template.Template {
@@ -110,47 +116,38 @@ func newComplaintTemplate(n string, b string) *template.Template {
 }
 
 func newComplaint(
-	cfg *common.Configuration,
-	swanOWID *owid.OWID,
-	partyOWID *owid.OWID) (*Complaint, error) {
-	var err error
+	seed *swan.Seed,
+	response *swan.Response) (*Complaint, error) {
 
 	// Set the static information associated with the complaint. These are
-	var c Complaint
-	c.DPRURL = "URL of the DPR"
-	c.Country = "Region of the CMP"
-
-	// Set the ID as an OWID.
-	c.idOWID = partyOWID
-
-	// Work out the swan.ID from the ID OWID provided.
-	c.ID, err = swan.IDFromOWID(swanOWID)
-	if err != nil {
-		return nil, err
-	}
+	c := Complaint{
+		DPRURL:   "URL of the DPR",
+		Country:  "Region of the CMP",
+		Seed:     seed,
+		Response: response}
 
 	// Set the organization as the domain for the moment.
-	c.Organization = partyOWID.Domain
+	c.Organization = response.OWID.Domain
 
 	// Return the complain data structure ready for the template email.
 	return &c, nil
 }
 
 func handlerComplain(
-	d *common.Domain,
+	d *shared.Domain,
 	w http.ResponseWriter,
 	r *http.Request) {
 
 	// Get the form values from the input request.
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
 	// Check that the SWAN ID and the Party ID are present.
 	if r.Form.Get("swanid") == "" {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("'swanid' missing"),
@@ -158,7 +155,7 @@ func handlerComplain(
 		return
 	}
 	if r.Form.Get("partyid") == "" {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("'partyid' missing"),
@@ -166,18 +163,18 @@ func handlerComplain(
 		return
 	}
 
-	swanOWID, err := owid.FromBase64(r.Form.Get("swanid"))
+	seed, err := swan.SeedFromBase64(r.Form.Get("swanid"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("'swanid' not a valid OWID"),
 			http.StatusBadRequest)
 		return
 	}
-	partyOWID, err := owid.FromBase64(r.Form.Get("partyid"))
+	response, err := swan..FromBase64(r.Form.Get("partyid"))
 	if err != nil {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("'partyid' not a valid OWID"),
@@ -188,7 +185,7 @@ func handlerComplain(
 	// Create the complaint object.
 	c, err := newComplaint(d.Config, swanOWID, partyOWID)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -196,13 +193,13 @@ func handlerComplain(
 	var subject bytes.Buffer
 	err = complaintSubjectTemplate.Execute(&subject, c)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 	var body bytes.Buffer
 	err = complaintBodyTemplate.Execute(&body, c)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -221,7 +218,7 @@ func handlerComplain(
 	w.Header().Set("Cache-Control", "no-cache")
 	_, err = g.Write([]byte(u))
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 }

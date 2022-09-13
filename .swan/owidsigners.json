@@ -4,287 +4,287 @@
 		"name": "Operator-A",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIBHSDnyphM3cOfeSXxBEkv+/1rkBc/mJZ9w0ypx5nheloAoGCCqGSM49\nAwEHoUQDQgAEsVsWiiZNNapX1mYEqfhFHAhWi8G0jAzEVXAjCpvE0wPdQyJg7RGg\nOYM5qCjEt0VJAmwUjXBYijRnOFgr6Mjclw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsVsWiiZNNapX1mYEqfhFHAhWi8G0\njAzEVXAjCpvE0wPdQyJg7RGgOYM5qCjEt0VJAmwUjXBYijRnOFgr6Mjclw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"51db.uk": {
 		"domain": "51db.uk",
 		"name": "Operator-B",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIEVLYa+pqI2s9Vcx9XgiXE81pLpXIe001UIeZ39ertdvoAoGCCqGSM49\nAwEHoUQDQgAEGktVLRwEISRdVhoCj7cPD9jOYcmDk4sMCUGmNwv/mVgzjWn34tPi\njefvKYjjbpIa6LNPs8oV6GIQdKhfzaFhxg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEGktVLRwEISRdVhoCj7cPD9jOYcmD\nk4sMCUGmNwv/mVgzjWn34tPijefvKYjjbpIa6LNPs8oV6GIQdKhfzaFhxg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"51dc.uk": {
 		"domain": "51dc.uk",
 		"name": "Operator-C",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIJxGJLXbGJGQBhJN6JcuKsSBjNwe+zNQuYN8qfz3VmeSoAoGCCqGSM49\nAwEHoUQDQgAEyd0sormyP+IzgX1LTxYj6NsRI12Fz5kWmeFcbDo5korXeO9nN7DJ\nPf0I5egCKNLSXla6AryxrOdt0o0UKcgeyA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEyd0sormyP+IzgX1LTxYj6NsRI12F\nz5kWmeFcbDo5korXeO9nN7DJPf0I5egCKNLSXla6AryxrOdt0o0UKcgeyA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"51dd.uk": {
 		"domain": "51dd.uk",
 		"name": "Operator-D",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIBI4h1ZRv/vFA7ju53jM7zKbhbiWW9gqf12KEN0I3eKEoAoGCCqGSM49\nAwEHoUQDQgAE6u6Xo3p4gdUpQPIiiTg2RigpQkk1Dw/FPNAQ8DBr+sFnD/lDsAWQ\nflB9nhh56BbXvdb0fv42k1lUeUsXsV9bFA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6u6Xo3p4gdUpQPIiiTg2RigpQkk1\nDw/FPNAQ8DBr+sFnD/lDsAWQflB9nhh56BbXvdb0fv42k1lUeUsXsV9bFA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"51de.uk": {
 		"domain": "51de.uk",
 		"name": "Operator-E",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGpZ7k0xWOxdmIVd6OuYWGFwe6YGHd2SZgQbKw1p6ZvzoAoGCCqGSM49\nAwEHoUQDQgAEzHt7Hr/0bqXohSQEpF30Jx9rg/gpNPbb1hZpj+JV8SJMtc00hXiY\nyeCNzpB27xnv4ukCC0VEcBaWNzYpaoFM+A==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzHt7Hr/0bqXohSQEpF30Jx9rg/gp\nNPbb1hZpj+JV8SJMtc00hXiYyeCNzpB27xnv4ukCC0VEcBaWNzYpaoFM+A==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"an.cisne-demo.es": {
 		"domain": "an.cisne-demo.es",
 		"name": "Operator-Cisne",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIH20VFErjlzQHjaGMfN+7BvN97xZ2RSpWWRGc1kNCNNqoAoGCCqGSM49\nAwEHoUQDQgAEAGDA03uMkP4lsHSyK7F4QZx+eU9MhU7A7MPziZyXZggp8LUjm6sU\nx2Jq31oA3rY8uTrJA/fLNq7R7d98P+AudQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEAGDA03uMkP4lsHSyK7F4QZx+eU9M\nhU7A7MPziZyXZggp8LUjm6sUx2Jq31oA3rY8uTrJA/fLNq7R7d98P+AudQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"badssp.swan-demo.uk": {
 		"domain": "badssp.swan-demo.uk",
 		"name": "Bad SSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIN4ToIqJbBx3k/0U/EwA0katcCci+QOL3j7CUSd+ZTjKoAoGCCqGSM49\nAwEHoUQDQgAEP1zzQf1l1JmUsXB15BdAPIrXm2R5zSchPChzVWY6t5jW7zPe/w5e\nPhrmYUT4ww1vWQzMiF73uOPCHeyuXwl2Pg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEP1zzQf1l1JmUsXB15BdAPIrXm2R5\nzSchPChzVWY6t5jW7zPe/w5ePhrmYUT4ww1vWQzMiF73uOPCHeyuXwl2Pg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"bidswitch.swan-demo.uk": {
 		"domain": "bidswitch.swan-demo.uk",
 		"name": "Bidswitch Exchange",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIK+JqtJZ9BIsS9foQiyb14He7s9YlaOj+4IS4HWXZ4K5oAoGCCqGSM49\nAwEHoUQDQgAE5rUaDFgNdblVnTgvd8vqNZAZWrhZvvAlMndSbQRAQ+hRBhh0rU0b\nX2FUMk33g+HDk+jOAEP6+OlavNTnn79jVQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE5rUaDFgNdblVnTgvd8vqNZAZWrhZ\nvvAlMndSbQRAQ+hRBhh0rU0bX2FUMk33g+HDk+jOAEP6+OlavNTnn79jVQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"biscuit-news.uk": {
 		"domain": "biscuit-news.uk",
 		"name": "Biscuit News",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILKeacQgEw+BZ8h7qCAM2W4I6QrCZ+sNKLdyOuMqsyb2oAoGCCqGSM49\nAwEHoUQDQgAEouzN5laBiFTAFg3NRfmxlFOh3d4J83iLW727fFhDO1uyODH+Pe98\nItstx7oybeLmJ4ubnP3Q1JekhRZ7wfSEDw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEouzN5laBiFTAFg3NRfmxlFOh3d4J\n83iLW727fFhDO1uyODH+Pe98Itstx7oybeLmJ4ubnP3Q1JekhRZ7wfSEDw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"centro.swan-demo.uk": {
 		"domain": "centro.swan-demo.uk",
 		"name": "Centro DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPVoxENUS21+Zhd5mgAcnQCtMkoosYXicsewHehCpgZnoAoGCCqGSM49\nAwEHoUQDQgAENhGTeZKJ2eROgFjhwiBoE6PvSbi1I4s1KBNDR1ZEbpnpTezJNeU3\nwaYyxJenG0ViRiob0mSPMnRn79tXUQg4yw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENhGTeZKJ2eROgFjhwiBoE6PvSbi1\nI4s1KBNDR1ZEbpnpTezJNeU3waYyxJenG0ViRiob0mSPMnRn79tXUQg4yw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cisne-demo.es": {
 		"domain": "cisne-demo.es",
 		"name": "Cisne Demo",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIFRqy0Fq9wUPdL5xEWG3kNdn6t1Q6MtAZygEV0AVrY1hoAoGCCqGSM49\nAwEHoUQDQgAEbVC8bGVCmXewrDy44Z2DcD2QfW28CihD/vYb0buy7HGU5bdnmdT/\nb8FxRNeTQZ4L/Cs6Zm9LFGPxT/VllH3ypA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbVC8bGVCmXewrDy44Z2DcD2QfW28\nCihD/vYb0buy7HGU5bdnmdT/b8FxRNeTQZ4L/Cs6Zm9LFGPxT/VllH3ypA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cmp.cisne-demo.es": {
 		"domain": "cmp.cisne-demo.es",
 		"name": "Cisne CMP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIM+e08q/cA31XaSxBEV4YYXjfbHnjKo7+3EUrornD2DWoAoGCCqGSM49\nAwEHoUQDQgAEmQgh8QGpDEu/5tvev+W5YM3Vclxh+UJGzvWtpU+JhW2kDrEOwi5c\n3c0oN4Fzf6n02YWJsFq9+KbmiL8YPSbY7g==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmQgh8QGpDEu/5tvev+W5YM3Vclxh\n+UJGzvWtpU+JhW2kDrEOwi5c3c0oN4Fzf6n02YWJsFq9+KbmiL8YPSbY7g==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cmp.swan-demo.uk": {
 		"domain": "cmp.swan-demo.uk",
 		"name": "SWAN CMP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEID3gOYF0e6n3Zfo9J4RhyJWGA/j39zaeHtIlptvkXkovoAoGCCqGSM49\nAwEHoUQDQgAEbJ0GfdaxLmnQGv0G2YwWb+u/Fpw1YZRwPrubPrzSSjYsAMUPe2Q8\n6j8LEgRl9EgHhFWM0lLlVnOUeDAmgZWsRQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbJ0GfdaxLmnQGv0G2YwWb+u/Fpw1\nYZRwPrubPrzSSjYsAMUPe2Q86j8LEgRl9EgHhFWM0lLlVnOUeDAmgZWsRQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cool-bikes.uk": {
 		"domain": "cool-bikes.uk",
 		"name": "Cool Bikes",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINWTa4sHaV85HCyFiDYF8jbIRzKKPN0G7SyXJzZGRRUaoAoGCCqGSM49\nAwEHoUQDQgAEX9O+/aIFc9oom0MbKHp2rydxul+W3joMVsvPxrlCRX/WapIxrFpY\nzBYR9vRDIfy5roMHlR+dSz+RYRcbNl6zmg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEX9O+/aIFc9oom0MbKHp2rydxul+W\n3joMVsvPxrlCRX/WapIxrFpYzBYR9vRDIfy5roMHlR+dSz+RYRcbNl6zmg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cool-cars.uk": {
 		"domain": "cool-cars.uk",
 		"name": "Cool Cars",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGG68lLvNN2VPGKG593d8F4IGsuPwKMV3Cl+qPZc3LiuoAoGCCqGSM49\nAwEHoUQDQgAEJScXInJJJIFTOjr9EUkeYcCPsI53CzkY9iYfGtKgFbUqLOKN6J4P\nltnuOmuaLY2bFW/+de76jjnnCPVf35RP3w==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJScXInJJJIFTOjr9EUkeYcCPsI53\nCzkY9iYfGtKgFbUqLOKN6J4PltnuOmuaLY2bFW/+de76jjnnCPVf35RP3w==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"cool-creams.uk": {
 		"domain": "cool-creams.uk",
 		"name": "Cool Creams",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIBi5jF+kzENz/GfVpZgh3S2MjhjjP6NvopPnFoLpt9OWoAoGCCqGSM49\nAwEHoUQDQgAELMXPfDbg5JCQdOrviFHQEvchCiH1pe1ZpBxbyKuO/CLo9TUxqg/y\nAfS5svt+KOxsZF6ixYyuChNM2PJkM2fcEw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAELMXPfDbg5JCQdOrviFHQEvchCiH1\npe1ZpBxbyKuO/CLo9TUxqg/yAfS5svt+KOxsZF6ixYyuChNM2PJkM2fcEw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"current-bun.uk": {
 		"domain": "current-bun.uk",
 		"name": "Current Bun",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGs7U4Tp4Tsc7q/0X+yExzcBCKoUPb8G8hJ0skfRkM7noAoGCCqGSM49\nAwEHoUQDQgAEnnCeVmF89nxo57SghkgsLkIF/aLy6Udj02AG9SWJxAn7X3X06CM8\nm4tFOSBNgkVvOPvHlpP4YmZvIN78oC0HNw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEnnCeVmF89nxo57SghkgsLkIF/aLy\n6Udj02AG9SWJxAn7X3X06CM8m4tFOSBNgkVvOPvHlpP4YmZvIN78oC0HNw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"dataxu.swan-demo.uk": {
 		"domain": "dataxu.swan-demo.uk",
 		"name": "DataXu DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIFlT9ZMtihJtsjKD8QeZKvHxFFswRnW0h+O01YdOjRlsoAoGCCqGSM49\nAwEHoUQDQgAEfWruJ8tITxQaR/ceOqSXaVaklKc1xqShscncvc8pPqa9+eXno4Xv\n3zRnWKUeQongYBBmcyexI+0EfrkKecAWUQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfWruJ8tITxQaR/ceOqSXaVaklKc1\nxqShscncvc8pPqa9+eXno4Xv3zRnWKUeQongYBBmcyexI+0EfrkKecAWUQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"liveintent.swan-demo.uk": {
 		"domain": "liveintent.swan-demo.uk",
 		"name": "LiveIntent DMP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIRwXQfPFihh1bMh/ftEtWtMdRQlsPKq7uCsOOesLIZVoAoGCCqGSM49\nAwEHoUQDQgAEQE6KHCj78yfZtgJxGTTO/if3AmrIpNR2dyCpKEx9ih9zWrYeQmZc\nxSV5j5Rvgk2KiDEmd23fEtKdWdCwKsburA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQE6KHCj78yfZtgJxGTTO/if3AmrI\npNR2dyCpKEx9ih9zWrYeQmZcxSV5j5Rvgk2KiDEmd23fEtKdWdCwKsburA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"liveramp.swan-demo.uk": {
 		"domain": "liveramp.swan-demo.uk",
 		"name": "Liveramp",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDJVINOrrhlcl01CmxTzRKLA9rlu1+ZgxD0xNHnhS7+1oAoGCCqGSM49\nAwEHoUQDQgAEZzs0y7pL/R9vcdCzQX3GP223E3mmHhTvI4ZtLUYRHB9UShb7UDLI\nhN3JXC27kml8RL+aVSRbFQE4EQVP5WqQEw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZzs0y7pL/R9vcdCzQX3GP223E3mm\nHhTvI4ZtLUYRHB9UShb7UDLIhN3JXC27kml8RL+aVSRbFQE4EQVP5WqQEw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"localhost": {
 		"domain": "localhost",
 		"name": "Localhost",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIFb9KMTbF3KxC507m0fnpjXB1yyWTSOyZMBUFrtoGbAaoAoGCCqGSM49\nAwEHoUQDQgAESg7mlYM1mMqFFsbZGNVGCNFLdL3Li3ArIjDdQsi767x8mrO8JAaI\n/L5I9ZYxQQAtOGn9mFIgFbAS8BjoXscFJA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAESg7mlYM1mMqFFsbZGNVGCNFLdL3L\ni3ArIjDdQsi767x8mrO8JAaI/L5I9ZYxQQAtOGn9mFIgFbAS8BjoXscFJA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"magnite.swan-demo.uk": {
 		"domain": "magnite.swan-demo.uk",
 		"name": "Magnite SSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICEL0xMKAb07oNh9avWkAt7sVFTovZ8z+VRqsMj8QsjVoAoGCCqGSM49\nAwEHoUQDQgAELMNKs6GOMYJQQZjJLlVvtfdkauJQYtcByVqke+3LSGNc5rwi5sop\n6DVBwY/Up9ASqjqhSRXPDDFvs0h6nfjjqg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAELMNKs6GOMYJQQZjJLlVvtfdkauJQ\nYtcByVqke+3LSGNc5rwi5sop6DVBwY/Up9ASqjqhSRXPDDFvs0h6nfjjqg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"mediamath.swan-demo.uk": {
 		"domain": "mediamath.swan-demo.uk",
 		"name": "MediaMath DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIBLwSo5dPiOeiBaiQTUFXuUbdAtCl1dblqKI0Vk4sKIboAoGCCqGSM49\nAwEHoUQDQgAEgFFnIbNOlcMEYg882gJVI/Bj4uzaFXb03nq6ZAYyPe6fbnFIbl3a\nHteMiN64L3PCTAC9YtgdFESxcCl5HH45JQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgFFnIbNOlcMEYg882gJVI/Bj4uza\nFXb03nq6ZAYyPe6fbnFIbl3aHteMiN64L3PCTAC9YtgdFESxcCl5HH45JQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"new-pork-limes.uk": {
 		"domain": "new-pork-limes.uk",
 		"name": "New Pork Limes",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIO+yf29AK2T/HpkQ7uBWjhzSbnq0A2GFg+C8pZflo/9zoAoGCCqGSM49\nAwEHoUQDQgAEmHUmDOk+XYQG85pO3h7SqhEKoPbtUy3tZopLJO9VFlbhTbNMjLmK\niKxSpB0A8VnKEJ6CBoSHQb7QVMnA56Lpxg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmHUmDOk+XYQG85pO3h7SqhEKoPbt\nUy3tZopLJO9VFlbhTbNMjLmKiKxSpB0A8VnKEJ6CBoSHQb7QVMnA56Lpxg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"new-prebid-limes.uk": {
 		"domain": "new-prebid-limes.uk",
 		"name": "New Prebid Limes",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIFFCeAvkn8Sk8Fj/qqU33vYcUSdzR+TBF+jg08hZyaSoAoGCCqGSM49\nAwEHoUQDQgAEwppFDonWqgbY8e0aqmX931mWBZh9GBWkgn+mSYHhTTSA6fr+7pSE\nv5L0DxCP0QlJvbjU2KoUKLXMwNxW6csVmQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwppFDonWqgbY8e0aqmX931mWBZh9\nGBWkgn+mSYHhTTSA6fr+7pSEv5L0DxCP0QlJvbjU2KoUKLXMwNxW6csVmQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"oath.swan-demo.uk": {
 		"domain": "oath.swan-demo.uk",
 		"name": "Oath DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIK97FomLQZqfrIHUzl41pFwje3/tbRkhtFc2Zkh2Gg3HoAoGCCqGSM49\nAwEHoUQDQgAEKxx6EWkZV0of1xOwlLjzgjv/ri4KUvizFsTaxxo6T9R27g749wm4\noVy2IVROn7wttfoXMRLbSuQQQJWkF6NBJQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEKxx6EWkZV0of1xOwlLjzgjv/ri4K\nUvizFsTaxxo6T9R27g749wm4oVy2IVROn7wttfoXMRLbSuQQQJWkF6NBJQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"pop-up.swan-demo.uk": {
 		"domain": "pop-up.swan-demo.uk",
 		"name": "Pop Up Site",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGatX+SlZlSx6z0I2Fmdtzt1cXOu9n1+o/hKDKNuIW8toAoGCCqGSM49\nAwEHoUQDQgAEcwuxWA0RTXAUoU347jfMCBgrcXEFSza94IO4Tam9DvvETxcmnxtI\nBGWkWWzCulQm8xI6/i4itRiNRb47acL5dg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEcwuxWA0RTXAUoU347jfMCBgrcXEF\nSza94IO4Tam9DvvETxcmnxtIBGWkWWzCulQm8xI6/i4itRiNRb47acL5dg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"pub1.cisne-demo.es": {
 		"domain": "pub1.cisne-demo.es",
 		"name": "Cisne Publisher 1",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDiWsFjpQU6PYTK4Wdn1n7Dp3oXvaEIntvhPxJa+3cejoAoGCCqGSM49\nAwEHoUQDQgAEv14bsZLPdHCI4BKW700OwUo3zTrPEV4QflwOM4mrZV6//rQ6v6b6\n34Ay9F37vxVENxKzftpWhID+6nOPXs8Owg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEv14bsZLPdHCI4BKW700OwUo3zTrP\nEV4QflwOM4mrZV6//rQ6v6b634Ay9F37vxVENxKzftpWhID+6nOPXs8Owg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"pub2.cisne-demo.es": {
 		"domain": "pub2.cisne-demo.es",
 		"name": "Cisne Publisher 2",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEILnVCzvJ5teltSLfKY6YYt24jEE9rWiPCOLnrUXAT5z2oAoGCCqGSM49\nAwEHoUQDQgAEVeknPdjrN7iQxj2tqpaCtb7WsHj0m5ZDA7CQ6mKcQMAaTLHMdRpZ\nB2PgQTtzz+68Khg+v8CAan2Mj/nDtSExjA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVeknPdjrN7iQxj2tqpaCtb7WsHj0\nm5ZDA7CQ6mKcQMAaTLHMdRpZB2PgQTtzz+68Khg+v8CAan2Mj/nDtSExjA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"pub3.cisne-demo.es": {
 		"domain": "pub3.cisne-demo.es",
 		"name": "Cisne Publisher 3",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIHSchC5hwi5LjQnbRlbDXgnvCzdzXvg1zr2XvEYcmVQ/oAoGCCqGSM49\nAwEHoUQDQgAEPx+23qeNFW4BLe2xDM9lg/uktrWFTZCG63EqQ4DtKh2/Kn44F2H4\nuHNqOYS0C3fMY/4wzaqyAXoz1nRFynALQg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEPx+23qeNFW4BLe2xDM9lg/uktrWF\nTZCG63EqQ4DtKh2/Kn44F2H4uHNqOYS0C3fMY/4wzaqyAXoz1nRFynALQg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"pubmatic.swan-demo.uk": {
 		"domain": "pubmatic.swan-demo.uk",
 		"name": "Pubmatic DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIoRFYTtO3Bdw94d1nXvCZwUkVMqT2lw+L+dTrV9KvyXoAoGCCqGSM49\nAwEHoUQDQgAEwDiKFN9evaQ4AVe8CNwuqI1BpOiwNxVSOw4rHUdxHdbPYVwVP7l1\n1w+6j+ZzjWkHtpDhsLLGSy9zdJZv7r0Skg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwDiKFN9evaQ4AVe8CNwuqI1BpOiw\nNxVSOw4rHUdxHdbPYVwVP7l11w+6j+ZzjWkHtpDhsLLGSy9zdJZv7r0Skg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"quantcast.swan-demo.uk": {
 		"domain": "quantcast.swan-demo.uk",
 		"name": "Quantcast",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAH/74VGMY15JoCsPwrEggH2KbSQPLUTXOtpfYi9Uo2WoAoGCCqGSM49\nAwEHoUQDQgAEVePSfcrylDlpTSG+r+Bs7/dFTJth1jOkWiELsY/6sCGPak5OUwdf\nMMCx3BgRQivbTOSB7c1pjAN3UWXkuPMCTw==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVePSfcrylDlpTSG+r+Bs7/dFTJth\n1jOkWiELsY/6sCGPak5OUwdfMMCx3BgRQivbTOSB7c1pjAN3UWXkuPMCTw==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"single.51da.uk": {
 		"domain": "single.51da.uk",
 		"name": "Operator-A",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIH9H8pkCegptgRS38gTfGSB/bQJ92vKb5aNnxpqqUaikoAoGCCqGSM49\nAwEHoUQDQgAEmyeY/GGFjCrIcodgh7wTTFKpMlikhnBB2ZgM3yXcLuww679zbaQQ\n7pCDiWvvq2H/MERjfq/B9HLDYGE3VzxfSQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmyeY/GGFjCrIcodgh7wTTFKpMlik\nhnBB2ZgM3yXcLuww679zbaQQ7pCDiWvvq2H/MERjfq/B9HLDYGE3VzxfSQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"single.51db.uk": {
 		"domain": "single.51db.uk",
 		"name": "Operator-B",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEICgKRmyWz9Rhce7gtWrLbVYv4Jjjfh0w28TXzmaaLrwnoAoGCCqGSM49\nAwEHoUQDQgAEd/kWcjQhMFM+I0+uvUFK7sOBHU9osZ4deQ3S6LAltPL9Re/pK0WL\n4d6fHliZT5JNaneGkXOViN7gJutglFssQA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd/kWcjQhMFM+I0+uvUFK7sOBHU9o\nsZ4deQ3S6LAltPL9Re/pK0WL4d6fHliZT5JNaneGkXOViN7gJutglFssQA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"single.51dc.uk": {
 		"domain": "single.51dc.uk",
 		"name": "Operator-C",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIAAjbTKtbkKUFSE1948GbdNLq/VZ2/5bcmydcW2Sm9RhoAoGCCqGSM49\nAwEHoUQDQgAEoq4k8fx6MnXZ7g/eAHiC+OMH7+ooSw2N63cH7djurUKNejQvTIUP\npFK1q7ZxasAE8NCP5qlMNpoTsdwFcwDtrA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoq4k8fx6MnXZ7g/eAHiC+OMH7+oo\nSw2N63cH7djurUKNejQvTIUPpFK1q7ZxasAE8NCP5qlMNpoTsdwFcwDtrA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"single.51dd.uk": {
 		"domain": "single.51dd.uk",
 		"name": "Operator-D",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIH7EFL+gaYABZgk9t6fxSqv2xf+Bxju973CCoJaC8t6SoAoGCCqGSM49\nAwEHoUQDQgAE6tF45oPyTEaiunzb0KdEyDzw2tKYablzDl2CqnzOyCTfOraDHO3E\nv6DcM4lRrc36ra/x0DsuGoctm6PyFIU+AA==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6tF45oPyTEaiunzb0KdEyDzw2tKY\nablzDl2CqnzOyCTfOraDHO3Ev6DcM4lRrc36ra/x0DsuGoctm6PyFIU+AA==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"single.51de.uk": {
 		"domain": "single.51de.uk",
 		"name": "Operator-E",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIDyO1egYeQiBs7rmadakWhdTJ3Ac4cPYdTYbnGjKDs6ToAoGCCqGSM49\nAwEHoUQDQgAEi9DFygGc7HhN3d0f4cVm8J6IWvNaL1S2TbRLDo25Rl+sy1zoMkk9\n4IXQ/sYCMCbaRtCit9zFKyEblTjNtsgxqQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEi9DFygGc7HhN3d0f4cVm8J6IWvNa\nL1S2TbRLDo25Rl+sy1zoMkk94IXQ/sYCMCbaRtCit9zFKyEblTjNtsgxqQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"sirdata.swan-demo.uk": {
 		"domain": "sirdata.swan-demo.uk",
 		"name": "Sirdata CMP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPczuTHe6wIYbX6h8Q9UK50hsw4/aoV/mFcRGi5N9tfpoAoGCCqGSM49\nAwEHoUQDQgAEH3edgvaekGjHXk4oF8wbWwDg4ZMBT81neg3z0fXF8F6/uvA3nwGx\nRiuA56anirTkjysM1p6NmVCt9xjSFxxd9g==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEH3edgvaekGjHXk4oF8wbWwDg4ZMB\nT81neg3z0fXF8F6/uvA3nwGxRiuA56anirTkjysM1p6NmVCt9xjSFxxd9g==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"smaato.swan-demo.uk": {
 		"domain": "smaato.swan-demo.uk",
 		"name": "Smaato Exchange",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIOBZSGatIm83Gs9eu+NLrHaomY0NrRSBDtddcAn16P5roAoGCCqGSM49\nAwEHoUQDQgAEfMsGWnh0p8Q5p7K+MSJVMtPc2jMIcYbL4whUCKYDPp51g9tsVr/x\nngy/gy5vPBBM7jjAnMnp51YsQMm+KtSJYQ==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfMsGWnh0p8Q5p7K+MSJVMtPc2jMI\ncYbL4whUCKYDPp51g9tsVr/xngy/gy5vPBBM7jjAnMnp51YsQMm+KtSJYQ==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"swan-demo.uk": {
 		"domain": "swan-demo.uk",
 		"name": "SWAN Demo",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIPUF2jvi4G8plEz1akMSFOHLSgFP6kirPPk5/HCfh9BYoAoGCCqGSM49\nAwEHoUQDQgAEB44dNWi3YCog0qOYYKffxjipu980re7iu4MXmiO1kPDfAVYuHS2i\nT0TbgEnHw2tNqbM1ug2w7TGCKeEy3pKI6g==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEB44dNWi3YCog0qOYYKffxjipu980\nre7iu4MXmiO1kPDfAVYuHS2iT0TbgEnHw2tNqbM1ug2w7TGCKeEy3pKI6g==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"thetradedesk.swan-demo.uk": {
 		"domain": "thetradedesk.swan-demo.uk",
 		"name": "theTradeDesk DSP",
 		"privateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIGuH42LWcvtzNXUufRxapoHMQLCTUtZJW0WEf9nl4aDToAoGCCqGSM49\nAwEHoUQDQgAEtD8r9lagnOTk0o1pR6clDfRHspYb+WGoHQGsfCyIVy8rBfPCtJ24\nA0dbmf2L27fe/XQll9x6tIvEGL4vMcRTEg==\n-----END EC PRIVATE KEY-----\n",
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEtD8r9lagnOTk0o1pR6clDfRHspYb\n+WGoHQGsfCyIVy8rBfPCtJ24A0dbmf2L27fe/XQll9x6tIvEGL4vMcRTEg==\n-----END PUBLIC KEY-----\n",
-		"contractURL": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
+		"termsUrl": "https://github.com/SWAN-community/swan/blob/main/model-terms.md"
 	},
 	"zeta.swan-demo.uk": {
 		"domain": "zeta.swan-demo.uk",

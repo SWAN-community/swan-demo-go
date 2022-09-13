@@ -30,7 +30,7 @@ import (
 
 	"github.com/SWAN-community/owid-go"
 	"github.com/SWAN-community/salt-go"
-	"github.com/SWAN-community/swan-demo-go/demo/common"
+	"github.com/SWAN-community/swan-demo-go/demo/shared"
 	"github.com/SWAN-community/swan-go"
 
 	uuid "gopkg.in/satori/go.uuid.v1"
@@ -105,12 +105,12 @@ func (m *dialogModel) SWIDAsString() (string, error) {
 	return u.String(), nil
 }
 
-func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func handlerDialog(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Parse the form variables.
 	err := r.ParseForm()
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 
@@ -120,7 +120,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 		// No parameters were provided so get the SWAN data from the request
 		// path. If no data is present then redirect to SWAN.
-		s := common.GetSWANDataFromRequest(r)
+		s := shared.GetSWANDataFromRequest(r)
 		if s == "" {
 			redirectToSWAN(d, w, r)
 			return
@@ -137,7 +137,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 				redirectToSWAN(d, w, r)
 				return
 			}
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				e.Err,
@@ -150,7 +150,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	if len(r.Form["swid"]) == 0 {
 		se := setNewSWID(d, &r.Form)
 		if se != nil {
-			common.ReturnProxyError(d.Config, w, se)
+			shared.ReturnProxyError(d.Config, w, se)
 			return
 		}
 	}
@@ -166,7 +166,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		se := dialogReset(d, &r.Form)
 		if se != nil {
-			common.ReturnProxyError(d.Config, w, se)
+			shared.ReturnProxyError(d.Config, w, se)
 			return
 		}
 	}
@@ -176,10 +176,10 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 		// The user has request that the data be updated in the SWAN network.
 
-		// Get the OWID creator which is needed to sign the data just captured.
-		c, err := d.GetOWIDCreator()
+		// Get the OWID signer which is needed to sign the data just captured.
+		c, err := d.GetOWIDSigner()
 		if err != nil {
-			common.ReturnServerError(d.Config, w, err)
+			shared.ReturnServerError(d.Config, w, err)
 			return
 		}
 
@@ -189,7 +189,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		// Set the parameters for the update.
 		err = o.SetPref(c, r.Form.Get("pref") == "on")
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
@@ -198,7 +198,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 		err = o.SetEmail(c, r.Form.Get("email"))
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
@@ -207,7 +207,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 		err = o.SetSalt(c, r.Form.Get("salt"))
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
@@ -216,7 +216,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		}
 		err = o.SetSWID(r.Form.Get("swid"))
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
@@ -229,7 +229,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		// return URL for the publisher returned to.
 		u, se := o.GetURL()
 		if se != nil {
-			common.ReturnProxyError(d.Config, w, se)
+			shared.ReturnProxyError(d.Config, w, se)
 			return
 		}
 
@@ -254,7 +254,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Encoding", "gzip")
 		err := d.LookupHTML("cmp.html").Execute(g, &dialogModel{Values: r.Form})
 		if err != nil {
-			common.ReturnServerError(d.Config, w, err)
+			shared.ReturnServerError(d.Config, w, err)
 			return
 		}
 	}
@@ -262,7 +262,7 @@ func handlerDialog(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 
 // sendReminderEmail sends the reminder email with a link to setup other
 // browsers.
-func sendReminderEmail(d *common.Domain, o *swan.Update) error {
+func sendReminderEmail(d *shared.Domain, o *swan.Update) error {
 
 	// Get the salt to display the grid in the email.
 	s, err := salt.FromBase64(string(o.Salt().Payload))
@@ -282,7 +282,7 @@ func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 	u.RawQuery = q.Encode()
 
 	// Set the email with the model populated.
-	err = common.NewSMTP().Send(
+	err = shared.NewSMTP().Send(
 		o.Email().PayloadAsString(),
 		"SWAN Demo: Email Reminder",
 		d.LookupHTML("email-template.html"),
@@ -297,7 +297,7 @@ func sendReminderEmail(d *common.Domain, o *swan.Update) error {
 // dialogReset checks for any reset keys and removes other keys if present. If
 // these keys are present they are removed from the collection to avoid being
 // added as hidden fields.
-func dialogReset(d *common.Domain, m *url.Values) *swan.Error {
+func dialogReset(d *shared.Domain, m *url.Values) *swan.Error {
 
 	// Check to see if the post is as a result of the SWID reset. If so then
 	// replace the SWID with a new random value.
@@ -327,7 +327,7 @@ func dialogReset(d *common.Domain, m *url.Values) *swan.Error {
 }
 
 // setNewSWID creates a new SWID and adds to the key values.
-func setNewSWID(d *common.Domain, m *url.Values) *swan.Error {
+func setNewSWID(d *shared.Domain, m *url.Values) *swan.Error {
 	o, err := d.SWAN().CreateSWID()
 	if err != nil {
 		return err
@@ -338,7 +338,7 @@ func setNewSWID(d *common.Domain, m *url.Values) *swan.Error {
 
 // getUpdate returns a populated SWAN Update operation.
 func getUpdate(
-	d *common.Domain,
+	d *shared.Domain,
 	r *http.Request,
 	m *url.Values) (*swan.Update, error) {
 
@@ -386,7 +386,7 @@ func getUpdate(
 
 // decryptAndDecode the encrypted data returned from SWAN.
 func decryptAndDecode(
-	d *common.Domain,
+	d *shared.Domain,
 	v string,
 	m *url.Values) *swan.Error {
 	r, err := d.SWAN().DecryptRaw(v)
@@ -423,10 +423,10 @@ func decryptAndDecode(
 
 // redirectToSWAN redirects the request to SWAN to return to this URL with the
 // current SWAN data.
-func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
+func redirectToSWAN(d *shared.Domain, w http.ResponseWriter, r *http.Request) {
 
 	// Create the fetch function returning to this URL.
-	f := d.SWAN().NewFetch(r, common.GetCleanURL(d.Config, r).String(), nil)
+	f := d.SWAN().NewFetch(r, shared.GetCleanURL(d.Config, r).String(), nil)
 
 	// User Interface Provider fetch operations only need to consider
 	// one node if the caller will have already recently accessed SWAN.
@@ -437,7 +437,7 @@ func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	if r.Form.Get("nodeCount") != "" {
 		i, err := strconv.ParseInt(r.Form.Get("nodeCount"), 10, 32)
 		if err != nil {
-			common.ReturnStatusCodeError(
+			shared.ReturnStatusCodeError(
 				d.Config,
 				w,
 				err,
@@ -454,9 +454,9 @@ func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Use the return URL provided in the request to this URL as the
 	// final return URL after the update has occurred. Store in the
 	// state for use when the CMP dialogue updates.
-	returnUrl, err := common.GetReturnURL(r)
+	returnUrl, err := shared.GetReturnURL(r)
 	if err != nil {
-		common.ReturnServerError(d.Config, w, err)
+		shared.ReturnServerError(d.Config, w, err)
 		return
 	}
 	f.State[0] = returnUrl.String()
@@ -464,7 +464,7 @@ func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Also also add the access node to the state store.
 	f.State[1] = r.Form.Get("accessNode")
 	if f.State[1] == "" {
-		common.ReturnStatusCodeError(
+		shared.ReturnStatusCodeError(
 			d.Config,
 			w,
 			fmt.Errorf("SWAN accessNode parameter required for CMP operation"),
@@ -479,7 +479,7 @@ func redirectToSWAN(d *common.Domain, w http.ResponseWriter, r *http.Request) {
 	// Get the URL.
 	u, se := f.GetURL()
 	if se != nil {
-		common.ReturnProxyError(d.Config, w, se)
+		shared.ReturnProxyError(d.Config, w, se)
 		return
 	}
 	http.Redirect(w, r, u, 303)
